@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Medication & Insulin</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+  </head>
+  <body class="bg-dark text-light">
+    <div class="container mt-5">
+      <h1 class="text-center text-success">Medication & Insulin Management</h1>
+      <p class="text-center">
+        Proper medication management is essential for diabetes control.
+      </p>
+      <ul class="list-group">
+        <li class="list-group-item bg-dark text-success">
+          💊 Take prescribed medicines on time
+        </li>
+        <li class="list-group-item bg-dark text-success">
+          🩸 Monitor insulin levels regularly
+        </li>
+        <li class="list-group-item bg-dark text-success">
+          🔬 Consult a doctor for dosage adjustments
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

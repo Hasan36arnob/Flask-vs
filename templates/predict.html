@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prediction Results</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <style>
+      :root {
+        --primary-green: #198754;
+        --dark-green: #0f5132;
+        --light-green: #d1e7dd;
+        --black: #212529;
+        --gray-dark: #343a40;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .navbar {
+        background-color: var(--black) !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .navbar-brand,
+      .nav-link {
+        color: var(--light-green) !important;
+      }
+
+      .nav-link:hover {
+        color: white !important;
+      }
+
+      .nav-link.active {
+        color: var(--primary-green) !important;
+      }
+
+      .result-container {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        padding: 2.5rem;
+        margin: 2rem auto;
+        max-width: 800px;
+        border: 2px solid var(--primary-green);
+      }
+
+      .page-title {
+        color: var(--black);
+        font-weight: 700;
+        margin-bottom: 2rem;
+        position: relative;
+        padding-bottom: 1rem;
+      }
+
+      .page-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 4px;
+        background: var(--primary-green);
+        border-radius: 2px;
+      }
+
+      .result {
+        padding: 2rem;
+        border-radius: 15px;
+        margin: 2rem 0;
+        transition: all 0.3s ease;
+      }
+
+      .result:hover {
+        transform: translateY(-5px);
+      }
+
+      .low-risk {
+        background: var(--light-green);
+        border: 2px solid var(--primary-green);
+      }
+
+      .moderate-risk {
+        background: #fff3cd;
+        border: 2px solid #ffc107;
+      }
+
+      .high-risk {
+        background: #f8d7da;
+        border: 2px solid #dc3545;
+      }
+
+      .result h3 {
+        font-weight: 700;
+        margin: 0;
+        font-size: 1.5rem;
+      }
+
+      .home-button {
+        background-color: var(--black);
+        border: 2px solid var(--black);
+        padding: 0.8rem 2.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .home-button:hover {
+        background-color: var(--primary-green);
+        border-color: var(--primary-green);
+        transform: translateY(-2px);
+      }
+
+      .home-button i {
+        margin-right: 0.5rem;
+      }
+
+      .alert-danger {
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        font-weight: 500;
+      }
+
+      footer {
+        background-color: var(--black);
+        padding: 1rem 0;
+        margin-top: auto;
+        color: var(--light-green);
+      }
+
+      footer p {
+        font-weight: 500;
+      }
+
+      /* Animation classes */
+      .fade-in {
+        animation: fadeIn 0.5s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <i class="fas fa-heartbeat me-2"></i>
+          Diabetes Prediction
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="fas fa-home me-1"></i>Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/about">
+                <i class="fas fa-info-circle me-1"></i>About
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/contact">
+                <i class="fas fa-envelope me-1"></i>Contact
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/predict_page">
+                <i class="fas fa-chart-line me-1"></i>Predict
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container fade-in">
+      <div class="result-container">
+        <h1 class="page-title text-center">
+          <i class="fas fa-clipboard-check me-2"></i>Prediction Results
+        </h1>
+
+        {% if prediction_text %}
+        <div class="result text-center">
+          {% if "Low Risk" in prediction_text %}
+          <div class="result low-risk">
+            <i
+              class="fas fa-check-circle fa-3x mb-3"
+              style="color: var(--dark-green)"
+            ></i>
+            <h3 class="mb-0">{{ prediction_text | safe }}</h3>
+          </div>
+          {% elif "Moderate Risk" in prediction_text %}
+          <div class="result moderate-risk">
+            <i
+              class="fas fa-exclamation-triangle fa-3x mb-3"
+              style="color: #856404"
+            ></i>
+            <h3 class="mb-0">{{ prediction_text | safe }}</h3>
+          </div>
+          {% elif "High Risk" in prediction_text %}
+          <div class="result high-risk">
+            <i
+              class="fas fa-exclamation-circle fa-3x mb-3"
+              style="color: #721c24"
+            ></i>
+            <h3 class="mb-0">{{ prediction_text | safe }}</h3>
+          </div>
+          {% else %}
+          <div class="result bg-light">
+            <i
+              class="fas fa-info-circle fa-3x mb-3"
+              style="color: var(--black)"
+            ></i>
+            <h3 class="mb-0">{{ prediction_text | safe }}</h3>
+          </div>
+          {% endif %}
+        </div>
+        {% else %}
+        <div class="alert alert-danger text-center" role="alert">
+          <i class="fas fa-times-circle fa-2x mb-2"></i>
+          <p class="mb-0">No results found. Please try again.</p>
+        </div>
+        {% endif %}
+
+        <div class="text-center mt-4">
+          <a href="/" class="btn btn-lg home-button">
+            <i class="fas fa-home me-2"></i>Back to Home
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <p class="text-center mb-0">
+          <i class="fas fa-heart text-danger me-1"></i>
+          Powered by Diabetes Prediction System
+        </p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

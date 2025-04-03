@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercise Guide</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand text-success" href="/">Diabetes Care</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/about">Hospitals</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/contact">Resources</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/diet">Diet</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/exercise">Exercise</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/doctor">Doctor</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container py-5">
+      <div class="card shadow-lg border-0">
+        <div class="card-body p-5">
+          <h1 class="display-4 text-center text-success mb-4">
+            Exercise Guide for Diabetes
+          </h1>
+          <p class="lead text-center mb-5">
+            Regular physical activity is crucial for managing diabetes. Here's
+            your comprehensive guide to staying active and healthy.
+          </p>
+
+          <!-- Aerobic Exercise Section -->
+          <div class="mb-5">
+            <h2 class="text-success mb-4">
+              <i class="fas fa-running me-2"></i>Aerobic Exercise (Cardio)
+            </h2>
+            <p class="text-muted mb-4">
+              Aim for at least 150 minutes of moderate-intensity aerobic
+              exercise per week.
+            </p>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="card h-100 border-success">
+                  <div class="card-body">
+                    <h5 class="card-title text-success">
+                      <i class="fas fa-walking me-2"></i>Walking
+                    </h5>
+                    <p class="card-text">
+                      A simple and accessible option for everyone. Start with
+                      10-minute walks and gradually increase duration.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="card h-100 border-success">
+                  <div class="card-body">
+                    <h5 class="card-title text-success">
+                      <i class="fas fa-swimmer me-2"></i>Swimming
+                    </h5>
+                    <p class="card-text">
+                      Excellent low-impact exercise that's gentle on your joints
+                      while providing full-body workout.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="card h-100 border-success">
+                  <div class="card-body">
+                    <h5 class="card-title text-success">
+                      <i class="fas fa-biking me-2"></i>Cycling
+                    </h5>
+                    <p class="card-text">
+                      Great for cardiovascular health and can be done indoors or
+                      outdoors.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="card h-100 border-success">
+                  <div class="card-body">
+                    <h5 class="card-title text-success">
+                      <i class="fas fa-music me-2"></i>Dancing
+                    </h5>
+                    <p class="card-text">
+                      A fun and engaging way to get your heart rate up and
+                      improve fitness.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Strength Training Section -->
+          <div class="mb-5">
+            <h2 class="text-success mb-4">
+              <i class="fas fa-dumbbell me-2"></i>Strength Training
+            </h2>
+            <p class="text-muted mb-4">
+              Include strength training at least two days per week.
+            </p>
+            <div class="list-group">
+              <div class="list-group-item border-success">
+                <h5 class="mb-1">
+                  <i class="fas fa-weight me-2"></i>Weight Lifting
+                </h5>
+                <p class="mb-1">
+                  Start with light weights and focus on proper form
+                </p>
+              </div>
+              <div class="list-group-item border-success">
+                <h5 class="mb-1">
+                  <i class="fas fa-band-aid me-2"></i>Resistance Bands
+                </h5>
+                <p class="mb-1">Versatile equipment for home workouts</p>
+              </div>
+              <div class="list-group-item border-success">
+                <h5 class="mb-1">
+                  <i class="fas fa-child me-2"></i>Bodyweight Exercises
+                </h5>
+                <p class="mb-1">
+                  Squats, push-ups, and other exercises using your body weight
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Flexibility Section -->
+          <div class="mb-5">
+            <h2 class="text-success mb-4">
+              <i class="fas fa-pray me-2"></i>Flexibility and Balance
+            </h2>
+            <div class="row">
+              <div class="col-md-4 mb-4">
+                <div class="card h-100 border-success">
+                  <div class="card-body text-center">
+                    <h5 class="card-title">
+                      <i class="fas fa-om me-2"></i>Yoga
+                    </h5>
+                    <p class="card-text">
+                      Improves flexibility and reduces stress
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-4">
+                <div class="card h-100 border-success">
+                  <div class="card-body text-center">
+                    <h5 class="card-title">
+                      <i class="fas fa-yin-yang me-2"></i>Tai Chi
+                    </h5>
+                    <p class="card-text">Enhances balance and coordination</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-4">
+                <div class="card h-100 border-success">
+                  <div class="card-body text-center">
+                    <h5 class="card-title">
+                      <i class="fas fa-child me-2"></i>Stretching
+                    </h5>
+                    <p class="card-text">
+                      Maintains flexibility and prevents injury
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Important Considerations -->
+          <div class="alert alert-info">
+            <h3 class="h4 text-primary mb-3">
+              <i class="fas fa-exclamation-circle me-2"></i>Important
+              Considerations
+            </h3>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <i class="fas fa-check-circle me-2"></i>Monitor blood sugar
+                before, during, and after exercise
+              </li>
+              <li class="mb-2">
+                <i class="fas fa-check-circle me-2"></i>Wear comfortable,
+                supportive shoes and check feet regularly
+              </li>
+              <li class="mb-2">
+                <i class="fas fa-check-circle me-2"></i>Stay well-hydrated
+                throughout your workout
+              </li>
+              <li class="mb-2">
+                <i class="fas fa-check-circle me-2"></i>Consult healthcare
+                professional before starting new exercise routine
+              </li>
+              <li>
+                <i class="fas fa-check-circle me-2"></i>Start slowly and
+                gradually increase intensity
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

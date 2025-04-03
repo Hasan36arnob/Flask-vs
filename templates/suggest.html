@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>পরামর্শ</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-green: #198754;
+        --dark-green: #0f5132;
+        --light-green: #d1e7dd;
+        --black: #212529;
+        --gray-dark: #343a40;
+      }
+
+      body {
+        background-color: #f8f9fa;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--black);
+      }
+
+      .navbar {
+        background-color: var(--black) !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .navbar-brand,
+      .nav-link {
+        color: var(--light-green) !important;
+      }
+
+      .nav-link:hover {
+        color: white !important;
+      }
+
+      .suggestions-container {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        padding: 2.5rem;
+        margin: 2rem auto;
+        border: 2px solid var(--primary-green);
+        max-width: 900px;
+      }
+
+      .page-title {
+        color: var(--black);
+        position: relative;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .page-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 4px;
+        background: var(--primary-green);
+        border-radius: 2px;
+      }
+
+      .suggestion-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .suggestion-item {
+        background-color: var(--light-green);
+        border-radius: 10px;
+        padding: 1.2rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--primary-green);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+      }
+
+      .suggestion-item:hover {
+        transform: translateX(5px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .suggestion-icon {
+        color: var(--primary-green);
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        min-width: 30px;
+      }
+
+      .suggestion-text {
+        color: var(--dark-green);
+        font-size: 1.1rem;
+        margin: 0;
+        flex-grow: 1;
+      }
+
+      .btn-home {
+        background-color: var(--black);
+        color: white;
+        padding: 0.8rem 2rem;
+        font-weight: 600;
+        border: 2px solid var(--black);
+        transition: all 0.3s ease;
+      }
+
+      .btn-home:hover {
+        background-color: var(--primary-green);
+        border-color: var(--primary-green);
+        transform: translateY(-2px);
+        color: white;
+      }
+
+      footer {
+        background-color: var(--black);
+        padding: 1rem 0;
+        margin-top: auto;
+        color: var(--light-green);
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .animate-slide {
+        animation: slideIn 0.5s ease-out;
+      }
+
+      .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .btn-print {
+        background-color: var(--primary-green);
+        color: white;
+        padding: 0.8rem 2rem;
+        font-weight: 600;
+        border: 2px solid var(--primary-green);
+        transition: all 0.3s ease;
+      }
+
+      .btn-print:hover {
+        background-color: var(--dark-green);
+        border-color: var(--dark-green);
+        transform: translateY(-2px);
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand text-success" href="/">Diabetes Care</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/about">Hospitals</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/contact">Resources</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/diet">Diet</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/exercise">Exercise</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/doctor">Doctor</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container animate-slide">
+      <div class="suggestions-container">
+        <h1 class="text-center page-title">
+          <i class="fas fa-lightbulb me-2"></i>পরামর্শ
+        </h1>
+
+        <ul class="suggestion-list">
+          {% for suggestion in suggestions %}
+          <li class="suggestion-item">
+            <i class="suggestion-icon fas fa-check-circle"></i>
+            <p class="suggestion-text">{{ suggestion }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+
+        <div class="action-buttons">
+          <a href="{{ back_url }}" class="btn btn-lg btn-home">
+            <i class="fas fa-home me-2"></i>হোম
+          </a>
+          <button onclick="window.print()" class="btn btn-lg btn-print">
+            <i class="fas fa-print me-2"></i>প্রিন্ট করুন
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p class="text-center mb-0">
+          <i class="fas fa-copyright me-1"></i>ডায়াবেটিস পূর্বাভাস সিস্টেম
+          দ্বারা চালিত
+        </p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

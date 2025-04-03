@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="bn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ডায়াবেটিস পূর্বাভাস</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <style>
+      :root {
+        --primary-green: #198754;
+        --dark-green: #0f5132;
+        --light-green: #d1e7dd;
+        --black: #212529;
+        --gray-dark: #343a40;
+      }
+
+      body {
+        background-color: #f8f9fa;
+        color: var(--black);
+      }
+
+      .navbar {
+        background-color: var(--black) !important;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .navbar-brand,
+      .nav-link {
+        color: var(--light-green) !important;
+      }
+
+      .nav-link:hover {
+        color: white !important;
+      }
+
+      .nav-link.active {
+        color: var(--primary-green) !important;
+      }
+
+      .form-container {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        padding: 2.5rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        border: 2px solid var(--primary-green);
+      }
+
+      .text-primary {
+        color: var(--primary-green) !important;
+      }
+
+      .result {
+        background-color: var(--light-green);
+        color: var(--dark-green);
+        padding: 1rem;
+        border-radius: 5px;
+        margin-bottom: 1rem;
+        border: 1px solid var(--primary-green);
+      }
+
+      .form-label {
+        font-weight: 600;
+        color: var(--gray-dark);
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        border-color: var(--primary-green);
+        box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+      }
+
+      .form-control,
+      .form-select {
+        border: 2px solid #ced4da;
+      }
+
+      .form-control:hover,
+      .form-select:hover {
+        border-color: var(--primary-green);
+      }
+
+      .btn-predict {
+        background-color: var(--black);
+        border: 2px solid var(--black);
+        padding: 0.8rem 2.5rem;
+        font-weight: 600;
+        margin-top: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .btn-predict:hover {
+        background-color: var(--primary-green);
+        border-color: var(--primary-green);
+        transform: translateY(-2px);
+      }
+
+      .btn-predict:active {
+        transform: translateY(0);
+      }
+
+      footer {
+        background-color: var(--black);
+        padding: 1rem 0;
+        margin-top: 2rem;
+        color: var(--light-green);
+      }
+
+      /* Custom styling for form elements */
+      .row.g-3 {
+        --bs-gutter-y: 1.5rem;
+      }
+
+      .form-select option {
+        padding: 10px;
+      }
+
+      /* Add some hover effects */
+      .form-container:hover {
+        box-shadow: 0 0 30px rgba(25, 135, 84, 0.1);
+      }
+
+      /* Validation styles */
+      .was-validated .form-control:valid,
+      .was-validated .form-select:valid {
+        border-color: var(--primary-green);
+        background-color: rgba(25, 135, 84, 0.05);
+      }
+
+      .was-validated .form-control:invalid,
+      .was-validated .form-select:invalid {
+        border-color: #dc3545;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary-green);
+        border-radius: 5px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--dark-green);
+      }
+
+      .login-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      .login-container {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .captcha-text {
+        font-family: "Courier New", monospace;
+        font-size: 24px;
+        font-weight: bold;
+        letter-spacing: 5px;
+        padding: 10px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        user-select: none;
+      }
+
+      #captchaBox {
+        cursor: pointer;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Add this right after the opening <body> tag and before the navbar -->
+    <div id="loginOverlay" class="login-overlay">
+      <div class="login-container">
+        <h2 class="text-center mb-4">Login</h2>
+        <div class="text-center mb-3">
+          <i class="fas fa-user-circle fa-3x text-primary"></i>
+        </div>
+        <form id="loginForm" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              placeholder="Enter your username"
+              required
+            />
+            <div class="invalid-feedback">Please enter your username</div>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Enter your password"
+              required
+            />
+            <div class="invalid-feedback">Please enter your password</div>
+          </div>
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Login</button>
+          </div>
+          <div class="text-center mt-3">
+            <p class="mb-0">
+              Don't have an account? <a href="#" id="showRegister">Register</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Add a registration form that will be shown when the Register link is clicked -->
+    <div id="registerOverlay" class="login-overlay hidden">
+      <div class="login-container">
+        <h2 class="text-center mb-4">Register</h2>
+        <div class="text-center mb-3">
+          <i class="fas fa-user-plus fa-3x text-primary"></i>
+        </div>
+        <form id="registerForm" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="newUsername" class="form-label">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              id="newUsername"
+              placeholder="Choose a username"
+              required
+            />
+            <div class="invalid-feedback">Please choose a username</div>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="Enter your email"
+              required
+            />
+            <div class="invalid-feedback">Please enter a valid email</div>
+          </div>
+          <div class="mb-3">
+            <label for="newPassword" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="newPassword"
+              placeholder="Choose a password"
+              required
+            />
+            <div class="invalid-feedback">Please choose a password</div>
+          </div>
+          <div class="mb-3">
+            <label for="confirmPassword" class="form-label"
+              >Confirm Password</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="confirmPassword"
+              placeholder="Confirm your password"
+              required
+            />
+            <div class="invalid-feedback">Passwords do not match</div>
+          </div>
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-success">Register</button>
+          </div>
+          <div class="text-center mt-3">
+            <p class="mb-0">
+              Already have an account? <a href="#" id="showLogin">Login</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand text-success" href="/">Diabetes Care</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/about">Hospitals</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/contact">Resources</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/diet">Diet</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/exercise">Exercise</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/doctor">Doctor</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="form-container">
+        <h1 class="text-center text-primary mb-4">
+          Diabetes Prediction and Management System
+        </h1>
+
+        {% if prediction_text %}
+        <div class="result text-center">
+          <p class="mb-0">{{ prediction_text }}</p>
+        </div>
+        {% endif %}
+
+        <form
+          method="POST"
+          action="/predict"
+          class="needs-validation"
+          novalidate
+        >
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="Age" class="form-label">Age:</label>
+              <input
+                type="number"
+                class="form-control"
+                id="Age"
+                name="Age"
+                placeholder="Leave empty if you don't want to answer"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="Gender" class="form-label">Gender:</label>
+              <select class="form-select" id="Gender" name="Gender">
+                <option value="">No Answer</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="Polyuria" class="form-label"
+                >Frequent Urination:</label
+              >
+              <select class="form-select" id="Polyuria" name="Polyuria">
+                <option value="">No Answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="Polydipsia" class="form-label"
+                >Excessive Thirst:</label
+              >
+              <select class="form-select" id="Polydipsia" name="Polydipsia">
+                <option value="">No Answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="sudden_weight_loss" class="form-label"
+                >sudden weight loss:</label
+              >
+              <select
+                class="form-select"
+                id="sudden_weight_loss"
+                name="sudden_weight_loss"
+              >
+                <option value="">No Answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="weakness" class="form-label">weakness:</label>
+              <select class="form-select" id="weakness" name="weakness">
+                <option value="">No Answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="Polyphagia" class="form-label">Polyphagia:</label>
+              <select class="form-select" id="Polyphagia" name="Polyphagia">
+                <option value="">No Answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="visual_blurring" class="form-label"
+                >visual blurring:</label
+              >
+              <select
+                class="form-select"
+                id="visual_blurring"
+                name="visual_blurring"
+              >
+                <option value="">No Answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="Itching" class="form-label">Itching:</label>
+              <select class="form-select" id="Itching" name="Itching">
+                <option value="">No Answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="Irritability" class="form-label">Irritability:</label>
+              <select class="form-select" id="Irritability" name="Irritability">
+                <option value="">No Answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="delayed_healing" class="form-label"
+                >delayed healing:</label
+              >
+              <select
+                class="form-select"
+                id="delayed_healing"
+                name="delayed_healing"
+              >
+                <option value="">No Answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="partial_paresis" class="form-label"
+                >partial paresis:</label
+              >
+              <select
+                class="form-select"
+                id="partial_paresis"
+                name="partial_paresis"
+              >
+                <option value="">No Answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="muscle_stiffness" class="form-label"
+                >muscle stiffness:</label
+              >
+              <select
+                class="form-select"
+                id="muscle_stiffness"
+                name="muscle_stiffness"
+              >
+                <option value="">No Answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="Alopecia" class="form-label">Alopecia:</label>
+              <select class="form-select" id="Alopecia" name="Alopecia">
+                <option value="">No Answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="Obesity" class="form-label">Obesity:</label>
+              <select class="form-select" id="Obesity" name="Obesity">
+                <option value="">No Answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-predict">
+              পূর্বাভাস দিন
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <p class="text-center mb-0">
+          ডায়াবেটিস পূর্বাভাস সিস্��েম দ্বারা ��ালিত
+        </p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Form validation script -->
+    <script>
+      (() => {
+        "use strict";
+        const forms = document.querySelectorAll(".needs-validation");
+        Array.from(forms).forEach((form) => {
+          form.addEventListener("submit", (event) => {
+            // Remove the validation check since fields are now optional
+            form.classList.add("was-validated");
+          });
+        });
+      })();
+
+      // Age validation
+      document.getElementById("Age").addEventListener("input", function () {
+        if (this.value) {
+          // Only validate if there's a value
+          if (this.value <= 0) {
+            this.setCustomValidity("অনুগ্রহ করে সঠিক বয়স প্রদান করুন।");
+          } else {
+            this.setCustomValidity("");
+          }
+        } else {
+          this.setCustomValidity(""); // Clear validation if empty
+        }
+      });
+    </script>
+
+    <script>
+      (() => {
+        "use strict";
+
+        // Get all form elements we need to validate
+        const ageInput = document.getElementById("Age");
+        const form = document.querySelector(".needs-validation");
+
+        // Age validation function
+        const validateAge = (age) => {
+          if (!age) return ""; // Allow empty age
+          const ageNum = parseInt(age);
+          if (isNaN(ageNum)) {
+            return "বয়স ��ংখ্যা হতে হবে";
+          }
+          if (ageNum <= 0) {
+            return "বয়স ০ এর চেয়ে বড় হতে হবে";
+          }
+          if (ageNum > 120) {
+            return "বয়স ১২০ এর চেয়ে কম হতে হবে";
+          }
+          return "";
+        };
+
+        // Add validation for age input
+        ageInput.addEventListener("input", function () {
+          const errorMessage = validateAge(this.value);
+          this.setCustomValidity(errorMessage);
+
+          // Show validation message
+          let feedbackDiv = this.nextElementSibling;
+          if (
+            !feedbackDiv ||
+            !feedbackDiv.classList.contains("invalid-feedback")
+          ) {
+            feedbackDiv = document.createElement("div");
+            feedbackDiv.className = "invalid-feedback";
+            this.parentNode.appendChild(feedbackDiv);
+          }
+          feedbackDiv.textContent = errorMessage;
+        });
+
+        // Validate all select fields have a value
+        const validateSelects = () => {
+          const selects = form.querySelectorAll("select");
+          selects.forEach((select) => {
+            select.addEventListener("change", function () {
+              this.setCustomValidity(""); // Always valid
+            });
+          });
+        };
+
+        // Form submission validation
+        form.addEventListener("submit", (event) => {
+          if (ageInput.value) {
+            // Only validate age if it's provided
+            const ageError = validateAge(ageInput.value);
+            if (ageError) {
+              event.preventDefault();
+              ageInput.setCustomValidity(ageError);
+            }
+          }
+          form.classList.add("was-validated");
+        });
+
+        // Initialize select validation
+        validateSelects();
+
+        // Add custom styling for validation
+        const style = document.createElement("style");
+        style.textContent = `
+          .form-control.is-invalid,
+          .form-select.is-invalid {
+            border-color: #dc3545;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right calc(0.375em + 0.1875rem) center;
+            background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+          }
+
+          .form-control.is-valid,
+          .form-select.is-valid {
+            border-color: #198754;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right calc(0.375em + 0.1875rem) center;
+            background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+          }
+
+          .invalid-feedback {
+            display: none;
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 0.875em;
+            color: #dc3545;
+          }
+
+          .was-validated .form-control:invalid ~ .invalid-feedback,
+          .was-validated .form-select:invalid ~ .invalid-feedback {
+            display: block;
+          }
+        `;
+        document.head.appendChild(style);
+      })();
+    </script>
+
+    <script>
+      // Captcha functionality
+      (() => {
+        const loginOverlay = document.getElementById("loginOverlay");
+        const loginForm = document.getElementById("loginForm");
+        const captchaText = document.getElementById("captchaText");
+        const captchaInput = document.getElementById("captchaInput");
+        const captchaBox = document.getElementById("captchaBox");
+
+        // Generate random captcha text
+        function generateCaptcha() {
+          const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+          let captcha = "";
+          for (let i = 0; i < 6; i++) {
+            captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+          }
+          return captcha;
+        }
+
+        // Set initial captcha
+        let currentCaptcha = generateCaptcha();
+        captchaText.textContent = currentCaptcha;
+
+        // Refresh captcha on click
+        captchaBox.addEventListener("click", () => {
+          currentCaptcha = generateCaptcha();
+          captchaText.textContent = currentCaptcha;
+        });
+
+        // Handle form submission
+        loginForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          if (captchaInput.value.toUpperCase() === currentCaptcha) {
+            // Store in session storage that user has passed verification
+            sessionStorage.setItem("verified", "true");
+            loginOverlay.classList.add("hidden");
+          } else {
+            captchaInput.classList.add("is-invalid");
+            currentCaptcha = generateCaptcha();
+            captchaText.textContent = currentCaptcha;
+            captchaInput.value = "";
+          }
+        });
+
+        // Check if user is already verified
+        if (sessionStorage.getItem("verified") === "true") {
+          loginOverlay.classList.add("hidden");
+        }
+
+        // Reset validation state on input
+        captchaInput.addEventListener("input", () => {
+          captchaInput.classList.remove("is-invalid");
+        });
+      })();
+    </script>
+
+    <script>
+      // Login and Registration functionality
+      (() => {
+        const loginOverlay = document.getElementById("loginOverlay");
+        const registerOverlay = document.getElementById("registerOverlay");
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+        const showRegisterLink = document.getElementById("showRegister");
+        const showLoginLink = document.getElementById("showLogin");
+
+        // Show registration form
+        showRegisterLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          loginOverlay.classList.add("hidden");
+          registerOverlay.classList.remove("hidden");
+        });
+
+        // Show login form
+        showLoginLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          registerOverlay.classList.add("hidden");
+          loginOverlay.classList.remove("hidden");
+        });
+
+        // Handle login form submission
+        loginForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          // Get the registered user data from localStorage
+          const registeredUserData = localStorage.getItem("registeredUser");
+
+          if (registeredUserData) {
+            const registeredUser = JSON.parse(registeredUserData);
+
+            // Check if username and password match the stored credentials
+            if (
+              username === registeredUser.username &&
+              password === registeredUser.password
+            ) {
+              // Store in session storage that user is logged in
+              sessionStorage.setItem("loggedIn", "true");
+              sessionStorage.setItem("username", username);
+              loginOverlay.classList.add("hidden");
+
+              // Update the UI to show the logged-in user
+              updateUIForLoggedInUser(username);
+            } else {
+              // Show error message for invalid credentials
+              const usernameInput = document.getElementById("username");
+              const passwordInput = document.getElementById("password");
+
+              // Add custom validation message
+              passwordInput.setCustomValidity("Invalid username or password");
+
+              // Show validation errors
+              loginForm.classList.add("was-validated");
+
+              // Reset validation state on input
+              usernameInput.addEventListener("input", () => {
+                passwordInput.setCustomValidity("");
+              });
+
+              passwordInput.addEventListener("input", () => {
+                passwordInput.setCustomValidity("");
+              });
+            }
+          } else {
+            // No registered user found
+            const passwordInput = document.getElementById("password");
+            passwordInput.setCustomValidity(
+              "No registered user found. Please register first."
+            );
+            loginForm.classList.add("was-validated");
+
+            // Reset validation state on input
+            passwordInput.addEventListener("input", () => {
+              passwordInput.setCustomValidity("");
+            });
+          }
+        });
+
+        // Handle registration form submission
+        registerForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          const username = document.getElementById("newUsername").value;
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("newPassword").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+          // Check if passwords match
+          if (password !== confirmPassword) {
+            document
+              .getElementById("confirmPassword")
+              .setCustomValidity("Passwords do not match");
+            registerForm.classList.add("was-validated");
+            return;
+          } else {
+            document.getElementById("confirmPassword").setCustomValidity("");
+          }
+
+          // For demonstration purposes
+          // In a real application, you would send this data to your server
+          if (username && email && password) {
+            // Store user info (this is just for demo purposes)
+            // In a real app, this would be handled by your backend
+            localStorage.setItem(
+              "registeredUser",
+              JSON.stringify({
+                username,
+                email,
+                password, // Note: Never store passwords in plain text in a real app
+              })
+            );
+
+            // Switch to login form
+            registerOverlay.classList.add("hidden");
+            loginOverlay.classList.remove("hidden");
+
+            // Optional: Pre-fill the username field
+            document.getElementById("username").value = username;
+
+            // Show success message
+            alert("Registration successful! Please log in.");
+          } else {
+            // Show validation errors
+            registerForm.classList.add("was-validated");
+          }
+        });
+
+        // Function to update UI for logged-in user
+        function updateUIForLoggedInUser(username) {
+          // You could add a user menu or display the username in the navbar
+          // For example:
+          const navbar = document.querySelector(".navbar-nav");
+
+          // Create a new list item for the user menu
+          const userMenuItem = document.createElement("li");
+          userMenuItem.className = "nav-item dropdown";
+          userMenuItem.innerHTML = `
+            <a class="nav-link text-success dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-user-circle me-1"></i>${username}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+            </ul>
+          `;
+
+          // Add the user menu to the navbar
+          navbar.appendChild(userMenuItem);
+
+          // Add logout functionality
+          document
+            .getElementById("logoutBtn")
+            .addEventListener("click", (e) => {
+              e.preventDefault();
+              sessionStorage.removeItem("loggedIn");
+              sessionStorage.removeItem("username");
+              location.reload(); // Reload the page to show the login form again
+            });
+        }
+
+        // Check if user is already logged in
+        if (sessionStorage.getItem("loggedIn") === "true") {
+          loginOverlay.classList.add("hidden");
+          const username = sessionStorage.getItem("username");
+          if (username) {
+            updateUIForLoggedInUser(username);
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>

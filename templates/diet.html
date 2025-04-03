@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diet Plan</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand text-success" href="/">Diabetes Care</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/about">Hospitals</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/contact">Resources</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/diet">Diet</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/exercise">Exercise</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link text-success" href="/doctor">Doctor</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container py-5">
+      <div class="card shadow-lg border-0">
+        <div class="card-body p-5">
+          <h1 class="display-4 text-center text-success mb-4">
+            Healthy Diet Plan for Diabetes
+          </h1>
+          <p class="lead text-center text-dark mb-5">
+            A balanced diet is crucial for managing diabetes effectively. Follow
+            these guidelines for better health.
+          </p>
+
+          <!-- Balanced Meals Section -->
+          <div class="mb-5">
+            <h2 class="text-success mb-4">
+              <i class="fas fa-balance-scale me-2"></i>Balanced Meals
+            </h2>
+            <div class="list-group">
+              <div class="list-group-item border-success border-2 mb-3">
+                <div class="d-flex align-items-center">
+                  <span class="text-success me-3"
+                    ><i class="fas fa-check-circle fs-4"></i
+                  ></span>
+                  <span class="fs-5">Focus on whole, unprocessed foods</span>
+                </div>
+              </div>
+              <div class="list-group-item border-success border-2 mb-3">
+                <div class="d-flex align-items-center">
+                  <span class="text-success me-3"
+                    ><i class="fas fa-check-circle fs-4"></i
+                  ></span>
+                  <span class="fs-5">Include variety from all food groups</span>
+                </div>
+              </div>
+              <div class="list-group-item border-success border-2 mb-3">
+                <div class="d-flex align-items-center">
+                  <span class="text-success me-3"
+                    ><i class="fas fa-check-circle fs-4"></i
+                  ></span>
+                  <span class="fs-5">Maintain regular meal times</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recommended Foods Section -->
+          <div class="mb-5">
+            <h2 class="text-success mb-4">
+              <i class="fas fa-apple-alt me-2"></i>Recommended Foods
+            </h2>
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="card h-100 border-success">
+                  <div class="card-header bg-success text-white">
+                    <h3 class="h5 mb-0">Non-Starchy Vegetables</h3>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-unstyled">
+                      <li>
+                        <i class="fas fa-carrot text-success me-2"></i>Spinach
+                      </li>
+                      <li>
+                        <i class="fas fa-carrot text-success me-2"></i>Broccoli
+                      </li>
+                      <li>
+                        <i class="fas fa-carrot text-success me-2"></i
+                        >Cauliflower
+                      </li>
+                      <li>
+                        <i class="fas fa-carrot text-success me-2"></i>Green
+                        beans
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-4">
+                <div class="card h-100 border-success">
+                  <div class="card-header bg-success text-white">
+                    <h3 class="h5 mb-0">Lean Proteins</h3>
+                  </div>
+                  <div class="card-body">
+                    <ul class="list-unstyled">
+                      <li>
+                        <i class="fas fa-drumstick-bite text-success me-2"></i
+                        >Chicken
+                      </li>
+                      <li><i class="fas fa-fish text-success me-2"></i>Fish</li>
+                      <li>
+                        <i class="fas fa-seedling text-success me-2"></i>Beans &
+                        Lentils
+                      </li>
+                      <li><i class="fas fa-egg text-success me-2"></i>Tofu</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Foods to Avoid Section -->
+          <div class="mb-5">
+            <h2 class="text-danger mb-4">
+              <i class="fas fa-ban me-2"></i>Foods to Limit or Avoid
+            </h2>
+            <div class="list-group">
+              <div class="list-group-item border-danger border-2 mb-3">
+                <div class="d-flex align-items-center">
+                  <span class="text-danger me-3"
+                    ><i class="fas fa-times-circle fs-4"></i
+                  ></span>
+                  <span class="fs-5">Sugary drinks and sodas</span>
+                </div>
+              </div>
+              <div class="list-group-item border-danger border-2 mb-3">
+                <div class="d-flex align-items-center">
+                  <span class="text-danger me-3"
+                    ><i class="fas fa-times-circle fs-4"></i
+                  ></span>
+                  <span class="fs-5">Processed and fast foods</span>
+                </div>
+              </div>
+              <div class="list-group-item border-danger border-2">
+                <div class="d-flex align-items-center">
+                  <span class="text-danger me-3"
+                    ><i class="fas fa-times-circle fs-4"></i
+                  ></span>
+                  <span class="fs-5">Refined grains and pastries</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Important Tips Section -->
+          <div class="alert alert-info">
+            <h3 class="h4 text-primary">
+              <i class="fas fa-lightbulb me-2"></i>Important Tips
+            </h3>
+            <ul class="mb-0">
+              <li>
+                Consult a registered dietitian for a personalized meal plan
+              </li>
+              <li>Monitor blood sugar levels regularly</li>
+              <li>Combine healthy eating with regular exercise</li>
+              <li>Stay hydrated by drinking plenty of water</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://kit.fontawesome.com/your-code.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
