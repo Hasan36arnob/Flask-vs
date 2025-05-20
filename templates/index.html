@@ -266,7 +266,254 @@
     </div>
 
     <!-- Same footer as before -->
+    <footer class="mt-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 text-center text-md-start">
+            <h5>ডায়াবেটিস কেয়ার</h5>
+            <p>আপনার স্বাস্থ্য আমাদের অগ্রাধিকার</p>
+          </div>
+          <div class="col-md-4 text-center">
+            <h5>যোগাযোগ</h5>
+            <p><i class="fas fa-phone me-2"></i> +৮৮০ ১৭XX-XXXXXX</p>
+            <p><i class="fas fa-envelope me-2"></i> info@diabetescare.com</p>
+          </div>
+          <div class="col-md-4 text-center text-md-end">
+            <h5>সামাজিক মাধ্যম</h5>
+            <a href="#" class="text-white me-2"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" class="text-white me-2"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a href="#" class="text-white me-2"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="#" class="text-white"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+          </div>
+        </div>
+        <hr class="mt-3 mb-3 bg-light" />
+        <div class="text-center">
+          <p class="mb-0">
+            &copy; ২০২৩ ডায়াবেটিস কেয়ার। সকল স্বত্ব সংরক্ষিত।
+          </p>
+        </div>
+      </div>
+    </footer>
 
     <!-- Same scripts as before -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Form validation script in Bangla -->
+    <script>
+      (() => {
+        "use strict";
+
+        // Get all form elements we need to validate
+        const ageInput = document.getElementById("Age");
+        const form = document.querySelector(".needs-validation");
+
+        // Age validation function with Bangla messages
+        const validateAge = (age) => {
+          if (!age) return ""; // Allow empty age
+          const ageNum = parseInt(age);
+          if (isNaN(ageNum)) {
+            return "বয়স সংখ্যা হতে হবে";
+          }
+          if (ageNum <= 0) {
+            return "বয়স ০ এর চেয়ে বড় হতে হবে";
+          }
+          if (ageNum > 120) {
+            return "বয়স ১২০ এর চেয়ে কম হতে হবে";
+          }
+          return "";
+        };
+
+        // Add validation for age input
+        ageInput.addEventListener("input", function () {
+          const errorMessage = validateAge(this.value);
+          this.setCustomValidity(errorMessage);
+
+          // Show validation message
+          let feedbackDiv = this.nextElementSibling;
+          if (
+            !feedbackDiv ||
+            !feedbackDiv.classList.contains("invalid-feedback")
+          ) {
+            feedbackDiv = document.createElement("div");
+            feedbackDiv.className = "invalid-feedback";
+            this.parentNode.appendChild(feedbackDiv);
+          }
+          feedbackDiv.textContent = errorMessage;
+        });
+
+        // Form submission validation
+        form.addEventListener(
+          "submit",
+          (event) => {
+            if (ageInput.value) {
+              const ageError = validateAge(ageInput.value);
+              if (ageError) {
+                event.preventDefault();
+                event.stopPropagation();
+                ageInput.setCustomValidity(ageError);
+              }
+            }
+            form.classList.add("was-validated");
+          },
+          false
+        );
+
+        // Validate all select fields
+        const selects = form.querySelectorAll("select");
+        selects.forEach((select) => {
+          select.addEventListener("change", function () {
+            if (this.value === "") {
+              this.setCustomValidity("অনুগ্রহ করে একটি উত্তর নির্বাচন করুন");
+            } else {
+              this.setCustomValidity("");
+            }
+          });
+        });
+      })();
+    </script>
+
+    <!-- Login/Registration script with Bangla messages -->
+    <script>
+      // Captcha functionality
+      (() => {
+        const loginOverlay = document.getElementById("loginOverlay");
+        const loginForm = document.getElementById("loginForm");
+        const captchaText = document.getElementById("captchaText");
+        const captchaInput = document.getElementById("captchaInput");
+        const captchaBox = document.getElementById("captchaBox");
+
+        // Generate random captcha text
+        function generateCaptcha() {
+          const chars = "০১২৩৪৫৬৭৮৯ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+          let captcha = "";
+          for (let i = 0; i < 6; i++) {
+            captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+          }
+          return captcha;
+        }
+
+        // Set initial captcha
+        let currentCaptcha = generateCaptcha();
+        captchaText.textContent = currentCaptcha;
+
+        // Refresh captcha on click
+        captchaBox.addEventListener("click", () => {
+          currentCaptcha = generateCaptcha();
+          captchaText.textContent = currentCaptcha;
+        });
+
+        // Handle form submission
+        loginForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+
+          if (captchaInput.value.toUpperCase() === currentCaptcha) {
+            sessionStorage.setItem("verified", "true");
+            loginOverlay.classList.add("hidden");
+          } else {
+            captchaInput.setCustomValidity("ক্যাপচা কোডটি সঠিক নয়");
+            captchaInput.classList.add("is-invalid");
+            currentCaptcha = generateCaptcha();
+            captchaText.textContent = currentCaptcha;
+            captchaInput.value = "";
+            loginForm.classList.add("was-validated");
+          }
+        });
+
+        // Check if user is already verified
+        if (sessionStorage.getItem("verified") === "true") {
+          loginOverlay.classList.add("hidden");
+        }
+      })();
+
+      // Login and Registration functionality
+      (() => {
+        const loginOverlay = document.getElementById("loginOverlay");
+        const registerOverlay = document.getElementById("registerOverlay");
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+        const showRegisterLink = document.getElementById("showRegister");
+        const showLoginLink = document.getElementById("showLogin");
+
+        // Show registration form
+        showRegisterLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          loginOverlay.classList.add("hidden");
+          registerOverlay.classList.remove("hidden");
+        });
+
+        // Show login form
+        showLoginLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          registerOverlay.classList.add("hidden");
+          loginOverlay.classList.remove("hidden");
+        });
+
+        // Handle login form submission
+        loginForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          // Simple validation
+          if (!username) {
+            document
+              .getElementById("username")
+              .setCustomValidity("ব্যবহারকারী নাম দিন");
+            loginForm.classList.add("was-validated");
+            return;
+          }
+
+          if (!password) {
+            document
+              .getElementById("password")
+              .setCustomValidity("পাসওয়ার্ড দিন");
+            loginForm.classList.add("was-validated");
+            return;
+          }
+
+          // For demo purposes - in real app, verify with server
+          sessionStorage.setItem("loggedIn", "true");
+          loginOverlay.classList.add("hidden");
+          alert("লগইন সফল! স্বাগতম " + username);
+        });
+
+        // Handle registration form submission
+        registerForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const password = document.getElementById("newPassword").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+          // Check if passwords match
+          if (password !== confirmPassword) {
+            document
+              .getElementById("confirmPassword")
+              .setCustomValidity("পাসওয়ার্ড মিলছে না");
+            registerForm.classList.add("was-validated");
+            return;
+          }
+
+          // For demo purposes - in real app, send to server
+          alert("নিবন্ধন সফল! এখন লগইন করুন");
+          registerOverlay.classList.add("hidden");
+          loginOverlay.classList.remove("hidden");
+        });
+
+        // Reset validation on input
+        document.querySelectorAll("input").forEach((input) => {
+          input.addEventListener("input", function () {
+            this.setCustomValidity("");
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
