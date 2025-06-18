@@ -3,27 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Diabetes Hospitals in Bangladesh - Diabetes Care</title>
+    <title>Top Diabetes & Hormone Specialists in Dhaka - Diabetes Care</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
     <style>
-      .hospital-card {
+      .doctor-card {
         border: 1px solid #ddd;
         margin: 15px 0;
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
       }
-      .hospital-card:hover {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transition: 0.3s;
+      .doctor-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+      .doctor-img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 15px;
+        border: 3px solid #28a745;
+      }
+      .specialty-badge {
+        background-color: #28a745;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        display: inline-block;
+      }
+      .rating {
+        color: #ffc107;
+        font-size: 1.1rem;
+      }
+      .gender-icon {
+        font-size: 1.2rem;
+        margin-right: 5px;
+      }
+      .male {
+        color: #007bff;
+      }
+      .female {
+        color: #ff69b4;
       }
     </style>
   </head>
   <body>
-    <!-- Your existing navbar here -->
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
         <a class="navbar-brand text-success" href="/">Diabetes Care</a>
@@ -46,16 +83,14 @@
             <li class="nav-item">
               <a class="nav-link text-success" href="/contact">Resources</a>
             </li>
-
             <li class="nav-item">
               <a class="nav-link text-success" href="/diet">Diet</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-success" href="/exercise">Exercise</a>
             </li>
-
             <li class="nav-item">
-              <a class="nav-link text-success" href="/doctor">Doctor</a>
+              <a class="nav-link text-success active" href="/doctor">Doctors</a>
             </li>
           </ul>
         </div>
@@ -63,170 +98,1045 @@
     </nav>
 
     <div class="container mt-4">
-      <h1 class="text-center mb-4">Top Diabetes Doctors in Bangladesh</h1>
+      <h1 class="text-center mb-4">
+        Top Diabetes, Thyroid & Hormone Specialists in Dhaka
+      </h1>
+      <p class="text-center mb-5">
+        Comprehensive list of experienced endocrinologists and diabetologists
+      </p>
+
+      <!-- Search and Filter Section -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search doctors..."
+            />
+            <button class="btn btn-success" type="button">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <select class="form-select">
+            <option selected>Filter by Specialty</option>
+            <option>Diabetes</option>
+            <option>Thyroid</option>
+            <option>Hormone Disorders</option>
+            <option>Pediatric Endocrinology</option>
+          </select>
+        </div>
+      </div>
 
       <div class="row">
-        <div class="col-md-6">
-          <div class="hospital-card">
-            <h3>hasan</h3>
-            <p><strong>Location:</strong> Shahbag, Dhaka</p>
-            <p>
-              <strong>Specialties:</strong> Comprehensive diabetes care,
-              endocrinology
+        <!-- Doctor 1 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Dr. Md. Shayedat Ullah</h4>
+            </div>
+            <p class="text-muted">
+              MBBS (Dhaka), BCS (Health), MACP (USA), MACE (USA), MD
+              (Endocrinology & Metabolism) (BSMMU)
             </p>
-            <p><strong>Contact:</strong> +880-2-9661551-60</p>
-            <a
-              href="https://www.birdembd.org/"
-              class="btn btn-success"
-              target="_blank"
-              >Visit Website</a
-            >
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="hospital-card">
-            <h3>Ibrahim General Hospital & DCEC</h3>
-            <p><strong>Location:</strong> Dhanmondi, Dhaka</p>
-            <p><strong>Specialties:</strong> Diabetes management, research</p>
-            <p><strong>Contact:</strong> +880-2-9667377</p>
-            <a href="#" class="btn btn-success">Contact Hospital</a>
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="hospital-card">
-            <h3>Evercare Hospital Dhaka</h3>
-            <p><strong>Location:</strong> Bashundhara R/A, Dhaka</p>
-            <p>
-              <strong>Specialties:</strong> Advanced diabetes treatment,
-              endocrinology
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Hormone</span>
+              <span class="specialty-badge">Obesity</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Consultant, Diabetes & Hormone
             </p>
-            <p><strong>Contact:</strong> +880-2-8431661</p>
-            <a
-              href="https://www.evercarebd.com/"
-              class="btn btn-success"
-              target="_blank"
-              >Visit Website</a
-            >
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="hospital-card">
-            <h3>Square Hospitals Ltd.</h3>
-            <p><strong>Location:</strong> Panthapath, Dhaka</p>
-            <p><strong>Specialties:</strong> Diabetes care, endocrinology</p>
-            <p><strong>Contact:</strong> +880-2-8144400</p>
-            <a
-              href="https://www.squarehospital.com/"
-              class="btn btn-success"
-              target="_blank"
-              >Visit Website</a
-            >
-          </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="hospital-card">
-            <h3>Labaid Specialized Hospital</h3>
-            <p><strong>Location:</strong> Dhanmondi, Dhaka</p>
             <p>
-              <strong>Specialties:</strong> Diabetes treatment, endocrinology
+              <strong>Hospital:</strong> National Institute of Burn & Plastic
+              Surgery, Shahbag, Dhaka
             </p>
-            <p><strong>Contact:</strong> +880-2-9676356</p>
-            <a
-              href="https://www.labaidgroup.com/"
-              class="btn btn-success"
-              target="_blank"
-              >Visit Website</a
-            >
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
           </div>
         </div>
 
-        <div class="col-md-6">
-          <div class="hospital-card">
-            <h3>Popular Diagnostic Centre Ltd.</h3>
-            <p><strong>Location:</strong> Dhanmondi, Dhaka</p>
-            <p><strong>Specialties:</strong> Diabetes diagnostics, treatment</p>
-            <p><strong>Contact:</strong> +880-2-9669480</p>
-            <a
-              href="https://populardiagnostic.com/"
-              class="btn btn-success"
-              target="_blank"
-              >Visit Website</a
-            >
+        <!-- Doctor 2 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Dr. M S Alam (Utsha)</h4>
+            </div>
+            <p class="text-muted">
+              MBBS, FCPS (Medicine), FCPS (Gastroenterology, Thesis), CCD
+              (BIRDEM), EDC (BIRDEM), C-CARD
+            </p>
+            <div>
+              <span class="specialty-badge">Medicine</span>
+              <span class="specialty-badge">Gastroliver</span>
+              <span class="specialty-badge">Hormone</span>
+              <span class="specialty-badge">Diabetes</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Senior Consultant (Medicine)
+            </p>
+            <p><strong>Hospital:</strong> Dhaka Medical College & Hospital</p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
           </div>
         </div>
 
-        <div class="col-md-6">
-          <div class="hospital-card">
-            <h3>United Hospital Limited</h3>
-            <p><strong>Location:</strong> Gulshan, Dhaka</p>
+        <!-- Doctor 3 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-venus gender-icon female"></i>
+              <h4 class="mb-0">Dr. Dalia Sultana</h4>
+            </div>
+            <p class="text-muted">
+              MBBS (DU), MD (Endocrinology, BIRDEM), CCD (Diabetology, BIRDEM)
+            </p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Assistant Professor, Endocrinology
+              Department
+            </p>
             <p>
-              <strong>Specialties:</strong> Comprehensive diabetes management
+              <strong>Hospital:</strong> Sir Salimullah Medical College &
+              Mitford Hospital
             </p>
-            <p><strong>Contact:</strong> +880-2-8836444</p>
-            <a
-              href="https://www.uhlbd.com/"
-              class="btn btn-success"
-              target="_blank"
-              >Visit Website</a
-            >
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
           </div>
         </div>
 
-        <div class="col-md-6">
-          <div class="hospital-card">
-            <h3>Apollo Hospitals Dhaka (Evercare)</h3>
-            <p><strong>Location:</strong> Bashundhara, Dhaka</p>
-            <p><strong>Specialties:</strong> Advanced diabetes care</p>
-            <p><strong>Contact:</strong> +880-2-8401661</p>
-            <a
-              href="https://www.evercarebd.com/"
-              class="btn btn-success"
-              target="_blank"
-              >Visit Website</a
-            >
+        <!-- Doctor 4 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Dr. Md. Ashikur Rahman</h4>
+            </div>
+            <p class="text-muted">
+              MBBS (DMC), BCS (Health), MCPS (Medicine), MRCP (UK), MD
+              (Endocrinology & Metabolism)
+            </p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3"><strong>Position:</strong> Resident Physician</p>
+            <p><strong>Hospital:</strong> Dhaka Medical College & Hospital</p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
           </div>
         </div>
 
-        <div class="col-md-6">
-          <div class="hospital-card">
-            <h3>Bangladesh Medical College & Hospital</h3>
-            <p><strong>Location:</strong> Dhanmondi, Dhaka</p>
+        <!-- Doctor 5 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Dr. Md. Mahmud Hasan</h4>
+            </div>
+            <p class="text-muted">
+              MBBS, BCS, MD (Endocrinology & Metabolism), MACE (USA)
+            </p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Obesity</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Consultant Endocrinologist
+            </p>
+            <p><strong>Hospital:</strong> Dhaka Medical College & Hospital</p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 6 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Prof. Dr. Md. Hafizur Rahman</h4>
+            </div>
+            <p class="text-muted">
+              MBBS (DMC), DEM (BIRDEM), MD (Endocrinology), MACE (USA)
+            </p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Professor, Endocrinology
+            </p>
+            <p><strong>Hospital:</strong> Dhaka Medical College & Hospital</p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 7 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Prof. Dr. Md. Farid Uddin</h4>
+            </div>
+            <p class="text-muted">MBBS, DEM, MD (Endocrinology & Metabolism)</p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Founder Chairman (Endocrinology
+              Department)
+            </p>
             <p>
-              <strong>Specialties:</strong> Diabetes education and treatment
+              <strong>Hospital:</strong> Bangladesh Medical University (PG
+              Hospital)
             </p>
-            <p><strong>Contact:</strong> +880-2-9118202</p>
-            <a href="#" class="btn btn-success">Contact Hospital</a>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
           </div>
         </div>
 
-        <div class="col-md-6">
-          <div class="hospital-card">
-            <h3>Ibn Sina Diagnostic & Imaging Center</h3>
-            <p><strong>Location:</strong> Dhanmondi, Dhaka</p>
-            <p><strong>Specialties:</strong> Diabetes diagnostics and care</p>
-            <p><strong>Contact:</strong> +880-2-9126625</p>
-            <a
-              href="https://www.ibnsinatrust.com/"
-              class="btn btn-success"
-              target="_blank"
-              >Visit Website</a
-            >
+        <!-- Doctor 8 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Prof. Dr. Indrajit Prasad</h4>
+            </div>
+            <p class="text-muted">
+              MBBS (DMC), FCPS (Medicine) MD (Endocrinology), FACE (USA)
+            </p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Professor, Endocrinology & Metabolism
+            </p>
+            <p><strong>Hospital:</strong> Dhaka Medical College & Hospital</p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 9 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Prof. Dr. SM Ashrafuzzaman</h4>
+            </div>
+            <p class="text-muted">
+              MBBS (DMC), DEM (DU), MD (Endocrinology), FAACE (USA)
+            </p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Hormone</span>
+              <span class="specialty-badge">Thyroid</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Professor & Head, Endocrinology &
+              Diabetes
+            </p>
+            <p>
+              <strong>Hospital:</strong> Birdem General Hospital & Ibrahim
+              Medical College
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 10 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-venus gender-icon female"></i>
+              <h4 class="mb-0">Dr. Marufa Mustari</h4>
+            </div>
+            <p class="text-muted">
+              MBBS, FCPS (Endocrinology & Metabolism), MACE (USA)
+            </p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Consultant, Endocrinology & Metabolism
+            </p>
+            <p>
+              <strong>Hospital:</strong> Bangabandhu Sheikh Mujib Medical
+              University Hospital
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 11 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Prof. Dr. Tofail Ahmed</h4>
+            </div>
+            <p class="text-muted">MBBS, DEM, MPhil, PhD</p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Professor, Endocrinology & Metabolism
+            </p>
+            <p>
+              <strong>Hospital:</strong> Birdem General Hospital & Ibrahim
+              Medical College
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 12 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-venus gender-icon female"></i>
+              <h4 class="mb-0">Dr. Sharmin Jahan</h4>
+            </div>
+            <p class="text-muted">MBBS, FCPS (Medicine), MD (Endocrinology)</p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Associate Professor, Endocrinology &
+              Metabolism
+            </p>
+            <p>
+              <strong>Hospital:</strong> Bangabandhu Sheikh Mujib Medical
+              University Hospital
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 13 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Prof. Dr. Feroz Amin</h4>
+            </div>
+            <p class="text-muted">MBBS, MD (Endocrinology), FACE (USA)</p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Professor & Head (Endocrinology)
+            </p>
+            <p>
+              <strong>Hospital:</strong> Birdem General Hospital & Ibrahim
+              Medical College
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 14 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-venus gender-icon female"></i>
+              <h4 class="mb-0">Dr. Rushda Sarmin Binte Rouf</h4>
+            </div>
+            <p class="text-muted">
+              MBBS (DMC), FCPS (Medicine), Gold Medalist, MD (Endocrinology)
+            </p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Medical Officer, Endocrinology &
+              Metabolism
+            </p>
+            <p>
+              <strong>Hospital:</strong> Birdem General Hospital & Ibrahim
+              Medical College
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 15 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Prof. Dr. M A Hasanat</h4>
+            </div>
+            <p class="text-muted">MBBS, MPhil, MD (Endocrinology)</p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Professor (Endocrinology)
+            </p>
+            <p>
+              <strong>Hospital:</strong> Bangabandhu Sheikh Mujib Medical
+              University Hospital
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 16 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-venus gender-icon female"></i>
+              <h4 class="mb-0">Dr. Tania Tofail</h4>
+            </div>
+            <p class="text-muted">
+              MBBS, CCD (BIRDEM), MRCP (UK), MD (Endocrinology)
+            </p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Research Assistant, Endocrinology
+            </p>
+            <p>
+              <strong>Hospital:</strong> Bangabandhu Sheikh Mujib Medical
+              University Hospital
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 17 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Prof. Dr. M. A. Mannan</h4>
+            </div>
+            <p class="text-muted">
+              MBBS, MCS (Medicine), MD (Endocrinology), MACE (USA), FACE (USA)
+            </p>
+            <div>
+              <span class="specialty-badge">Diabetics</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Hormone</span>
+              <span class="specialty-badge">Pancreatic</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Professor & Head, Endocrinology &
+              Metabolism
+            </p>
+            <p>
+              <strong>Hospital:</strong> Anwer Khan Modern Medical College &
+              Hospital
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 18 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-venus gender-icon female"></i>
+              <h4 class="mb-0">Dr. Sultana Marufa Shefin</h4>
+            </div>
+            <p class="text-muted">MBBS, MD (Endocrinology)</p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Hormone</span>
+              <span class="specialty-badge">Diabetes</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Associate Professor, Endocrinology
+            </p>
+            <p>
+              <strong>Hospital:</strong> Birdem General Hospital & Ibrahim
+              Medical College
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 19 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Dr. M A Halim Khan</h4>
+            </div>
+            <p class="text-muted">MBBS, BCS (Health), MD (Endocrinology)</p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Associate Professor & Head,
+              Endocrinology
+            </p>
+            <p>
+              <strong>Hospital:</strong> Shaheed Suhrawardy Medical College &
+              Hospital
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 20 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Dr. Md. Murshed Ahmed Khan</h4>
+            </div>
+            <p class="text-muted">
+              MBBS (Dhaka), MD (Endocrinology), MACP, MACE (USA)
+            </p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Assistant Professor, Endocrinology
+            </p>
+            <p>
+              <strong>Hospital:</strong> Bangabandhu Sheikh Mujib Medical
+              University Hospital
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 21 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-venus gender-icon female"></i>
+              <h4 class="mb-0">Dr. Jobaida Naznin</h4>
+            </div>
+            <p class="text-muted">MBBS, MD (Endocrinology)</p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Hormone</span>
+              <span class="specialty-badge">Diabetes</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Assistant Professor, Endocrinology &
+              Metabolism
+            </p>
+            <p>
+              <strong>Hospital:</strong> Shaheed Suhrawardy Medical College &
+              Hospital
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 22 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Prof. Dr. Mir Mosarraf Hossain</h4>
+            </div>
+            <p class="text-muted">MBBS, DEM (DU), MD (Endocrinology)</p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Professor & Head, Endocrinology
+            </p>
+            <p>
+              <strong>Hospital:</strong> Sir Salimullah Medical College &
+              Mitford Hospital
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 23 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-venus gender-icon female"></i>
+              <h4 class="mb-0">Dr. Tanjina Hossain</h4>
+            </div>
+            <p class="text-muted">MBBS, MD (Endocrinology)</p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Assistant Professor, Endocrinology &
+              Metabolism
+            </p>
+            <p>
+              <strong>Hospital:</strong> Green Life Medical College & Hospital
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 24 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-venus gender-icon female"></i>
+              <h4 class="mb-0">Dr. Faria Afsana</h4>
+            </div>
+            <p class="text-muted">MBBS, DEM, MD (Endocrinology), FACE, MACP</p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Hormone</span>
+              <span class="specialty-badge">Diabetes</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Associate Professor & Unit Head
+              (Endocrinology)
+            </p>
+            <p>
+              <strong>Hospital:</strong> Birdem General Hospital & Ibrahim
+              Medical College
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 25 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Prof. Dr. Naseem Akhter Chowdhury</h4>
+            </div>
+            <p class="text-muted">MBBS, FCPS (Medicine), FACP (USA)</p>
+            <div>
+              <span class="specialty-badge">Medicine</span>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Professor, Endocrinology & Metabolism
+            </p>
+            <p>
+              <strong>Hospital:</strong> Bangabandhu Sheikh Mujib Medical
+              University Hospital
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 26 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Prof. Dr. Mahmudul Haque</h4>
+            </div>
+            <p class="text-muted">MBBS (DMC), MD (Endocrinology)</p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Hormone</span>
+              <span class="specialty-badge">Diabetes</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Professor & Head, Endocrinology &
+              Metabolism
+            </p>
+            <p>
+              <strong>Hospital:</strong> Holy Family Red Crescent Medical
+              College & Hospital
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 27 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Dr. Afsar Ahmed</h4>
+            </div>
+            <p class="text-muted">
+              MBBS, BCS (Health), MD (Endocrinology), MACE (USA)
+            </p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Assistant Professor, Endocrinology
+            </p>
+            <p>
+              <strong>Hospital:</strong> National Institute of Traumatology &
+              Orthopedic Rehabilitation
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 28 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Prof. Dr. Abdul Mannan Sarker</h4>
+            </div>
+            <p class="text-muted">MBBS, DEM (DU), MD (Endocrinology)</p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Hormone</span>
+              <span class="specialty-badge">Diabetes</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Coordinator & Senior Consultant,
+              Endocrinology
+            </p>
+            <p><strong>Hospital:</strong> Evercare Hospital, Dhaka</p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 29 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Dr. M Saifuddin</h4>
+            </div>
+            <p class="text-muted">
+              MBBS, BCS, MD (Endocrinology), FRCP, FACP, FACE, FRSM
+            </p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3"><strong>Position:</strong> Consultant</p>
+            <p><strong>Hospital:</strong> Dhaka Medical College & Hospital</p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 30 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Dr. Md. Firoj Hossain</h4>
+            </div>
+            <p class="text-muted">
+              MBBS, FCPS (Medicine), MD (Endocrinology), DEM (BIRDEM), MACE &
+              MACP (USA)
+            </p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Hormone</span>
+              <span class="specialty-badge">Diabetes</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Assistant Professor, Medicine
+            </p>
+            <p><strong>Hospital:</strong> Mugda Medical College & Hospital</p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 31 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Prof. Dr. Md. Shahjamal Khan</h4>
+            </div>
+            <p class="text-muted">MBBS, MD (Endocrinology), FACE (USA)</p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Professor, Endocrinology & Metabolism
+            </p>
+            <p><strong>Hospital:</strong> Enam Medical College & Hospital</p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 32 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Dr. Shahjada Selim</h4>
+            </div>
+            <p class="text-muted">MBBS, MD (Endocrinology), MACE (USA)</p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Obesity</span>
+              <span class="specialty-badge">Metabolic</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Associate Professor, Endocrinology
+            </p>
+            <p>
+              <strong>Hospital:</strong> Bangabandhu Sheikh Mujib Medical
+              University Hospital
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 33 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Dr. Mohammad Imtiaj Mahbub</h4>
+            </div>
+            <p class="text-muted">MBBS, MD (Endocrinology)</p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Assistant Professor, Endocrinology
+            </p>
+            <p>
+              <strong>Hospital:</strong> Sheikh Hasina National Institute of
+              Burn & Plastic Surgery
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 34 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-venus gender-icon female"></i>
+              <h4 class="mb-0">Dr. Afroza Begum</h4>
+            </div>
+            <p class="text-muted">MBBS, BCS (Health), MD (Endocrinology)</p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3"><strong>Position:</strong> Consultant</p>
+            <p><strong>Hospital:</strong> Dhaka Medical College & Hospital</p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 35 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Dr. Mahmudul Hossain</h4>
+            </div>
+            <p class="text-muted">
+              MBBS (DMC), BCS (Health), MD (Endocrinology)
+            </p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Consultant, Endocrinology & Metabolism
+            </p>
+            <p><strong>Hospital:</strong> Kurmitola General Hospital, Dhaka</p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 36 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Dr. Md. Mazharul Huq Tanim</h4>
+            </div>
+            <p class="text-muted">MBBS, DEM (BIRDEM), MACP (USA)</p>
+            <div>
+              <span class="specialty-badge">Diabetics</span>
+              <span class="specialty-badge">Thyroid</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Consultant, Endocrinology & Metabolism
+            </p>
+            <p><strong>Hospital:</strong> Enam Medical College & Hospital</p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 37 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-mars gender-icon male"></i>
+              <h4 class="mb-0">Dr. Ahsanul Haq Amin</h4>
+            </div>
+            <p class="text-muted">MBBS, MD (Endocrinology), FACE (USA)</p>
+            <div>
+              <span class="specialty-badge">Endocrinology</span>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Thyroid</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Senior Consultant, Endocrinology &
+              Metabolism
+            </p>
+            <p><strong>Hospital:</strong> Evercare Hospital, Dhaka</p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
+          </div>
+        </div>
+
+        <!-- Doctor 38 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="doctor-card">
+            <div class="d-flex align-items-center mb-3">
+              <i class="fas fa-venus gender-icon female"></i>
+              <h4 class="mb-0">Dr. Sharmin Chowdhury</h4>
+            </div>
+            <p class="text-muted">MBBS, BCS (Health), MD (Endocrinology)</p>
+            <div>
+              <span class="specialty-badge">Diabetes</span>
+              <span class="specialty-badge">Hormone</span>
+            </div>
+            <p class="mt-3">
+              <strong>Position:</strong> Consultant, Endocrinology & Metabolism
+            </p>
+            <p>
+              <strong>Hospital:</strong> National Institute of Neurosciences &
+              Hospital
+            </p>
+            <a href="#" class="btn btn-outline-success btn-sm">View Chambers</a>
           </div>
         </div>
       </div>
 
-      <div class="text-center mt-4 mb-4">
-        <p class="text-muted">
-          Note: Please contact hospitals directly for appointment scheduling and
-          current availability.
+      <!-- Pagination -->
+      <nav aria-label="Page navigation" class="mt-5">
+        <ul class="pagination justify-content-center">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Help Section -->
+      <div class="alert alert-info mt-5">
+        <h4 class="alert-heading">Need Help Choosing a Specialist?</h4>
+        <p>
+          Consider these factors when selecting your diabetes or hormone
+          specialist:
         </p>
+        <ul>
+          <li>
+            Specific condition you need treatment for (Type 1/2 diabetes,
+            thyroid disorders, etc.)
+          </li>
+          <li>Doctor's experience and patient reviews</li>
+          <li>Hospital facilities and diagnostic capabilities</li>
+          <li>Location and convenience for regular follow-ups</li>
+          <li>Insurance coverage and consultation fees</li>
+        </ul>
+      </div>
+
+      <div class="text-center mt-4 mb-5">
+        <div class="card bg-light">
+          <div class="card-body">
+            <h5 class="card-title">Can't Find What You're Looking For?</h5>
+            <p class="card-text">
+              Our support team can help you find the right specialist for your
+              specific needs.
+            </p>
+            <a href="/contact" class="btn btn-success"
+              >Contact Our Support Team</a
+            >
+          </div>
+        </div>
       </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h5>Diabetes Care</h5>
+            <p>
+              Comprehensive diabetes management and education platform for
+              Bangladesh.
+            </p>
+          </div>
+          <div class="col-md-4">
+            <h5>Quick Links</h5>
+            <ul class="list-unstyled">
+              <li><a href="/" class="text-white">Home</a></li>
+              <li><a href="/about" class="text-white">Hospitals</a></li>
+              <li><a href="/doctor" class="text-white">Doctors</a></li>
+              <li><a href="/resources" class="text-white">Resources</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5>Contact Us</h5>
+            <p><i class="fas fa-phone-alt me-2"></i> +880 1234 567890</p>
+            <p><i class="fas fa-envelope me-2"></i> info@diabetescarebd.com</p>
+          </div>
+        </div>
+        <hr />
+        <div class="text-center">
+          <p class="mb-0">
+            &copy; 2023 Diabetes Care Bangladesh. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
