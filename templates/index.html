@@ -1,31 +1,57 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ডায়াবেটিস ঝুঁকি নির্ণয়</title>
+    <title>Diabetes Risk Assessment</title>
     <!-- Bootstrap CSS -->
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- Font Awesome -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-      rel="stylesheet"
-    />
-    <!-- Same CSS styles as before -->
     <style>
-      /* Your existing CSS styles */
+      body {
+        background-color: #f5f5f5;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .form-container {
+        background-color: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+      .btn-predict {
+        padding: 10px 30px;
+        font-weight: 600;
+        margin-top: 20px;
+        background-color: #28a745;
+        border: none;
+      }
+      .result {
+        background-color: #e9ecef;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        font-weight: 500;
+      }
+      .navbar-brand {
+        font-weight: 700;
+      }
+      footer {
+        background-color: #343a40;
+        color: white;
+        padding: 20px 0;
+        margin-top: 50px;
+      }
     </style>
   </head>
   <body>
-    <!-- Same login overlay as before -->
-
-    <!-- Navbar with Bangla text -->
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand text-success" href="/">ডায়াবেটিস কেয়ার</a>
+      <div class="container">
+        <a class="navbar-brand" href="#">Diabetes Care</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -37,34 +63,32 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link text-success" href="/">হোম</a>
+              <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-success" href="/about">হাসপাতাল</a>
+              <a class="nav-link" href="/about">Hospital</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-success" href="/contact">সাহায্য</a>
+              <a class="nav-link" href="/contact">Help</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-success" href="/diet">খাদ্য তালিকা</a>
+              <a class="nav-link" href="/diet">Diet Plan</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-success" href="/exercise">ব্যায়াম</a>
+              <a class="nav-link" href="/exercise">Exercise</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-success" href="/doctor">ডাক্তার</a>
+              <a class="nav-link" href="/doctor">Doctor</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <!-- Main Content in Bangla -->
+    <!-- Main Content -->
     <div class="container">
       <div class="form-container">
-        <h1 class="text-center text-primary mb-4">
-          ডায়াবেটিস ঝুঁকি নির্ণয় সিস্টেম
-        </h1>
+        <h1 class="text-center mb-4">Diabetes Risk Assessment System</h1>
 
         {% if prediction_text %}
         <div class="result text-center">
@@ -80,402 +104,221 @@
         >
           <div class="row g-3">
             <div class="col-md-6">
-              <label for="Age" class="form-label">বয়স:</label>
+              <label for="Age" class="form-label">Age</label>
               <input
                 type="number"
                 class="form-control"
                 id="Age"
                 name="Age"
-                placeholder="উত্তর দিতে না চাইলে খালি রাখুন"
+                placeholder="Leave blank if you don't want to answer"
               />
             </div>
             <div class="col-md-6">
-              <label for="Gender" class="form-label">লিঙ্গ:</label>
+              <label for="Gender" class="form-label">Gender</label>
               <select class="form-select" id="Gender" name="Gender">
-                <option value="">উত্তর দিব না</option>
-                <option value="Male">পুরুষ</option>
-                <option value="Female">মহিলা</option>
+                <option value="">Prefer not to answer</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
             </div>
 
             <div class="col-md-6">
               <label for="Polyuria" class="form-label"
-                >প্রস্রাবের পরিমাণ বেড়ে গেছে?</label
+                >Increased urine output?</label
               >
               <select class="form-select" id="Polyuria" name="Polyuria">
-                <option value="">উত্তর দিব না</option>
-                <option value="Yes">হ্যাঁ</option>
-                <option value="No">না</option>
+                <option value="">Prefer not to answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
             </div>
 
             <div class="col-md-6">
               <label for="Polydipsia" class="form-label"
-                >অতিরিক্ত পিপাসা লাগে?</label
+                >Excessive thirst?</label
               >
               <select class="form-select" id="Polydipsia" name="Polydipsia">
-                <option value="">উত্তর দিব না</option>
-                <option value="Yes">হ্যাঁ</option>
-                <option value="No">না</option>
+                <option value="">Prefer not to answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
             </div>
 
             <div class="col-md-6">
               <label for="sudden_weight_loss" class="form-label"
-                >হঠাৎ ওজন কমে গেছে?</label
+                >Sudden weight loss?</label
               >
               <select
                 class="form-select"
                 id="sudden_weight_loss"
                 name="sudden_weight_loss"
               >
-                <option value="">উত্তর দিব না</option>
-                <option value="Yes">হ্যাঁ</option>
-                <option value="No">না</option>
+                <option value="">Prefer not to answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
             </div>
 
             <div class="col-md-6">
-              <label for="weakness" class="form-label"
-                >দুর্বলতা অনুভব করেন?</label
-              >
+              <label for="weakness" class="form-label">Feeling weak?</label>
               <select class="form-select" id="weakness" name="weakness">
-                <option value="">উত্তর দিব না</option>
-                <option value="Yes">হ্যাঁ</option>
-                <option value="No">না</option>
+                <option value="">Prefer not to answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
             </div>
 
             <div class="col-md-6">
               <label for="Polyphagia" class="form-label"
-                >অতিরিক্ত ক্ষুধা লাগে?</label
+                >Excessive hunger?</label
               >
               <select class="form-select" id="Polyphagia" name="Polyphagia">
-                <option value="">উত্তর দিব না</option>
-                <option value="Yes">হ্যাঁ</option>
-                <option value="No">না</option>
+                <option value="">Prefer not to answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
             </div>
 
             <div class="col-md-6">
               <label for="visual_blurring" class="form-label"
-                >দৃষ্টি ঝাপসা হয়ে যায়?</label
+                >Blurred vision?</label
               >
               <select
                 class="form-select"
                 id="visual_blurring"
                 name="visual_blurring"
               >
-                <option value="">উত্তর দিব না</option>
-                <option value="Yes">হ্যাঁ</option>
-                <option value="No">না</option>
+                <option value="">Prefer not to answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
             </div>
 
             <div class="col-md-6">
-              <label for="Itching" class="form-label"
-                >চুলকানি সমস্যা আছে?</label
-              >
+              <label for="Itching" class="form-label">Itching problem?</label>
               <select class="form-select" id="Itching" name="Itching">
-                <option value="">উত্তর দিব না</option>
-                <option value="Yes">হ্যাঁ</option>
-                <option value="No">না</option>
+                <option value="">Prefer not to answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
             </div>
 
             <div class="col-md-6">
-              <label for="Irritability" class="form-label">বেশি রাগ হয়?</label>
+              <label for="Irritability" class="form-label"
+                >Increased irritability?</label
+              >
               <select class="form-select" id="Irritability" name="Irritability">
-                <option value="">উত্তর দিব না</option>
-                <option value="Yes">হ্যাঁ</option>
-                <option value="No">না</option>
+                <option value="">Prefer not to answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
             </div>
 
             <div class="col-md-6">
               <label for="delayed_healing" class="form-label"
-                >ক্ষত শুকাতে দেরি হয়?</label
+                >Delayed wound healing?</label
               >
               <select
                 class="form-select"
                 id="delayed_healing"
                 name="delayed_healing"
               >
-                <option value="">উত্তর দিব না</option>
-                <option value="Yes">হ্যাঁ</option>
-                <option value="No">না</option>
+                <option value="">Prefer not to answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
             </div>
 
             <div class="col-md-6">
               <label for="partial_paresis" class="form-label"
-                >পেশী দুর্বলতা আছে?</label
+                >Muscle weakness?</label
               >
               <select
                 class="form-select"
                 id="partial_paresis"
                 name="partial_paresis"
               >
-                <option value="">উত্তর দিব না</option>
-                <option value="Yes">হ্যাঁ</option>
-                <option value="No">না</option>
+                <option value="">Prefer not to answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
             </div>
 
             <div class="col-md-6">
               <label for="muscle_stiffness" class="form-label"
-                >পেশী শক্ত হয়ে যায়?</label
+                >Muscle stiffness?</label
               >
               <select
                 class="form-select"
                 id="muscle_stiffness"
                 name="muscle_stiffness"
               >
-                <option value="">উত্তর দিব না</option>
-                <option value="Yes">হ্যাঁ</option>
-                <option value="No">না</option>
+                <option value="">Prefer not to answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
             </div>
 
             <div class="col-md-6">
-              <label for="Alopecia" class="form-label">চুল পড়ে যাচ্ছে?</label>
+              <label for="Alopecia" class="form-label">Hair loss?</label>
               <select class="form-select" id="Alopecia" name="Alopecia">
-                <option value="">উত্তর দিব না</option>
-                <option value="Yes">হ্যাঁ</option>
-                <option value="No">না</option>
+                <option value="">Prefer not to answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
             </div>
 
             <div class="col-md-6">
-              <label for="Obesity" class="form-label">ওজন বেশি?</label>
+              <label for="Obesity" class="form-label">Overweight?</label>
               <select class="form-select" id="Obesity" name="Obesity">
-                <option value="">উত্তর দিব না</option>
-                <option value="Yes">হ্যাঁ</option>
-                <option value="No">না</option>
+                <option value="">Prefer not to answer</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
               </select>
             </div>
           </div>
 
           <div class="text-center">
             <button type="submit" class="btn btn-primary btn-predict">
-              ফলাফল দেখুন
+              Check Results
             </button>
           </div>
         </form>
       </div>
     </div>
 
-    <!-- Same footer as before -->
+    <!-- Footer -->
+    <footer class="text-center">
+      <div class="container">
+        <p>&copy; 2025 Diabetes Care System. All rights reserved.</p>
+      </div>
+    </footer>
 
-    <!-- Same scripts as before -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Form validation script in Bangla -->
+    <!-- Form Validation Script -->
     <script>
       (() => {
         "use strict";
 
-        // Get all form elements we need to validate
-        const ageInput = document.getElementById("Age");
-        const form = document.querySelector(".needs-validation");
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll(".needs-validation");
 
-        // Age validation function with Bangla messages
-        const validateAge = (age) => {
-          if (!age) return ""; // Allow empty age
-          const ageNum = parseInt(age);
-          if (isNaN(ageNum)) {
-            return "বয়স সংখ্যা হতে হবে";
-          }
-          if (ageNum <= 0) {
-            return "বয়স ০ এর চেয়ে বড় হতে হবে";
-          }
-          if (ageNum > 120) {
-            return "বয়স ১২০ এর চেয়ে কম হতে হবে";
-          }
-          return "";
-        };
-
-        // Add validation for age input
-        ageInput.addEventListener("input", function () {
-          const errorMessage = validateAge(this.value);
-          this.setCustomValidity(errorMessage);
-
-          // Show validation message
-          let feedbackDiv = this.nextElementSibling;
-          if (
-            !feedbackDiv ||
-            !feedbackDiv.classList.contains("invalid-feedback")
-          ) {
-            feedbackDiv = document.createElement("div");
-            feedbackDiv.className = "invalid-feedback";
-            this.parentNode.appendChild(feedbackDiv);
-          }
-          feedbackDiv.textContent = errorMessage;
-        });
-
-        // Form submission validation
-        form.addEventListener(
-          "submit",
-          (event) => {
-            if (ageInput.value) {
-              const ageError = validateAge(ageInput.value);
-              if (ageError) {
+        // Loop over them and prevent submission
+        Array.from(forms).forEach((form) => {
+          form.addEventListener(
+            "submit",
+            (event) => {
+              if (!form.checkValidity()) {
                 event.preventDefault();
                 event.stopPropagation();
-                ageInput.setCustomValidity(ageError);
               }
-            }
-            form.classList.add("was-validated");
-          },
-          false
-        );
 
-        // Validate all select fields
-        const selects = form.querySelectorAll("select");
-        selects.forEach((select) => {
-          select.addEventListener("change", function () {
-            if (this.value === "") {
-              this.setCustomValidity("অনুগ্রহ করে একটি উত্তর নির্বাচন করুন");
-            } else {
-              this.setCustomValidity("");
-            }
-          });
-        });
-      })();
-    </script>
-
-    <!-- Login/Registration script with Bangla messages -->
-    <script>
-      // Captcha functionality
-      (() => {
-        const loginOverlay = document.getElementById("loginOverlay");
-        const loginForm = document.getElementById("loginForm");
-        const captchaText = document.getElementById("captchaText");
-        const captchaInput = document.getElementById("captchaInput");
-        const captchaBox = document.getElementById("captchaBox");
-
-        // Generate random captcha text
-        function generateCaptcha() {
-          const chars = "০১২৩৪৫৬৭৮৯ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-          let captcha = "";
-          for (let i = 0; i < 6; i++) {
-            captcha += chars.charAt(Math.floor(Math.random() * chars.length));
-          }
-          return captcha;
-        }
-
-        // Set initial captcha
-        let currentCaptcha = generateCaptcha();
-        captchaText.textContent = currentCaptcha;
-
-        // Refresh captcha on click
-        captchaBox.addEventListener("click", () => {
-          currentCaptcha = generateCaptcha();
-          captchaText.textContent = currentCaptcha;
-        });
-
-        // Handle form submission
-        loginForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-
-          if (captchaInput.value.toUpperCase() === currentCaptcha) {
-            sessionStorage.setItem("verified", "true");
-            loginOverlay.classList.add("hidden");
-          } else {
-            captchaInput.setCustomValidity("ক্যাপচা কোডটি সঠিক নয়");
-            captchaInput.classList.add("is-invalid");
-            currentCaptcha = generateCaptcha();
-            captchaText.textContent = currentCaptcha;
-            captchaInput.value = "";
-            loginForm.classList.add("was-validated");
-          }
-        });
-
-        // Check if user is already verified
-        if (sessionStorage.getItem("verified") === "true") {
-          loginOverlay.classList.add("hidden");
-        }
-      })();
-
-      // Login and Registration functionality
-      (() => {
-        const loginOverlay = document.getElementById("loginOverlay");
-        const registerOverlay = document.getElementById("registerOverlay");
-        const loginForm = document.getElementById("loginForm");
-        const registerForm = document.getElementById("registerForm");
-        const showRegisterLink = document.getElementById("showRegister");
-        const showLoginLink = document.getElementById("showLogin");
-
-        // Show registration form
-        showRegisterLink.addEventListener("click", (e) => {
-          e.preventDefault();
-          loginOverlay.classList.add("hidden");
-          registerOverlay.classList.remove("hidden");
-        });
-
-        // Show login form
-        showLoginLink.addEventListener("click", (e) => {
-          e.preventDefault();
-          registerOverlay.classList.add("hidden");
-          loginOverlay.classList.remove("hidden");
-        });
-
-        // Handle login form submission
-        loginForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const username = document.getElementById("username").value;
-          const password = document.getElementById("password").value;
-
-          // Simple validation
-          if (!username) {
-            document
-              .getElementById("username")
-              .setCustomValidity("ব্যবহারকারী নাম দিন");
-            loginForm.classList.add("was-validated");
-            return;
-          }
-
-          if (!password) {
-            document
-              .getElementById("password")
-              .setCustomValidity("পাসওয়ার্ড দিন");
-            loginForm.classList.add("was-validated");
-            return;
-          }
-
-          // For demo purposes - in real app, verify with server
-          sessionStorage.setItem("loggedIn", "true");
-          loginOverlay.classList.add("hidden");
-          alert("লগইন সফল! স্বাগতম " + username);
-        });
-
-        // Handle registration form submission
-        registerForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const password = document.getElementById("newPassword").value;
-          const confirmPassword =
-            document.getElementById("confirmPassword").value;
-
-          // Check if passwords match
-          if (password !== confirmPassword) {
-            document
-              .getElementById("confirmPassword")
-              .setCustomValidity("পাসওয়ার্ড মিলছে না");
-            registerForm.classList.add("was-validated");
-            return;
-          }
-
-          // For demo purposes - in real app, send to server
-          alert("নিবন্ধন সফল! এখন লগইন করুন");
-          registerOverlay.classList.add("hidden");
-          loginOverlay.classList.remove("hidden");
-        });
-
-        // Reset validation on input
-        document.querySelectorAll("input").forEach((input) => {
-          input.addEventListener("input", function () {
-            this.setCustomValidity("");
-          });
+              form.classList.add("was-validated");
+            },
+            false
+          );
         });
       })();
     </script>
