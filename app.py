@@ -24,6 +24,25 @@ except Exception as e:
     model = None
     label_encoders = None
 
+# Define default feature importances (equal importance if model doesn't provide them)
+default_feature_importances = {
+    'Age': 0.15,
+    'Gender': 0.05,
+    'Polyuria': 0.12,
+    'Polydipsia': 0.12,
+    'sudden weight loss': 0.08,
+    'weakness': 0.06,
+    'Polyphagia': 0.07,
+    'visual blurring': 0.07,
+    'Itching': 0.05,
+    'Irritability': 0.05,
+    'delayed healing': 0.06,
+    'partial paresis': 0.06,
+    'muscle stiffness': 0.05,
+    'Alopecia': 0.03,
+    'Obesity': 0.08
+}
+
 # Routes
 @app.route('/')
 def home():
@@ -120,13 +139,18 @@ def predict():
         probabilities = model.predict_proba(features)
         probability_positive = float(probabilities[0][1] * 100)
 
-        # Calculate feature weights based on model importance
-        feature_importance = {}
-        for i, (key, value) in enumerate(input_data.items()):
-            if value not in ['', 'No Answer', 0]:
-                feature_importance[key] = model.feature_importances_[i]
+        # Get feature importances - use default if model doesn't provide them
+        try:
+            # Try to get feature importances from model
+            feature_importance_values = model.feature_importances_
+            feature_importance = dict(zip(input_data.keys(), feature_importance_values))
+        except AttributeError:
+            # If model doesn't have feature_importances_, use our default values
+            feature_importance = {}
+            for key in input_data.keys():
+                feature_importance[key] = default_feature_importances.get(key, 0.05)
 
-        # Weight confidence adjustment
+        # Weight confidence adjustment 
         if feature_importance:
             importance_sum = sum(feature_importance.values())
             weighted_importance = sum(importance / importance_sum for importance in feature_importance.values())
@@ -217,10 +241,17 @@ def suggest():
         # Get features where user actually provided positive responses
         input_data = latest_prediction['input_data']
         relevant_features = []
+        
+        # Get feature importances - use default if not available
+        try:
+            feature_importance = dict(zip(input_data.keys(), model.feature_importances_))
+        except AttributeError:
+            feature_importance = default_feature_importances
+
         for feature, value in input_data.items():
             # Check if the value indicates a positive response
             if value in [1, 'Yes', True]:
-                relevant_features.append((feature, model.feature_importances_[list(input_data.keys()).index(feature)]))
+                relevant_features.append((feature, feature_importance.get(feature, 0.05)))
 
         # Sort by feature importance and get top 3
         sorted_features = sorted(relevant_features, key=lambda x: x[1], reverse=True)[:3]
@@ -230,6 +261,8 @@ def suggest():
         for feature, _ in sorted_features:
             if feature == 'Age':
                 suggestions.append("Monitor your age-related health risks regularly.")
+            elif feature == 'Gender':
+                suggestions.append("Be aware of gender-specific risk factors for diabetes.")
             elif feature == 'Polyuria':
                 suggestions.append("Consult a doctor if you experience frequent urination.")
             elif feature == 'Polydipsia':
