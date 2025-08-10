@@ -2,7 +2,11 @@ pip>=25.2
 setuptools>=70.0
 wheel
 cython
-numpy==2.3.2
+
+# NumPy — use 1.26.0 for Python < 3.13, use 2.3.2 for Python >= 3.13
+numpy==1.26.0; python_version < "3.13"
+numpy==2.3.2; python_version >= "3.13"
+
 Flask==3.0.0
 gunicorn==21.2.0
 Werkzeug==3.0.1
