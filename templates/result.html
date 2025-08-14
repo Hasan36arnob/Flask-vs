@@ -1,81 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Prediction Results | Diabetes Risk Assessment</title>
+    <title>প্রেডিকশন ফলাফল | ডায়াবেটিস ঝুঁকি মূল্যায়ন</title>
     <!-- Bootstrap 5.3 CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- Font Awesome -->
+    <!-- Font Awesome 6.4 -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
       rel="stylesheet"
     />
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <!-- Custom CSS -->
     <style>
       :root {
         --primary-green: #198754;
-        --dark-green: #0a3622;
+        --dark-green: #0f5132;
         --light-green: #d1e7dd;
-        --gradient-green: linear-gradient(135deg, #198754 0%, #0a3622 100%);
+        --gradient-green: linear-gradient(135deg, #198754 0%, #0f5132 100%);
         --black: #212529;
         --gray-dark: #343a40;
-        --blue: #0d6efd;
-        --indigo: #6610f2;
-        --purple: #6f42c1;
-        --pink: #d63384;
-        --red: #dc3545;
-        --orange: #fd7e14;
-        --yellow: #ffc107;
-        --teal: #20c997;
-        --cyan: #0dcaf0;
-        --white: #fff;
-        --gray-100: #f8f9fa;
-        --gray-200: #e9ecef;
-        --gray-300: #dee2e6;
-        --gray-400: #ced4da;
-        --gray-500: #adb5bd;
-        --gray-600: #6c757d;
-        --gray-700: #495057;
-        --gray-800: #343a40;
-        --gray-900: #212529;
-        --font-primary: 'Poppins', sans-serif;
-        --font-secondary: 'Open Sans', sans-serif;
-        --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-        --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-        --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
-        --border-radius: 0.375rem;
-        --border-radius-lg: 0.5rem;
-        --border-radius-xl: 1rem;
+        --accent-blue: #0d6efd;
+        --accent-yellow: #ffc107;
+        --accent-red: #dc3545;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+        --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+        --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
         --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       }
 
       body {
-        font-family: var(--font-secondary);
-        background-color: var(--gray-100);
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        color: var(--gray-800);
+        color: var(--black);
         line-height: 1.6;
       }
 
-      h1, h2, h3, h4, h5, h6 {
-        font-family: var(--font-primary);
-        font-weight: 600;
-      }
-
+      /* Navbar */
       .navbar {
-        background-color: var(--black) !important;
-        box-shadow: var(--shadow-sm);
-        padding: 0.75rem 0;
+        background: var(--gradient-green) !important;
+        box-shadow: var(--shadow-md);
+        padding: 0.8rem 0;
       }
 
       .navbar-brand {
@@ -87,132 +62,91 @@
 
       .navbar-brand i {
         margin-right: 0.5rem;
-      }
-
-      .navbar-brand,
-      .nav-link {
-        color: var(--white) !important;
-        transition: var(--transition);
+        font-size: 1.8rem;
       }
 
       .nav-link {
         font-weight: 500;
-        padding: 0.5rem 1rem;
-        border-radius: var(--border-radius);
-        margin: 0 0.25rem;
+        padding: 0.5rem 1rem !important;
+        border-radius: 0.5rem;
+        margin: 0 0.2rem;
+        transition: var(--transition);
       }
 
       .nav-link:hover {
-        color: var(--light-green) !important;
-        background-color: rgba(255, 255, 255, 0.1);
+        background: rgba(255,255,255,0.15);
       }
 
       .nav-link.active {
-        color: var(--light-green) !important;
-        background-color: rgba(25, 135, 84, 0.2);
+        background: rgba(255,255,255,0.2);
+        font-weight: 600;
       }
 
       /* Main Content */
-      .main-content {
+      .main-container {
         flex: 1;
-        padding: 3rem 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 2rem 0;
       }
 
-      .result-container {
-        background: var(--white);
-        border-radius: var(--border-radius-xl);
+      .result-card {
+        background: white;
+        border-radius: 1rem;
         box-shadow: var(--shadow-lg);
-        padding: 3rem;
-        margin: 2rem auto;
-        max-width: 1000px;
+        overflow: hidden;
+        max-width: 850px;
+        margin: 0 auto;
         border: none;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .result-container::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 8px;
-        background: var(--gradient-green);
-      }
-
-      .page-title {
-        color: var(--black);
-        font-weight: 700;
-        margin-bottom: 2.5rem;
-        position: relative;
-        padding-bottom: 1.25rem;
-        text-align: center;
-        font-size: 2.25rem;
-      }
-
-      .page-title i {
-        margin-right: 0.75rem;
-        color: var(--primary-green);
-      }
-
-      .page-title::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 120px;
-        height: 5px;
-        background: var(--gradient-green);
-        border-radius: 5px;
-      }
-
-      /* Risk Result Card */
-      .risk-card {
-        padding: 2.5rem;
-        border-radius: var(--border-radius-xl);
-        margin: 2.5rem 0;
         transition: var(--transition);
+      }
+
+      .result-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+      }
+
+      .result-header {
+        background: var(--gradient-green);
+        color: white;
+        padding: 1.5rem;
         text-align: center;
         position: relative;
-        overflow: hidden;
-        box-shadow: var(--shadow);
       }
 
-      .risk-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 8px;
+      .result-header h1 {
+        font-weight: 700;
+        margin: 0;
+        font-size: 1.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
-      .risk-card.low-risk {
-        background-color: rgba(209, 231, 221, 0.3);
-        border: 2px solid var(--primary-green);
+      .result-header i {
+        margin-right: 0.8rem;
+        font-size: 1.5rem;
       }
 
-      .risk-card.low-risk::before {
-        background: var(--primary-green);
+      .result-body {
+        padding: 2.5rem;
       }
 
-      .risk-card.moderate-risk {
-        background-color: rgba(255, 243, 205, 0.3);
-        border: 2px solid var(--yellow);
+      /* Risk Level Cards */
+      .risk-card {
+        border-radius: 0.75rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        border-left: 5px solid;
       }
 
-      .risk-card.moderate-risk::before {
-        background: var(--yellow);
-      }
-
-      .risk-card.high-risk {
-        background-color: rgba(248, 215, 218, 0.3);
-        border: 2px solid var(--red);
-      }
-
-      .risk-card.high-risk::before {
-        background: var(--red);
+      .risk-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-md);
       }
 
       .risk-icon {
@@ -220,244 +154,123 @@
         margin-bottom: 1.5rem;
       }
 
-      .risk-card.low-risk .risk-icon {
-        color: var(--primary-green);
-      }
-
-      .risk-card.moderate-risk .risk-icon {
-        color: var(--yellow);
-      }
-
-      .risk-card.high-risk .risk-icon {
-        color: var(--red);
-      }
-
       .risk-title {
-        font-size: 1.75rem;
         font-weight: 700;
-        margin-bottom: 0.75rem;
-      }
-
-      .risk-percentage {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin: 1rem 0;
-      }
-
-      .risk-card.low-risk .risk-percentage {
-        color: var(--primary-green);
-      }
-
-      .risk-card.moderate-risk .risk-percentage {
-        color: var(--yellow);
-      }
-
-      .risk-card.high-risk .risk-percentage {
-        color: var(--red);
-      }
-
-      .risk-description {
-        font-size: 1.1rem;
-        max-width: 600px;
-        margin: 0 auto;
-      }
-
-      /* Stats Grid */
-      .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-        margin: 3rem 0;
-      }
-
-      .stat-card {
-        background: var(--white);
-        border-radius: var(--border-radius-lg);
-        padding: 2rem 1.5rem;
-        text-align: center;
-        box-shadow: var(--shadow-sm);
-        border: none;
-        transition: var(--transition);
-        border-top: 4px solid var(--primary-green);
-      }
-
-      .stat-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow);
-      }
-
-      .stat-icon {
-        font-size: 2rem;
-        color: var(--primary-green);
+        font-size: 1.5rem;
         margin-bottom: 1rem;
       }
 
-      .stat-value {
-        font-size: 2.25rem;
-        font-weight: 700;
-        color: var(--dark-green);
-        margin: 0.5rem 0;
-      }
-
-      .stat-label {
-        color: var(--gray-600);
-        font-weight: 500;
+      .risk-description {
         font-size: 1rem;
-      }
-
-      /* Feature Importance */
-      .feature-section {
-        margin: 3rem 0;
-      }
-
-      .section-title {
-        font-size: 1.75rem;
-        font-weight: 600;
         margin-bottom: 1.5rem;
-        color: var(--gray-800);
-        position: relative;
-        display: inline-block;
       }
 
-      .section-title i {
-        margin-right: 0.75rem;
+      /* Risk Level Specific Styles */
+      .low-risk {
+        background: rgba(25, 135, 84, 0.08);
+        border-left-color: var(--primary-green);
+      }
+
+      .low-risk .risk-icon {
         color: var(--primary-green);
       }
 
-      .section-subtitle {
-        color: var(--gray-600);
-        margin-bottom: 2rem;
-        font-size: 1.1rem;
+      .moderate-risk {
+        background: rgba(255, 193, 7, 0.08);
+        border-left-color: var(--accent-yellow);
       }
 
-      .feature-importance-container {
-        background: var(--white);
-        border-radius: var(--border-radius-lg);
-        padding: 2rem;
-        box-shadow: var(--shadow-sm);
-        margin-bottom: 2rem;
+      .moderate-risk .risk-icon {
+        color: var(--accent-yellow);
       }
 
-      .feature-item {
-        background: var(--white);
-        border-radius: var(--border-radius);
-        padding: 1.25rem 1.75rem;
-        margin: 0.75rem 0;
-        border-left: 4px solid var(--primary-green);
-        box-shadow: var(--shadow-sm);
-        transition: var(--transition);
-        display: flex;
-        flex-direction: column;
+      .high-risk {
+        background: rgba(220, 53, 69, 0.08);
+        border-left-color: var(--accent-red);
       }
 
-      .feature-item:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow);
-      }
-
-      .feature-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 0.75rem;
-      }
-
-      .feature-name {
-        font-weight: 600;
-        color: var(--gray-800);
-        font-size: 1.1rem;
-      }
-
-      .feature-value {
-        font-weight: 600;
-        color: var(--primary-green);
-        font-size: 1rem;
-      }
-
-      .importance-bar-container {
-        width: 100%;
-        height: 10px;
-        background: var(--gray-200);
-        border-radius: 5px;
-        overflow: hidden;
-        margin: 0.5rem 0;
-      }
-
-      .importance-bar {
-        height: 100%;
-        border-radius: 5px;
-        background: var(--gradient-green);
-        transition: width 1s ease-in-out;
+      .high-risk .risk-icon {
+        color: var(--accent-red);
       }
 
       /* Action Buttons */
       .action-buttons {
         display: flex;
         justify-content: center;
-        flex-wrap: wrap;
         gap: 1rem;
-        margin: 3rem 0 1rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
       }
 
       .btn-custom {
-        padding: 0.875rem 2rem;
+        padding: 0.8rem 2rem;
+        border-radius: 0.75rem;
         font-weight: 600;
-        border-radius: var(--border-radius-lg);
         transition: var(--transition);
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-width: 200px;
+        min-width: 180px;
       }
 
       .btn-custom i {
         margin-right: 0.5rem;
       }
 
-      .btn-home {
-        background-color: var(--black);
-        color: var(--white);
-        border: 2px solid var(--black);
+      .btn-primary {
+        background: var(--gradient-green);
+        border: none;
       }
 
-      .btn-home:hover {
-        background-color: var(--gray-800);
-        border-color: var(--gray-800);
-        color: var(--white);
-        transform: translateY(-3px);
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(25, 135, 84, 0.3);
       }
 
-      .btn-suggest {
-        background-color: var(--primary-green);
-        color: var(--white);
+      .btn-outline-primary {
         border: 2px solid var(--primary-green);
-      }
-
-      .btn-suggest:hover {
-        background-color: var(--dark-green);
-        border-color: var(--dark-green);
-        color: var(--white);
-        transform: translateY(-3px);
-      }
-
-      .btn-new {
-        background-color: transparent;
         color: var(--primary-green);
-        border: 2px solid var(--primary-green);
       }
 
-      .btn-new:hover {
-        background-color: var(--primary-green);
-        color: var(--white);
-        transform: translateY(-3px);
+      .btn-outline-primary:hover {
+        background: var(--primary-green);
+        color: white;
+      }
+
+      /* Recommendations */
+      .recommendations {
+        background: #f8f9fa;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        margin-top: 2rem;
+      }
+
+      .recommendations h3 {
+        color: var(--primary-green);
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .recommendations h3 i {
+        margin-right: 0.5rem;
+      }
+
+      .recommendations ul {
+        padding-left: 1.5rem;
+      }
+
+      .recommendations li {
+        margin-bottom: 0.5rem;
       }
 
       /* Footer */
-      .footer {
-        background-color: var(--black);
-        padding: 2rem 0;
+      footer {
+        background: var(--gradient-green);
+        color: white;
+        padding: 1.5rem 0;
         margin-top: auto;
-        color: var(--white);
       }
 
       .footer-content {
@@ -468,55 +281,60 @@
       }
 
       .footer-logo {
-        font-size: 1.5rem;
         font-weight: 700;
-        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
         display: flex;
         align-items: center;
       }
 
       .footer-logo i {
-        color: var(--red);
         margin-right: 0.5rem;
-      }
-
-      .footer-text {
-        font-size: 0.9rem;
-        opacity: 0.8;
-        max-width: 600px;
-        margin: 0 auto 1rem;
+        color: #ff6b6b;
       }
 
       .footer-links {
         display: flex;
         gap: 1.5rem;
-        margin-top: 1rem;
+        margin: 1rem 0;
       }
 
       .footer-link {
-        color: var(--white);
-        opacity: 0.8;
+        color: white;
         transition: var(--transition);
       }
 
       .footer-link:hover {
         color: var(--light-green);
-        opacity: 1;
         text-decoration: none;
+      }
+
+      .footer-social {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+      }
+
+      .social-icon:hover {
+        background: rgba(255,255,255,0.2);
+        transform: translateY(-2px);
       }
 
       /* Responsive Adjustments */
       @media (max-width: 768px) {
-        .result-container {
-          padding: 2rem 1.5rem;
-        }
-        
-        .page-title {
-          font-size: 1.75rem;
-        }
-        
-        .stats-grid {
-          grid-template-columns: 1fr;
+        .result-body {
+          padding: 1.5rem;
         }
         
         .risk-card {
@@ -525,7 +343,7 @@
         
         .action-buttons {
           flex-direction: column;
-          align-items: center;
+          gap: 0.75rem;
         }
         
         .btn-custom {
@@ -534,258 +352,178 @@
       }
 
       /* Animations */
-      .animate-delay-1 {
+      .animate-pop {
+        animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+      }
+
+      @keyframes popIn {
+        0% {
+          transform: scale(0.9);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .delay-1 {
+        animation-delay: 0.1s;
+      }
+      .delay-2 {
         animation-delay: 0.2s;
-      }
-
-      .animate-delay-2 {
-        animation-delay: 0.4s;
-      }
-
-      .animate-delay-3 {
-        animation-delay: 0.6s;
-      }
-
-      /* Tooltip styles */
-      .tooltip-inner {
-        background-color: var(--dark-green);
-        padding: 0.5rem 1rem;
-        border-radius: var(--border-radius);
-        font-size: 0.875rem;
-      }
-
-      .bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before, 
-      .bs-tooltip-top .tooltip-arrow::before {
-        border-top-color: var(--dark-green);
-      }
-
-      /* Progress animation */
-      @keyframes progressAnimation {
-        0% { width: 0; opacity: 0.5; }
-        100% { width: var(--progress-width); opacity: 1; }
-      }
-
-      .progress-animate {
-        animation: progressAnimation 1.5s ease-out forwards;
       }
     </style>
   </head>
   <body>
-    <!-- Navbar -->
-
-
     <!-- Main Content -->
-    <main class="main-content">
+    <div class="main-container">
       <div class="container">
-        <div class="result-container animate__animated animate__fadeIn">
-          <h1 class="page-title">
-            <i class="fas fa-clipboard-check"></i>Your Diabetes Risk Assessment
-          </h1>
-
-          {% if prediction_text %}
-          <!-- Risk Assessment Result -->
-          <div class="risk-card animate__animated animate__fadeInUp {{ 'low-risk' if risk_category in ['Very Low Risk', 'Low Risk'] else 'moderate-risk' if risk_category == 'Moderate Risk' else 'high-risk' }}">
-            <div class="risk-icon">
-              {% if risk_category in ['Very Low Risk', 'Low Risk'] %}
-              <i class="fas fa-check-circle"></i>
-              {% elif risk_category == 'Moderate Risk' %}
-              <i class="fas fa-exclamation-triangle"></i>
-              {% else %}
-              <i class="fas fa-exclamation-circle"></i>
-              {% endif %}
-            </div>
-            <h2 class="risk-title">{{ risk_category }}</h2>
-            <div class="risk-percentage">{{ "%.1f"|format(probability) }}%</div>
-            <p class="risk-description">
-              {% if risk_category in ['Very Low Risk', 'Low Risk'] %}
-              Your risk of developing diabetes is below average. Maintain your healthy lifestyle!
-              {% elif risk_category == 'Moderate Risk' %}
-              You have a moderate risk of developing diabetes. Consider lifestyle changes.
-              {% else %}
-              You have an elevated risk of developing diabetes. Please consult a healthcare professional.
-              {% endif %}
-            </p>
+        <div class="result-card animate__animated animate__fadeInUp">
+          <div class="result-header">
+            <h1>
+              <i class="fas fa-clipboard-check"></i>আপনার ডায়াবেটিস ঝুঁকি মূল্যায়ন
+            </h1>
           </div>
-
-          <!-- Statistics Grid -->
-          <div class="stats-grid">
-            <div class="stat-card animate__animated animate__fadeInUp animate__delay-1s">
-              <div class="stat-icon">
-                <i class="fas fa-shield-alt"></i>
-              </div>
-              <div class="stat-value">{{ "%.1f"|format(confidence_score) }}%</div>
-              <div class="stat-label">Confidence Level</div>
-            </div>
-            <div class="stat-card animate__animated animate__fadeInUp animate__delay-2s">
-              <div class="stat-icon">
-                <i class="fas fa-database"></i>
-              </div>
-              <div class="stat-value">{{ "%.1f"|format(data_completeness) }}%</div>
-              <div class="stat-label">Data Completeness</div>
-            </div>
-            <div class="stat-card animate__animated animate__fadeInUp animate__delay-3s">
-              <div class="stat-icon">
-                <i class="fas fa-chart-pie"></i>
-              </div>
-              <div class="stat-value">{{ "%.1f"|format(probability) }}%</div>
-              <div class="stat-label">Risk Probability</div>
-            </div>
-          </div>
-
-          <!-- Top Risk Factors -->
-          {% if top_factors %}
-          <div class="feature-section animate__animated animate__fadeIn">
-            <h3 class="section-title">
-              <i class="fas fa-chart-bar"></i>Key Influencing Factors
-            </h3>
-            <p class="section-subtitle">
-              These factors had the most significant impact on your diabetes risk assessment
-            </p>
-            
-            <div class="feature-importance-container">
-              {% for factor, importance in top_factors %}
-              <div class="feature-item">
-                <div class="feature-header">
-                  <span class="feature-name">{{ factor.replace('_', ' ').title() }}</span>
-                  <span class="feature-value">{{ "%.1f"|format(importance * 100) }}%</span>
+          
+          <div class="result-body">
+            {% if prediction_text %}
+              {% if "Low Risk" in prediction_text %}
+              <div class="risk-card low-risk animate-pop">
+                <div class="risk-icon">
+                  <i class="fas fa-check-circle"></i>
                 </div>
-                <div class="importance-bar-container">
-                  <div class="importance-bar progress-animate" style="--progress-width: {{ importance * 100 }}%; width: 0;"></div>
+                <h2 class="risk-title">ডায়াবেটিসের কম ঝুঁকি</h2>
+                <p class="risk-description">
+                  আপনার মূল্যায়ন নির্দেশ করে যে ডায়াবেটিস হওয়ার সম্ভাবনা কম। 
+                  আপনার ঝুঁকি কম রাখতে স্বাস্থ্যকর অভ্যাস বজায় রাখুন।
+                </p>
+                <div class="progress mb-3" style="height: 10px;">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
+                <small class="text-muted">ঝুঁকির মাত্রা: ২৫%</small>
               </div>
-              {% endfor %}
-            </div>
-          </div>
-          {% endif %}
-
-          <!-- All Features (Collapsible) -->
-          {% if sorted_features %}
-          <div class="feature-section animate__animated animate__fadeIn">
-            <div class="d-flex justify-content-center mb-4">
-              <button 
-                class="btn btn-outline-primary btn-lg" 
-                type="button" 
-                data-bs-toggle="collapse" 
-                data-bs-target="#allFeatures" 
-                aria-expanded="false" 
-                aria-controls="allFeatures"
-              >
-                <i class="fas fa-chevron-down me-2"></i>View Detailed Factor Analysis
-              </button>
-            </div>
-            
-            <div class="collapse" id="allFeatures">
-              <h4 class="section-title">
-                <i class="fas fa-list-ol"></i>Complete Factor Breakdown
-              </h4>
-              <p class="section-subtitle">
-                Detailed analysis of all factors considered in your assessment
-              </p>
               
-              <div class="feature-importance-container">
-                {% for feature, importance in sorted_features %}
-                <div class="feature-item">
-                  <div class="feature-header">
-                    <span class="feature-name">{{ feature.replace('_', ' ').title() }}</span>
-                    <span class="feature-value">{{ "%.1f"|format(importance * 100) }}%</span>
-                  </div>
-                  <div class="importance-bar-container">
-                    <div class="importance-bar progress-animate" style="--progress-width: {{ (importance / sorted_features[0][1] * 100) }}%; width: 0;"></div>
-                  </div>
+              {% elif "Moderate Risk" in prediction_text %}
+              <div class="risk-card moderate-risk animate-pop">
+                <div class="risk-icon">
+                  <i class="fas fa-exclamation-triangle"></i>
                 </div>
-                {% endfor %}
+                <h2 class="risk-title">ডায়াবেটিসের মাঝারি ঝুঁকি</h2>
+                <p class="risk-description">
+                  আপনার মূল্যায়নে ডায়াবেটিসের কিছু ঝুঁকিপূর্ণ কারণ দেখা গেছে। 
+                  একজন স্বাস্থ্যসেবা প্রদানকারীর সাথে পরামর্শ করা এবং জীবনযাত্রার পরিবর্তন বিবেচনা করুন।
+                </p>
+                <div class="progress mb-3" style="height: 10px;">
+                  <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="text-muted">ঝুঁকির মাত্রা: ৬০%</small>
               </div>
-            </div>
-          </div>
-          {% endif %}
-
-          {% else %}
-          <div class="alert alert-danger text-center animate__animated animate__shakeX" role="alert">
-            <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
-            <h4 class="alert-heading">No Results Found</h4>
-            <p class="mb-0">We couldn't process your request. Please try again.</p>
-          </div>
-          {% endif %}
-
-          <!-- Action Buttons -->
-          <div class="action-buttons">
-            <a href="/" class="btn btn-custom btn-home animate__animated animate__fadeInUp">
-              <i class="fas fa-home"></i>Back to Home
-            </a>
-            <a href="/suggest" class="btn btn-custom btn-suggest animate__animated animate__fadeInUp">
-              <i class="fas fa-lightbulb"></i>Personalized Recommendations
-            </a>
-            <a href="/predict_page" class="btn btn-custom btn-new animate__animated animate__fadeInUp">
-              <i class="fas fa-redo"></i>New Assessment
-            </a>
+              
+              {% elif "High Risk" in prediction_text %}
+              <div class="risk-card high-risk animate-pop">
+                <div class="risk-icon">
+                  <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <h2 class="risk-title">ডায়াবেটিসের উচ্চ ঝুঁকি</h2>
+                <p class="risk-description">
+                  আপনার মূল্যায়ন নির্দেশ করে যে ডায়াবেটিস হওয়ার সম্ভাবনা বেশি। 
+                  আমরা দৃঢ়ভাবে সুপারিশ করছি যত তাড়াতাড়ি সম্ভব একজন স্বাস্থ্যসেবা পেশাদারের সাথে পরামর্শ করুন।
+                </p>
+                <div class="progress mb-3" style="height: 10px;">
+                  <div class="progress-bar bg-danger" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="text-muted">ঝুঁকির মাত্রা: ৮৫%</small>
+              </div>
+              {% endif %}
+              
+              <!-- Recommendations Section -->
+              <div class="recommendations animate__animated animate__fadeIn delay-1">
+                <h3><i class="fas fa-lightbulb"></i> প্রস্তাবিত পদক্ষেপ</h3>
+                <ul>
+                  {% if "Low Risk" in prediction_text %}
+                    <li>নিয়মিত শারীরিক কার্যকলাপ চালিয়ে যান (সপ্তাহে কমপক্ষে ১৫০ মিনিট)</li>
+                    <li>ফল, শাকসবজি এবং গোটা শস্য সমৃদ্ধ সুষম খাদ্য বজায় রাখুন</li>
+                    <li>আপনার স্বাস্থ্য পর্যবেক্ষণের জন্য বার্ষিক চেক-আপের সময়সূচী করুন</li>
+                  {% elif "Moderate Risk" in prediction_text %}
+                    <li>আরও পরীক্ষার জন্য একজন স্বাস্থ্যসেবা প্রদানকারীর সাথে পরামর্শ করুন</li>
+                    <li>অধিকাংশ দিনে ৩০ মিনিট শারীরিক কার্যকলাপ বাড়ান</li>
+                    <li>চিনি এবং পরিশোধিত কার্বোহাইড্রেট গ্রহণ কমিয়ে দিন</li>
+                    <li>পর্যায়ক্রমে আপনার রক্তে শর্করার মাত্রা পর্যবেক্ষণ করুন</li>
+                  {% elif "High Risk" in prediction_text %}
+                    <li>অবিলম্বে একজন ডাক্তারের সাথে অ্যাপয়েন্টমেন্ট করুন</li>
+                    <li>HbA1c এবং উপবাস গ্লুকোজ পরীক্ষার জন্য অনুরোধ করুন</li>
+                    <li>চিকিৎসা সুপারিশকৃত ডায়েট এবং ব্যায়াম পরিকল্পনা শুরু করুন</li>
+                    <li>একজন ডায়াবেটিস শিক্ষকের সাথে কাজ করা বিবেচনা করুন</li>
+                  {% endif %}
+                </ul>
+              </div>
+              
+              <!-- Action Buttons -->
+              <div class="action-buttons animate__animated animate__fadeIn delay-2">
+                <a href="/" class="btn btn-custom btn-primary">
+                  <i class="fas fa-home"></i> হোমে ফিরুন
+                </a>
+                <a href="/" class="btn btn-custom btn-outline-primary">
+                  <i class="fas fa-redo"></i> নতুন মূল্যায়ন
+                </a>
+                {% if "Moderate Risk" in prediction_text or "High Risk" in prediction_text %}
+                <a href="/doctor" class="btn btn-custom btn-danger">
+                  <i class="fas fa-user-md"></i> ডাক্তার খুঁজুন
+                </a>
+                {% endif %}
+              </div>
+              
+            {% else %}
+              <div class="alert alert-danger text-center animate-pop" role="alert">
+                <i class="fas fa-times-circle fa-2x mb-3"></i>
+                <h4 class="alert-heading">মূল্যায়ন উপলব্ধ নয়</h4>
+                <p>আমরা আপনার ডায়াবেটিস ঝুঁকি মূল্যায়ন প্রক্রিয়া করতে পারিনি। দয়া করে আবার চেষ্টা করুন।</p>
+                <hr>
+                <a href="/predict_page" class="btn btn-outline-danger">
+                  <i class="fas fa-redo"></i> আবার চেষ্টা করুন
+                </a>
+              </div>
+            {% endif %}
           </div>
         </div>
       </div>
-    </main>
+    </div>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer>
       <div class="container">
         <div class="footer-content">
           <div class="footer-logo">
             <i class="fas fa-heartbeat"></i>
-            <span>DiabetesAI</span>
+            ডায়াবেটিসগার্ড
           </div>
-          <p class="footer-text">
-            Our advanced predictive model analyzes multiple health factors to assess your diabetes risk.
-            This tool is for informational purposes only and not a substitute for professional medical advice.
-          </p>
-          <div class="footer-links">
-            <a href="/privacy" class="footer-link">Privacy Policy</a>
-            <a href="/terms" class="footer-link">Terms of Service</a>
-            <a href="/contact" class="footer-link">Contact Us</a>
+          <!-- <div class="footer-links">
+            <a href="/privacy" class="footer-link">গোপনীয়তা নীতি</a>
+            <a href="/terms" class="footer-link">সেবার শর্তাবলী</a>
+            <a href="/contact" class="footer-link">যোগাযোগ করুন</a>
+          </div> -->
+          <div class="footer-social">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
           </div>
+          <p class="mt-3 mb-0 small">&copy; ২০২৩ ডায়াবেটিসগার্ড। সর্বস্বত্ব সংরক্ষিত।</p>
         </div>
       </div>
     </footer>
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Custom JavaScript -->
+    <!-- Custom JS -->
     <script>
+      // Add animation classes as elements come into view
       document.addEventListener('DOMContentLoaded', function() {
-        // Initialize tooltips
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-          return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
+        const animateElements = document.querySelectorAll('.risk-card, .recommendations, .action-buttons');
         
-        // Animate progress bars when they come into view
-        const animateOnScroll = () => {
-          const progressBars = document.querySelectorAll('.progress-animate');
-          
-          progressBars.forEach(bar => {
-            const rect = bar.getBoundingClientRect();
-            const isVisible = (rect.top <= window.innerHeight) && (rect.bottom >= 0);
-            
-            if (isVisible && !bar.classList.contains('animated')) {
-              bar.style.width = bar.style.getPropertyValue('--progress-width') + '%';
-              bar.classList.add('animated');
-            }
-          });
-        };
-        
-        // Initial check
-        animateOnScroll();
-        
-        // Check on scroll
-        window.addEventListener('scroll', animateOnScroll);
-        
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-          anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-              behavior: 'smooth'
-            });
-          });
+        animateElements.forEach((element, index) => {
+          element.style.animationDelay = `${index * 0.1}s`;
         });
       });
     </script>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Prediction Results | Diabetes Risk Assessment</title>
+  <title>ফলাফল | ডায়াবেটিস ঝুঁকি মূল্যায়ন</title>
     <!-- Bootstrap 5.3 CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
@@ -385,7 +385,7 @@
         <div class="result-card animate__animated animate__fadeInUp">
           <div class="result-header">
             <h1>
-              <i class="fas fa-clipboard-check"></i>Your Diabetes Risk Assessment
+              <i class="fas fa-clipboard-check"></i>আপনার ডায়াবেটিস ঝুঁকি মূল্যায়ন
             </h1>
           </div>
           
@@ -396,15 +396,14 @@
                 <div class="risk-icon">
                   <i class="fas fa-check-circle"></i>
                 </div>
-                <h2 class="risk-title">Low Risk of Diabetes</h2>
+                <h2 class="risk-title">ডায়াবেটিসের ঝুঁকি কম</h2>
                 <p class="risk-description">
-                  Your assessment indicates a low likelihood of having diabetes. 
-                  Continue maintaining healthy habits to keep your risk low.
+                  আপনার মূল্যায়ন অনুযায়ী ডায়াবেটিস হওয়ার সম্ভাবনা কম। ঝুঁকি কম রাখতে স্বাস্থ্যকর অভ্যাস বজায় রাখুন।
                 </p>
                 <div class="progress mb-3" style="height: 10px;">
                   <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <small class="text-muted">Risk Level: 25%</small>
+                <small class="text-muted">ঝুঁকির স্তর: ২৫%</small>
               </div>
               
               {% elif "Moderate Risk" in prediction_text %}
@@ -412,15 +411,14 @@
                 <div class="risk-icon">
                   <i class="fas fa-exclamation-triangle"></i>
                 </div>
-                <h2 class="risk-title">Moderate Risk of Diabetes</h2>
+                <h2 class="risk-title">ডায়াবেটিসের মাঝারি ঝুঁকি</h2>
                 <p class="risk-description">
-                  Your assessment shows some risk factors for diabetes. 
-                  Consider consulting with a healthcare provider and making lifestyle adjustments.
+                  আপনার মূল্যায়নে ডায়াবেটিসের কিছু ঝুঁকি ফ্যাক্টর পাওয়া গেছে। চিকিৎসকের পরামর্শ নিন এবং জীবনযাপনে পরিবর্তন আনুন।
                 </p>
                 <div class="progress mb-3" style="height: 10px;">
                   <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <small class="text-muted">Risk Level: 60%</small>
+                <small class="text-muted">ঝুঁকির স্তর: ৬০%</small>
               </div>
               
               {% elif "High Risk" in prediction_text %}
@@ -428,36 +426,35 @@
                 <div class="risk-icon">
                   <i class="fas fa-exclamation-circle"></i>
                 </div>
-                <h2 class="risk-title">High Risk of Diabetes</h2>
+                <h2 class="risk-title">ডায়াবেটিসের উচ্চ ঝুঁকি</h2>
                 <p class="risk-description">
-                  Your assessment indicates a high likelihood of having diabetes. 
-                  We strongly recommend consulting with a healthcare professional as soon as possible.
+                  আপনার মূল্যায়ন অনুযায়ী ডায়াবেটিস হওয়ার সম্ভাবনা অনেক বেশি। দ্রুত চিকিৎসকের পরামর্শ নিন।
                 </p>
                 <div class="progress mb-3" style="height: 10px;">
                   <div class="progress-bar bg-danger" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <small class="text-muted">Risk Level: 85%</small>
+                <small class="text-muted">ঝুঁকির স্তর: ৮৫%</small>
               </div>
               {% endif %}
               
               <!-- Recommendations Section -->
               <div class="recommendations animate__animated animate__fadeIn delay-1">
-                <h3><i class="fas fa-lightbulb"></i> Recommended Actions</h3>
+                <h3><i class="fas fa-lightbulb"></i> পরামর্শকৃত পদক্ষেপ</h3>
                 <ul>
                   {% if "Low Risk" in prediction_text %}
-                    <li>Continue regular physical activity (at least 150 minutes per week)</li>
-                    <li>Maintain a balanced diet rich in fruits, vegetables, and whole grains</li>
-                    <li>Schedule annual check-ups to monitor your health</li>
+                    <li>নিয়মিত শারীরিক কার্যকলাপ চালিয়ে যান (সপ্তাহে অন্তত ১৫০ মিনিট)</li>
+                    <li>ফল, সবজি ও শস্যসমৃদ্ধ সুষম খাদ্য বজায় রাখুন</li>
+                    <li>স্বাস্থ্য পর্যবেক্ষণের জন্য বছরে একবার চেকআপ করুন</li>
                   {% elif "Moderate Risk" in prediction_text %}
-                    <li>Consult with a healthcare provider for further testing</li>
-                    <li>Increase physical activity to 30 minutes most days</li>
-                    <li>Reduce sugar and refined carbohydrate intake</li>
-                    <li>Monitor your blood sugar levels periodically</li>
+                    <li>আরও পরীক্ষা-নিরীক্ষার জন্য চিকিৎসকের পরামর্শ নিন</li>
+                    <li>প্রতিদিন অন্তত ৩০ মিনিট শারীরিক কার্যকলাপ বাড়ান</li>
+                    <li>চিনি ও পরিশোধিত কার্বোহাইড্রেট কমান</li>
+                    <li>নিয়মিত রক্তের শর্করা পরীক্ষা করুন</li>
                   {% elif "High Risk" in prediction_text %}
-                    <li>Schedule an appointment with a doctor immediately</li>
-                    <li>Request HbA1c and fasting glucose tests</li>
-                    <li>Begin a medically supervised diet and exercise plan</li>
-                    <li>Consider working with a diabetes educator</li>
+                    <li>অবিলম্বে ডাক্তারের অ্যাপয়েন্টমেন্ট নিন</li>
+                    <li>HbA1c ও ফাস্টিং গ্লুকোজ টেস্ট করুন</li>
+                    <li>চিকিৎসকের তত্ত্বাবধানে ডায়েট ও ব্যায়াম শুরু করুন</li>
+                    <li>ডায়াবেটিস এডুকেটরের সহায়তা নিন</li>
                   {% endif %}
                 </ul>
               </div>
@@ -465,14 +462,14 @@
               <!-- Action Buttons -->
               <div class="action-buttons animate__animated animate__fadeIn delay-2">
                 <a href="/" class="btn btn-custom btn-primary">
-                  <i class="fas fa-home"></i> Back to Home
+                  <i class="fas fa-home"></i> হোমে ফিরে যান
                 </a>
                 <a href="/predict_page" class="btn btn-custom btn-outline-primary">
-                  <i class="fas fa-redo"></i> New Assessment
+                  <i class="fas fa-redo"></i> নতুন মূল্যায়ন
                 </a>
                 {% if "Moderate Risk" in prediction_text or "High Risk" in prediction_text %}
                 <a href="/find-doctor" class="btn btn-custom btn-danger">
-                  <i class="fas fa-user-md"></i> Find a Doctor
+                  <i class="fas fa-user-md"></i> ডাক্তার খুঁজুন
                 </a>
                 {% endif %}
               </div>
@@ -480,11 +477,11 @@
             {% else %}
               <div class="alert alert-danger text-center animate-pop" role="alert">
                 <i class="fas fa-times-circle fa-2x mb-3"></i>
-                <h4 class="alert-heading">Assessment Unavailable</h4>
-                <p>We couldn't process your diabetes risk assessment. Please try again.</p>
+                <h4 class="alert-heading">মূল্যায়ন পাওয়া যায়নি</h4>
+                <p>আপনার ডায়াবেটিস ঝুঁকি মূল্যায়ন সম্পন্ন করা যায়নি। দয়া করে আবার চেষ্টা করুন।</p>
                 <hr>
                 <a href="/predict_page" class="btn btn-outline-danger">
-                  <i class="fas fa-redo"></i> Retry Assessment
+                  <i class="fas fa-redo"></i> পুনরায় চেষ্টা করুন
                 </a>
               </div>
             {% endif %}
@@ -499,12 +496,12 @@
         <div class="footer-content">
           <div class="footer-logo">
             <i class="fas fa-heartbeat"></i>
-            DiabetesGuard
+            ডায়াবেটিসগার্ড
           </div>
           <div class="footer-links">
-            <a href="/privacy" class="footer-link">Privacy Policy</a>
-            <a href="/terms" class="footer-link">Terms of Service</a>
-            <a href="/contact" class="footer-link">Contact Us</a>
+            <a href="/privacy" class="footer-link">গোপনীয়তা নীতি</a>
+            <a href="/terms" class="footer-link">সেবার শর্তাবলী</a>
+            <a href="/contact" class="footer-link">যোগাযোগ করুন</a>
           </div>
           <div class="footer-social">
             <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
@@ -512,7 +509,7 @@
             <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
             <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
           </div>
-          <p class="mt-3 mb-0 small">&copy; 2023 DiabetesGuard. All rights reserved.</p>
+          <p class="mt-3 mb-0 small">&copy; ২০২৩ ডায়াবেটিসগার্ড। সর্বস্বত্ব সংরক্ষিত।</p>
         </div>
       </div>
     </footer>

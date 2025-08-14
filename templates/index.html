@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Diabetes Risk Assessment</title>
+  <title>ডায়াবেটিস ঝুঁকি মূল্যায়ন</title>
     <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -240,7 +240,7 @@
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
       <div class="container">
         <a class="navbar-brand" href="/">
-          <i class="fas fa-heartbeat me-2"></i>DiabEase
+          <i class="fas fa-heartbeat me-2"></i>ডায়াবেটিসগার্ড
         </a>
         <button
           class="navbar-toggler"
@@ -253,22 +253,22 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/" ><i class="fas fa-home me-1"></i> Home</a>
+              <a class="nav-link" href="/" ><i class="fas fa-home me-1"></i> হোম</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/about"><i class="fas fa-hospital me-1"></i> Hospitals</a>
+              <a class="nav-link" href="/about"><i class="fas fa-hospital me-1"></i> হাসপাতাল</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/diet"><i class="fas fa-utensils me-1"></i> Diet</a>
+              <a class="nav-link" href="/diet"><i class="fas fa-utensils me-1"></i> ডায়েট</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/exercise"><i class="fas fa-running me-1"></i> Exercise</a>
+              <a class="nav-link" href="/exercise"><i class="fas fa-running me-1"></i> ব্যায়াম</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/doctor"><i class="fas fa-user-md me-1"></i> Doctors</a>
+              <a class="nav-link" href="/doctor"><i class="fas fa-user-md me-1"></i> ডাক্তার</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/contact"><i class="fas fa-question-circle me-1"></i> Help</a>
+              <a class="nav-link" href="/contact"><i class="fas fa-question-circle me-1"></i> সহায়তা</a>
             </li>
             <li class="nav-item" id="auth-nav-item">
               <!-- Dynamically filled by JavaScript -->
@@ -283,26 +283,26 @@
       <!-- Register Form -->
       <div id="register-container" class="form-container auth-container hidden">
         <div class="text-center mb-4">
-          <h1 class="h3 text-gray-900 mb-3">Create Your Account</h1>
-          <p class="text-muted">Join our community to track your health</p>
+          <h1 class="h3 text-gray-900 mb-3">আপনার অ্যাকাউন্ট তৈরি করুন</h1>
+          <p class="text-muted">স্বাস্থ্য ট্র্যাক করতে আমাদের কমিউনিটিতে যোগ দিন</p>
         </div>
         <form id="register-form">
           <div class="mb-3">
-            <label for="register-name" class="form-label">Full Name</label>
+            <label for="register-name" class="form-label">পূর্ণ নাম</label>
             <div class="input-group">
               <span class="input-group-text"><i class="fas fa-user"></i></span>
               <input type="text" class="form-control" id="register-name" required>
             </div>
           </div>
           <div class="mb-3">
-            <label for="register-email" class="form-label">Email</label>
+            <label for="register-email" class="form-label">ইমেইল</label>
             <div class="input-group">
               <span class="input-group-text"><i class="fas fa-envelope"></i></span>
               <input type="email" class="form-control" id="register-email" required>
             </div>
           </div>
           <div class="mb-3">
-            <label for="register-password" class="form-label">Password</label>
+            <label for="register-password" class="form-label">পাসওয়ার্ড</label>
             <div class="input-group">
               <span class="input-group-text"><i class="fas fa-lock"></i></span>
               <input type="password" class="form-control" id="register-password" required>
@@ -310,88 +310,88 @@
             <div class="progress mt-2">
               <div class="progress-bar" id="password-strength-bar" role="progressbar" style="width: 0%"></div>
             </div>
-            <small id="password-strength-text" class="text-muted">Password strength</small>
+            <small id="password-strength-text" class="text-muted">পাসওয়ার্ডের শক্তি</small>
           </div>
           <div class="mb-3">
-            <label for="register-confirm-password" class="form-label">Confirm Password</label>
+            <label for="register-confirm-password" class="form-label">পাসওয়ার্ড নিশ্চিত করুন</label>
             <div class="input-group">
               <span class="input-group-text"><i class="fas fa-lock"></i></span>
               <input type="password" class="form-control" id="register-confirm-password" required>
             </div>
           </div>
           <div class="text-center">
-            <button type="submit" class="btn btn-primary btn-block">Register</button>
+            <button type="submit" class="btn btn-primary btn-block">রেজিস্টার করুন</button>
           </div>
           <hr>
-          <p class="text-center mt-3">Already have an account? <a href="#" onclick="showLogin()" class="text-primary">Login here</a></p>
+          <p class="text-center mt-3">ইতিমধ্যে অ্যাকাউন্ট আছে? <a href="#" onclick="showLogin()" class="text-primary">লগইন করুন</a></p>
         </form>
       </div>
 
       <!-- Login Form -->
       <div id="login-container" class="form-container auth-container hidden">
         <div class="text-center mb-4">
-          <h1 class="h3 text-gray-900 mb-3">Welcome Back!</h1>
-          <p class="text-muted">Login to continue your health journey</p>
+          <h1 class="h3 text-gray-900 mb-3">আবার স্বাগতম!</h1>
+          <p class="text-muted">আপনার স্বাস্থ্য যাত্রা চালিয়ে যেতে লগইন করুন</p>
         </div>
         <form id="login-form">
           <div class="mb-3">
-            <label for="login-email" class="form-label">Email</label>
+            <label for="login-email" class="form-label">ইমেইল</label>
             <div class="input-group">
               <span class="input-group-text"><i class="fas fa-envelope"></i></span>
               <input type="email" class="form-control" id="login-email" required>
             </div>
           </div>
           <div class="mb-3">
-            <label for="login-password" class="form-label">Password</label>
+            <label for="login-password" class="form-label">পাসওয়ার্ড</label>
             <div class="input-group">
               <span class="input-group-text"><i class="fas fa-lock"></i></span>
               <input type="password" class="form-control" id="login-password" required>
             </div>
             <div class="text-end mt-1">
-              <small><a href="#" class="text-primary">Forgot password?</a></small>
+              <small><a href="#" class="text-primary">পাসওয়ার্ড ভুলে গেছেন?</a></small>
             </div>
           </div>
           <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="remember-me">
-            <label class="form-check-label" for="remember-me">Remember me</label>
+            <label class="form-check-label" for="remember-me">মনে রাখুন</label>
           </div>
           <div class="text-center">
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <button type="submit" class="btn btn-primary btn-block">লগইন করুন</button>
           </div>
           <hr>
-          <p class="text-center mt-3">Don't have an account? <a href="#" onclick="showRegister()" class="text-primary">Register here</a></p>
+          <p class="text-center mt-3">অ্যাকাউন্ট নেই? <a href="#" onclick="showRegister()" class="text-primary">রেজিস্টার করুন</a></p>
         </form>
       </div>
 
       <!-- Assessment Form (shown after login) -->
       <div id="assessment-container" class="form-container hidden">
         <div class="d-flex justify-content-between align-items-center mb-4">
-          <h1 class="h3 text-gray-900 mb-0">Diabetes Risk Assessment</h1>
+          <h1 class="h3 text-gray-900 mb-0">ডায়াবেটিস ঝুঁকি মূল্যায়ন</h1>
           <span id="welcome-message" class="welcome-message"></span>
         </div>
 
         {% if prediction_text %}
         <div class="result">
-          <h4 class="text-center mb-3">Assessment Result</h4>
+          <h4 class="text-center mb-3">মূল্যায়নের ফলাফল</h4>
           <div class="risk-meter">
             <div class="risk-indicator" style="left: calc({{ risk_percentage }}%);"></div>
           </div>
           <div class="text-center">
             <p class="mb-0 lead">{{ prediction_text }}</p>
-            <p class="text-muted mt-2">Based on your symptoms and health data</p>
+            <p class="text-muted mt-2">আপনার উপসর্গ ও স্বাস্থ্য তথ্যের ভিত্তিতে</p>
           </div>
         </div>
         {% endif %}
 
         <ul class="nav nav-pills mb-4" id="assessment-tabs" role="tablist">
           <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="assessment-tab" data-bs-toggle="pill" data-bs-target="#assessment" type="button" role="tab">Assessment</button>
+            <button class="nav-link active" id="assessment-tab" data-bs-toggle="pill" data-bs-target="#assessment" type="button" role="tab">মূল্যায়ন</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="history-tab" data-bs-toggle="pill" data-bs-target="#history" type="button" role="tab">History</button>
+            <button class="nav-link" id="history-tab" data-bs-toggle="pill" data-bs-target="#history" type="button" role="tab">ইতিহাস</button>
           </li>
           <li class="nav-item" role="presentation">
-            <button class="nav-link" id="profile-tab" data-bs-toggle="pill" data-bs-target="#profile" type="button" role="tab">Profile</button>
+            <button class="nav-link" id="profile-tab" data-bs-toggle="pill" data-bs-target="#profile" type="button" role="tab">প্রোফাইল</button>
           </li>
         </ul>
 
@@ -400,37 +400,37 @@
             <form method="POST" action="/predict" class="needs-validation" novalidate>
               <div class="row g-3">
                 <div class="col-md-6">
-                  <label for="Age" class="form-label">Age</label>
+                  <label for="Age" class="form-label">বয়স</label>
                   <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-birthday-cake"></i></span>
-                    <input type="number" class="form-control" id="Age" name="Age" placeholder="Enter your age">
+                    <input type="number" class="form-control" id="Age" name="Age" placeholder="আপনার বয়স লিখুন">
                   </div>
                 </div>
                 
                 <div class="col-md-6">
-                  <label for="Gender" class="form-label">Gender</label>
+                  <label for="Gender" class="form-label">লিঙ্গ</label>
                   <div class="input-group">
                     <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
                     <select class="form-select" id="Gender" name="Gender">
-                      <option value="">Select gender</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Other">Other</option>
+                      <option value="">লিঙ্গ নির্বাচন করুন</option>
+                      <option value="Male">পুরুষ</option>
+                      <option value="Female">মহিলা</option>
+                      <option value="Other">অন্যান্য</option>
                     </select>
                   </div>
                 </div>
 
                 <div class="col-12">
-                  <h5 class="mt-4 mb-3">Symptoms</h5>
+                  <h5 class="mt-4 mb-3">উপসর্গসমূহ</h5>
                   <div class="row">
                     <div class="col-md-6">
                       <div class="card symptom-card mb-3">
                         <div class="card-body">
-                          <h6 class="card-title">Increased urine output?</h6>
+                          <h6 class="card-title">মূত্রের পরিমাণ বৃদ্ধি পেয়েছে?</h6>
                           <select class="form-select" id="Polyuria" name="Polyuria">
-                            <option value="">Select option</option>
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
+                            <option value="">নির্বাচন করুন</option>
+                            <option value="Yes">হ্যাঁ</option>
+                            <option value="No">না</option>
                           </select>
                         </div>
                       </div>
@@ -439,7 +439,7 @@
                     <div class="col-md-6">
                       <div class="card symptom-card mb-3">
                         <div class="card-body">
-                          <h6 class="card-title">Excessive thirst?</h6>
+                          <h6 class="card-title">অতিরিক্ত পিপাসা?</h6>
                           <select class="form-select" id="Polydipsia" name="Polydipsia">
                             <option value="">Select option</option>
                             <option value="Yes">Yes</option>
@@ -452,7 +452,7 @@
                     <div class="col-md-6">
                       <div class="card symptom-card mb-3">
                         <div class="card-body">
-                          <h6 class="card-title">Sudden weight loss?</h6>
+                          <h6 class="card-title">হঠাৎ ওজন কমে গেছে?</h6>
                           <select class="form-select" id="sudden_weight_loss" name="sudden_weight_loss">
                             <option value="">Select option</option>
                             <option value="Yes">Yes</option>
@@ -465,7 +465,7 @@
                     <div class="col-md-6">
                       <div class="card symptom-card mb-3">
                         <div class="card-body">
-                          <h6 class="card-title">Feeling weak?</h6>
+                          <h6 class="card-title">দুর্বল লাগছে?</h6>
                           <select class="form-select" id="weakness" name="weakness">
                             <option value="">Select option</option>
                             <option value="Yes">Yes</option>
@@ -478,7 +478,7 @@
                     <div class="col-md-6">
                       <div class="card symptom-card mb-3">
                         <div class="card-body">
-                          <h6 class="card-title">Excessive hunger?</h6>
+                          <h6 class="card-title">অতিরিক্ত ক্ষুধা?</h6>
                           <select class="form-select" id="Polyphagia" name="Polyphagia">
                             <option value="">Select option</option>
                             <option value="Yes">Yes</option>
@@ -491,7 +491,7 @@
                     <div class="col-md-6">
                       <div class="card symptom-card mb-3">
                         <div class="card-body">
-                          <h6 class="card-title">Blurred vision?</h6>
+                          <h6 class="card-title">দৃষ্টিশক্তি ঝাপসা?</h6>
                           <select class="form-select" id="visual_blurring" name="visual_blurring">
                             <option value="">Select option</option>
                             <option value="Yes">Yes</option>
@@ -504,7 +504,7 @@
                     <div class="col-md-6">
                       <div class="card symptom-card mb-3">
                         <div class="card-body">
-                          <h6 class="card-title">Itching problem?</h6>
+                          <h6 class="card-title">চুলকানির সমস্যা?</h6>
                           <select class="form-select" id="Itching" name="Itching">
                             <option value="">Select option</option>
                             <option value="Yes">Yes</option>
@@ -517,7 +517,7 @@
                     <div class="col-md-6">
                       <div class="card symptom-card mb-3">
                         <div class="card-body">
-                          <h6 class="card-title">Increased irritability?</h6>
+                          <h6 class="card-title">বিরক্তি বেড়েছে?</h6>
                           <select class="form-select" id="Irritability" name="Irritability">
                             <option value="">Select option</option>
                             <option value="Yes">Yes</option>
@@ -530,7 +530,7 @@
                     <div class="col-md-6">
                       <div class="card symptom-card mb-3">
                         <div class="card-body">
-                          <h6 class="card-title">Delayed wound healing?</h6>
+                          <h6 class="card-title">ক্ষত শুকাতে দেরি হচ্ছে?</h6>
                           <select class="form-select" id="delayed_healing" name="delayed_healing">
                             <option value="">Select option</option>
                             <option value="Yes">Yes</option>
@@ -543,7 +543,7 @@
                     <div class="col-md-6">
                       <div class="card symptom-card mb-3">
                         <div class="card-body">
-                          <h6 class="card-title">Muscle weakness?</h6>
+                          <h6 class="card-title">পেশীর দুর্বলতা?</h6>
                           <select class="form-select" id="partial_paresis" name="partial_paresis">
                             <option value="">Select option</option>
                             <option value="Yes">Yes</option>
@@ -556,7 +556,7 @@
                     <div class="col-md-6">
                       <div class="card symptom-card mb-3">
                         <div class="card-body">
-                          <h6 class="card-title">Muscle stiffness?</h6>
+                          <h6 class="card-title">পেশী শক্ত হয়ে যাওয়া?</h6>
                           <select class="form-select" id="muscle_stiffness" name="muscle_stiffness">
                             <option value="">Select option</option>
                             <option value="Yes">Yes</option>
@@ -569,7 +569,7 @@
                     <div class="col-md-6">
                       <div class="card symptom-card mb-3">
                         <div class="card-body">
-                          <h6 class="card-title">Hair loss?</h6>
+                          <h6 class="card-title">চুল পড়া?</h6>
                           <select class="form-select" id="Alopecia" name="Alopecia">
                             <option value="">Select option</option>
                             <option value="Yes">Yes</option>
@@ -582,7 +582,7 @@
                     <div class="col-md-6">
                       <div class="card symptom-card mb-3">
                         <div class="card-body">
-                          <h6 class="card-title">Overweight?</h6>
+                          <h6 class="card-title">ওজন বেশি?</h6>
                           <select class="form-select" id="Obesity" name="Obesity">
                             <option value="">Select option</option>
                             <option value="Yes">Yes</option>
@@ -597,7 +597,7 @@
 
               <div class="text-center mt-4">
                 <button type="submit" class="btn btn-primary btn-lg">
-                  <i class="fas fa-heartbeat me-2"></i> Check Results
+                  <i class="fas fa-heartbeat me-2"></i> ফলাফল দেখুন
                 </button>
               </div>
             </form>
@@ -606,16 +606,16 @@
           <div class="tab-pane fade" id="history" role="tabpanel">
             <div class="text-center py-5">
               <i class="fas fa-history feature-icon"></i>
-              <h4>Assessment History</h4>
-              <p class="text-muted">Your previous assessments will appear here</p>
+              <h4>মূল্যায়নের ইতিহাস</h4>
+              <p class="text-muted">আপনার পূর্ববর্তী মূল্যায়নসমূহ এখানে দেখাবে</p>
               <div class="card mt-4">
                 <div class="card-body">
                   <div class="d-flex justify-content-between">
                     <div>
-                      <h6>Assessment #1</h6>
-                      <small class="text-muted">June 15, 2023</small>
+                      <h6>মূল্যায়ন #১</h6>
+                      <small class="text-muted">১৫ জুন, ২০২৩</small>
                     </div>
-                    <span class="badge bg-success">Low Risk</span>
+                    <span class="badge bg-success">কম ঝুঁকি</span>
                   </div>
                 </div>
               </div>
@@ -623,10 +623,10 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between">
                     <div>
-                      <h6>Assessment #2</h6>
-                      <small class="text-muted">May 28, 2023</small>
+                      <h6>মূল্যায়ন #২</h6>
+                      <small class="text-muted">২৮ মে, ২০২৩</small>
                     </div>
-                    <span class="badge bg-warning text-dark">Medium Risk</span>
+                    <span class="badge bg-warning text-dark">মাঝারি ঝুঁকি</span>
                   </div>
                 </div>
               </div>
@@ -641,28 +641,28 @@
               
               <div class="card mt-4">
                 <div class="card-body text-start">
-                  <h5 class="card-title">Personal Information</h5>
+                  <h5 class="card-title">ব্যক্তিগত তথ্য</h5>
                   <div class="mb-3">
-                    <label class="form-label">Age</label>
+                    <label class="form-label">বয়স</label>
                     <input type="number" class="form-control" id="profile-age" value="32">
                   </div>
                   <div class="mb-3">
-                    <label class="form-label">Gender</label>
+                    <label class="form-label">লিঙ্গ</label>
                     <select class="form-select" id="profile-gender">
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                       <option value="Other">Other</option>
                     </select>
                   </div>
-                  <button class="btn btn-primary mt-2">Update Profile</button>
+                  <button class="btn btn-primary mt-2">প্রোফাইল আপডেট করুন</button>
                 </div>
               </div>
               
               <div class="card mt-3">
                 <div class="card-body text-start">
-                  <h5 class="card-title">Account Settings</h5>
-                  <button class="btn btn-outline-primary w-100 mb-2">Change Password</button>
-                  <button class="btn btn-outline-danger w-100" onclick="logout()">Logout</button>
+                  <h5 class="card-title">অ্যাকাউন্ট সেটিংস</h5>
+                  <button class="btn btn-outline-primary w-100 mb-2">পাসওয়ার্ড পরিবর্তন করুন</button>
+                  <button class="btn btn-outline-danger w-100" onclick="logout()">লগআউট</button>
                 </div>
               </div>
             </div>
@@ -677,9 +677,9 @@
             <div class="card feature-card h-100">
               <div class="card-body">
                 <i class="fas fa-heartbeat feature-icon"></i>
-                <h4>Risk Assessment</h4>
-                <p>Check your diabetes risk based on symptoms and health data</p>
-                <button class="btn btn-primary" onclick="showAssessment()">Take Assessment</button>
+                <h4>ঝুঁকি মূল্যায়ন</h4>
+                <p>উপসর্গ ও স্বাস্থ্য তথ্যের ভিত্তিতে আপনার ডায়াবেটিস ঝুঁকি যাচাই করুন</p>
+                <button class="btn btn-primary" onclick="showAssessment()">মূল্যায়ন করুন</button>
               </div>
             </div>
           </div>
@@ -687,9 +687,9 @@
             <div class="card feature-card h-100">
               <div class="card-body">
                 <i class="fas fa-utensils feature-icon"></i>
-                <h4>Diet Plans</h4>
-                <p>Personalized meal plans to help manage your blood sugar</p>
-                <button class="btn btn-primary" onclick="showDiet()">View Plans</button>
+                <h4>ডায়েট প্ল্যান</h4>
+                <p>রক্তের শর্করা নিয়ন্ত্রণে সহায়ক ব্যক্তিগত খাদ্য পরিকল্পনা</p>
+                <button class="btn btn-primary" onclick="showDiet()">প্ল্যান দেখুন</button>
               </div>
             </div>
           </div>
@@ -697,9 +697,9 @@
             <div class="card feature-card h-100">
               <div class="card-body">
                 <i class="fas fa-running feature-icon"></i>
-                <h4>Exercise Guides</h4>
-                <p>Workout routines designed for diabetes prevention</p>
-                <button class="btn btn-primary" onclick="showExercise()">Get Started</button>
+                <h4>ব্যায়াম নির্দেশিকা</h4>
+                <p>ডায়াবেটিস প্রতিরোধে উপযোগী ব্যায়াম রুটিন</p>
+                <button class="btn btn-primary" onclick="showExercise()">শুরু করুন</button>
               </div>
             </div>
           </div>
@@ -708,10 +708,10 @@
         <!-- User Health Plans Todo List -->
         <div class="card mb-5">
           <div class="card-body">
-            <h4 class="card-title">Your Health Plans (To-Do List)</h4>
+            <h4 class="card-title">আপনার স্বাস্থ্য পরিকল্পনা (টু-ডু তালিকা)</h4>
             <form id="todo-form" class="mb-3 d-flex gap-2">
-              <input type="text" id="todo-input" class="form-control" placeholder="Add a new plan..." required>
-              <button type="submit" class="btn btn-primary">Add</button>
+              <input type="text" id="todo-input" class="form-control" placeholder="নতুন পরিকল্পনা যোগ করুন..." required>
+              <button type="submit" class="btn btn-primary">যোগ করুন</button>
             </form>
             <ul id="todo-list" class="list-group"></ul>
           </div>
@@ -724,29 +724,29 @@
       <div class="container">
         <div class="row">
           <div class="col-md-4 mb-4 mb-md-0">
-            <h5>DiabEase</h5>
-            <p>Your partner in diabetes prevention and management.</p>
+            <h5>ডায়াবেটিসগার্ড</h5>
+            <p>ডায়াবেটিস প্রতিরোধ ও ব্যবস্থাপনায় আপনার সঙ্গী।</p>
           </div>
           <div class="col-md-4 mb-4 mb-md-0">
-            <h5>Quick Links</h5>
+            <h5>দ্রুত লিঙ্ক</h5>
             <ul class="list-unstyled">
-              <li><a href="#" onclick="showHome()" class="text-white">Home</a></li>
-              <li><a href="#" onclick="showAbout()" class="text-white">Hospitals</a></li>
-              <li><a href="#" onclick="showDiet()" class="text-white">Diet Plans</a></li>
-              <li><a href="#" onclick="showExercise()" class="text-white">Exercise</a></li>
+              <li><a href="#" onclick="showHome()" class="text-white">হোম</a></li>
+              <li><a href="#" onclick="showAbout()" class="text-white">হাসপাতাল</a></li>
+              <li><a href="#" onclick="showDiet()" class="text-white">ডায়েট প্ল্যান</a></li>
+              <li><a href="#" onclick="showExercise()" class="text-white">ব্যায়াম</a></li>
             </ul>
           </div>
           <div class="col-md-4">
-            <h5>Contact Us</h5>
+            <h5>যোগাযোগ করুন</h5>
             <ul class="list-unstyled">
               <li><i class="fas fa-envelope me-2"></i> info@diabease.com</li>
-              <li><i class="fas fa-phone me-2"></i> +1 (555) 123-4567</li>
-              <li><i class="fas fa-map-marker-alt me-2"></i> 123 Health St, Wellness City</li>
+              <li><i class="fas fa-phone me-2"></i> +১ (৫৫৫) ১২৩-৪৫৬৭</li>
+              <li><i class="fas fa-map-marker-alt me-2"></i> ১২৩ হেলথ স্ট্রিট, ওয়েলনেস সিটি</li>
             </ul>
           </div>
         </div>
         <hr class="my-4 bg-light">
-        <p>&copy; 2023 DiabEase. All rights reserved.</p>
+  <p>&copy; ২০২৩ ডায়াবেটিসগার্ড। সর্বস্বত্ব সংরক্ষিত।</p>
         <div class="social-icons">
           <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
           <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>

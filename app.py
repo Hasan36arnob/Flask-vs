@@ -1081,13 +1081,13 @@ def predict():
         adjusted_probability = probability_positive * (adjusted_confidence / 100)
         
         # Risk categorization
-        if adjusted_probability > 40:
+        if adjusted_probability > 70:
             risk_category, color = "Very High Risk", "#8B0000"
-        elif adjusted_probability > 25:
+        elif adjusted_probability > 55:
             risk_category, color = "High Risk", "#FF0000" 
-        elif adjusted_probability > 20:
+        elif adjusted_probability > 40:
             risk_category, color = "Moderate Risk", "#FFA500"
-        elif adjusted_probability > 15:
+        elif adjusted_probability > 35:
             risk_category, color = "Low Risk", "#FFFF00"
         else:
             risk_category, color = "Very Low Risk", "#008000"
