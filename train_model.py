@@ -67,12 +67,49 @@ y_pred = stacking_model.predict(X_test)
 print("Accuracy:", accuracy_score(y_test, y_pred))
 print("Classification Report:\n", classification_report(y_test, y_pred))
 
-# -------------------------------
-# Save all files for Flask + SHAP
-# -------------------------------
-joblib.dump(stacking_model, "stacking_model.pkl")
-joblib.dump(label_encoders, "label_encoders.pkl")
-joblib.dump(X_train.values, "X_train.pkl")  # Save as numpy array
-joblib.dump(list(X.columns), "feature_names.pkl")
+import matplotlib.pyplot as plt
+from sklearn.metrics import roc_curve, auc, RocCurveDisplay
+from sklearn.preprocessing import label_binarize
 
-print("\n✅ Files saved successfully")
+# Binarize the output for ROC (needed for multiclass)
+y_test_bin = label_binarize(y_test, classes=np.unique(y))
+n_classes = y_test_bin.shape[1]
+
+# Get predicted probabilities
+y_proba = stacking_model.predict_proba(X_test)
+
+# Compute ROC curve and ROC area for each class
+fpr = dict()
+tpr = dict()
+roc_auc = dict()
+
+for i in range(n_classes):
+    fpr[i], tpr[i], _ = roc_curve(y_test_bin[:, i], y_proba[:, i])
+    roc_auc[i] = auc(fpr[i], tpr[i])
+
+# Plot all ROC curves
+plt.figure(figsize=(8, 6))
+colors = ['blue', 'red', 'green']  # Adjust based on number of classes
+
+for i, color in zip(range(n_classes), colors):
+    RocCurveDisplay.from_predictions(
+        y_test_bin[:, i],
+        y_proba[:, i],
+        name=f'ROC curve (class {i}, AUC = {roc_auc[i]:.2f})',
+        color=color,
+        ax=plt.gca()
+    )
+
+plt.plot([0, 1], [0, 1], 'k--', lw=2)
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver Operating Characteristic (ROC) Curve')
+plt.legend(loc="lower right")
+plt.show()
+
+# Print AUC values
+print("\nAUC Scores:")
+for i in range(n_classes):
+    print(f"Class {i}: {roc_auc[i]:.4f}")

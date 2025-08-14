@@ -1,100 +1,115 @@
-import joblib
 import pandas as pd
-import numpy as np
-from sklearn.ensemble import RandomForestClassifier, StackingClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.linear_model import LogisticRegression
 from xgboost import XGBClassifier
-from sklearn.utils import resample
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import StackingClassifier
+from sklearn.metrics import accuracy_score, classification_report
+import joblib
+import numpy as np
 
-# 1. Load and prepare data
-print("Loading and preparing data...")
+# -------------------------------
+# Load dataset
+# -------------------------------
 data = pd.read_csv('diabetess.csv')
-feature_names = joblib.load('feature_names.pkl')
-label_encoders = joblib.load('label_encoders.pkl')
+data = data.drop_duplicates()
 
-# 2. Clean data - remove asymptomatic positives
-print("\nCleaning data...")
-symptom_cols = [col for col in data.columns if col not in ['Age', 'Gender', 'class']]
-asymptomatic_pos = data[(data[symptom_cols] == 'No').all(axis=1) & (data['class'] == 'Positive')]
-data_clean = data.drop(asymptomatic_pos.index)
-print(f"Removed {len(asymptomatic_pos)} problematic cases")
+# -------------------------------
+# Encode categorical features
+# -------------------------------
+label_encoders = {}
+for column in data.columns:
+    if data[column].dtype == 'object':
+        le = LabelEncoder()
+        data[column] = le.fit_transform(data[column])
+        label_encoders[column] = le
 
-# 3. Balance classes
-print("\nBalancing classes...")
-negatives = data_clean[data_clean['class'] == 'Negative']
-positives = data_clean[data_clean['class'] == 'Positive']
+# -------------------------------
+# Features & Target
+# -------------------------------
+X = data.drop('class', axis=1)
+y = data['class']
 
-negatives_upsampled = resample(negatives,
-                              replace=True,
-                              n_samples=len(positives),
-                              random_state=42)
-balanced_data = pd.concat([positives, negatives_upsampled]).sample(frac=1)
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
 
-# 4. Rebuild model with proper XGBoost config
-print("\nRebuilding model...")
-
-def preprocess(df):
-    df_processed = df.copy()
-    for col in df.columns:
-        if col in label_encoders:
-            df_processed[col] = label_encoders[col].transform(df[col])
-    return df_processed
-
-def constrained_predict(model, X):
-    probas = model.predict_proba(X)
-    symptom_cols = [col for col in X.columns if col not in ['Age', 'Gender']]
-    no_symptoms = (X[symptom_cols] == 0).all(axis=1)
-    probas[no_symptoms, 1] = 0  # Force 0% risk if no symptoms
-    return (probas[:, 1] > 0.5).astype(int)
-
-X = balanced_data.drop('class', axis=1)
-y = balanced_data['class']
-
-X_processed = preprocess(X)
-y_encoded = label_encoders['class'].transform(y)
-
-# Updated XGBoost config without deprecated parameters
+# -------------------------------
+# Base learners & meta model
+# -------------------------------
 base_models = [
-    ('rf', RandomForestClassifier(class_weight='balanced', random_state=42)),
-    ('dt', DecisionTreeClassifier(class_weight='balanced', random_state=42)),
-    ('xgb', XGBClassifier(scale_pos_weight=len(y_encoded[y_encoded==0])/len(y_encoded[y_encoded==1]),
-                         eval_metric='logloss'))
+    ('rf', RandomForestClassifier(n_estimators=100, random_state=42)),
+    ('dt', DecisionTreeClassifier(random_state=42)),
+    ('xgb', XGBClassifier(use_label_encoder=False, eval_metric='logloss', random_state=42))
 ]
+meta_model = LogisticRegression(max_iter=1000, random_state=42)
 
-meta_model = LogisticRegression(class_weight='balanced', max_iter=1000)
-model = StackingClassifier(estimators=base_models, final_estimator=meta_model, cv=5)
+# -------------------------------
+# Stacking model
+# -------------------------------
+stacking_model = StackingClassifier(
+    estimators=base_models,
+    final_estimator=meta_model,
+    cv=5,
+    stack_method='predict_proba'  # Important for SHAP compatibility
+)
 
-model.fit(X_processed, y_encoded)
+# Train model
+stacking_model.fit(X_train, y_train)
 
-# 5. Test the fixed model
-print("\nTesting model...")
-test_cases = [
-    [65, 'Female'] + ['No']*13,  # Asymptomatic
-    [40, 'Male', 'Yes', 'Yes'] + ['No']*11  # Symptomatic
-]
+# -------------------------------
+# Evaluation
+# -------------------------------
+y_pred = stacking_model.predict(X_test)
+print("Accuracy:", accuracy_score(y_test, y_pred))
+print("Classification Report:\n", classification_report(y_test, y_pred))
 
-for i, case in enumerate(test_cases):
-    case_df = pd.DataFrame([case], columns=feature_names)
-    processed_case = preprocess(case_df)
-    
-    orig_proba = model.predict_proba(processed_case)[0][1]
-    constrained_pred = constrained_predict(model, processed_case)[0]
-    
-    print(f"\nTest Case {i+1}:")
-    print("Features:", case[:5], "...")  # Show first 5 features for brevity
-    print("Original probability:", f"{orig_proba*100:.1f}%")
-    print("Constrained prediction:", "Positive" if constrained_pred else "Negative")
+import matplotlib.pyplot as plt
+from sklearn.metrics import roc_curve, auc, RocCurveDisplay
+from sklearn.preprocessing import label_binarize
 
-# 6. Save everything
-print("\nSaving final model...")
-joblib.dump(model, 'diabetes_model_final.pkl')
-joblib.dump(constrained_predict, 'predict_function.pkl')
-joblib.dump(label_encoders, 'label_encoders_final.pkl')
-joblib.dump(feature_names, 'feature_names_final.pkl')
+# Binarize the output for ROC (needed for multiclass)
+y_test_bin = label_binarize(y_test, classes=np.unique(y))
+n_classes = y_test_bin.shape[1]
 
-print("\n✅ Final model saved with:")
-print("- diabetes_model_final.pkl")
-print("- predict_function.pkl")
-print("- label_encoders_final.pkl")
-print("- feature_names_final.pkl")
+# Get predicted probabilities
+y_proba = stacking_model.predict_proba(X_test)
+
+# Compute ROC curve and ROC area for each class
+fpr = dict()
+tpr = dict()
+roc_auc = dict()
+
+for i in range(n_classes):
+    fpr[i], tpr[i], _ = roc_curve(y_test_bin[:, i], y_proba[:, i])
+    roc_auc[i] = auc(fpr[i], tpr[i])
+
+# Plot all ROC curves
+plt.figure(figsize=(8, 6))
+colors = ['blue', 'red', 'green']  # Adjust based on number of classes
+
+for i, color in zip(range(n_classes), colors):
+    RocCurveDisplay.from_predictions(
+        y_test_bin[:, i],
+        y_proba[:, i],
+        name=f'ROC curve (class {i}, AUC = {roc_auc[i]:.2f})',
+        color=color,
+        ax=plt.gca()
+    )
+
+plt.plot([0, 1], [0, 1], 'k--', lw=2)
+plt.xlim([0.0, 1.0])
+plt.ylim([0.0, 1.05])
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Receiver Operating Characteristic (ROC) Curve')
+plt.legend(loc="lower right")
+plt.show()
+
+# Print AUC values
+print("\nAUC Scores:")
+for i in range(n_classes):
+    print(f"Class {i}: {roc_auc[i]:.4f}")
