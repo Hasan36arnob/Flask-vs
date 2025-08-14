@@ -1,67 +1,158 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ফলাফল</title>
-    <!-- Bootstrap CSS -->
+    <title>Prediction Results | Diabetes Risk Assessment</title>
+    <!-- Bootstrap 5.3 CSS -->
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- Font Awesome Icons -->
+    <!-- Font Awesome -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
       rel="stylesheet"
     />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <!-- Custom CSS -->
     <style>
       :root {
         --primary-green: #198754;
-        --dark-green: #0f5132;
+        --dark-green: #0a3622;
         --light-green: #d1e7dd;
+        --gradient-green: linear-gradient(135deg, #198754 0%, #0a3622 100%);
         --black: #212529;
         --gray-dark: #343a40;
+        --blue: #0d6efd;
+        --indigo: #6610f2;
+        --purple: #6f42c1;
+        --pink: #d63384;
+        --red: #dc3545;
+        --orange: #fd7e14;
+        --yellow: #ffc107;
+        --teal: #20c997;
+        --cyan: #0dcaf0;
+        --white: #fff;
+        --gray-100: #f8f9fa;
+        --gray-200: #e9ecef;
+        --gray-300: #dee2e6;
+        --gray-400: #ced4da;
+        --gray-500: #adb5bd;
+        --gray-600: #6c757d;
+        --gray-700: #495057;
+        --gray-800: #343a40;
+        --gray-900: #212529;
+        --font-primary: 'Poppins', sans-serif;
+        --font-secondary: 'Open Sans', sans-serif;
+        --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+        --border-radius: 0.375rem;
+        --border-radius-lg: 0.5rem;
+        --border-radius-xl: 1rem;
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       }
 
       body {
-        background-color: #f8f9fa;
+        font-family: var(--font-secondary);
+        background-color: var(--gray-100);
         min-height: 100vh;
         display: flex;
         flex-direction: column;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        color: var(--black);
+        color: var(--gray-800);
+        line-height: 1.6;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-primary);
+        font-weight: 600;
       }
 
       .navbar {
         background-color: var(--black) !important;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        box-shadow: var(--shadow-sm);
+        padding: 0.75rem 0;
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .navbar-brand i {
+        margin-right: 0.5rem;
       }
 
       .navbar-brand,
       .nav-link {
-        color: var(--light-green) !important;
+        color: var(--white) !important;
+        transition: var(--transition);
+      }
+
+      .nav-link {
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: var(--border-radius);
+        margin: 0 0.25rem;
       }
 
       .nav-link:hover {
-        color: white !important;
+        color: var(--light-green) !important;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .nav-link.active {
+        color: var(--light-green) !important;
+        background-color: rgba(25, 135, 84, 0.2);
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        padding: 3rem 0;
       }
 
       .result-container {
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        padding: 2.5rem;
+        background: var(--white);
+        border-radius: var(--border-radius-xl);
+        box-shadow: var(--shadow-lg);
+        padding: 3rem;
         margin: 2rem auto;
-        border: 2px solid var(--primary-green);
-        max-width: 900px;
+        max-width: 1000px;
+        border: none;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .result-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 8px;
+        background: var(--gradient-green);
       }
 
       .page-title {
         color: var(--black);
+        font-weight: 700;
+        margin-bottom: 2.5rem;
         position: relative;
-        padding-bottom: 1rem;
-        margin-bottom: 2rem;
+        padding-bottom: 1.25rem;
+        text-align: center;
+        font-size: 2.25rem;
+      }
+
+      .page-title i {
+        margin-right: 0.75rem;
+        color: var(--primary-green);
       }
 
       .page-title::after {
@@ -70,227 +161,633 @@
         bottom: 0;
         left: 50%;
         transform: translateX(-50%);
-        width: 100px;
-        height: 4px;
-        background: var(--primary-green);
-        border-radius: 2px;
+        width: 120px;
+        height: 5px;
+        background: var(--gradient-green);
+        border-radius: 5px;
       }
 
-      .feature-list {
-        background-color: var(--light-green);
-        border-radius: 15px;
-        padding: 1.5rem;
-        margin: 1.5rem 0;
-        border: 1px solid var(--primary-green);
+      /* Risk Result Card */
+      .risk-card {
+        padding: 2.5rem;
+        border-radius: var(--border-radius-xl);
+        margin: 2.5rem 0;
+        transition: var(--transition);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .risk-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 8px;
+      }
+
+      .risk-card.low-risk {
+        background-color: rgba(209, 231, 221, 0.3);
+        border: 2px solid var(--primary-green);
+      }
+
+      .risk-card.low-risk::before {
+        background: var(--primary-green);
+      }
+
+      .risk-card.moderate-risk {
+        background-color: rgba(255, 243, 205, 0.3);
+        border: 2px solid var(--yellow);
+      }
+
+      .risk-card.moderate-risk::before {
+        background: var(--yellow);
+      }
+
+      .risk-card.high-risk {
+        background-color: rgba(248, 215, 218, 0.3);
+        border: 2px solid var(--red);
+      }
+
+      .risk-card.high-risk::before {
+        background: var(--red);
+      }
+
+      .risk-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .risk-card.low-risk .risk-icon {
+        color: var(--primary-green);
+      }
+
+      .risk-card.moderate-risk .risk-icon {
+        color: var(--yellow);
+      }
+
+      .risk-card.high-risk .risk-icon {
+        color: var(--red);
+      }
+
+      .risk-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+      }
+
+      .risk-percentage {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 1rem 0;
+      }
+
+      .risk-card.low-risk .risk-percentage {
+        color: var(--primary-green);
+      }
+
+      .risk-card.moderate-risk .risk-percentage {
+        color: var(--yellow);
+      }
+
+      .risk-card.high-risk .risk-percentage {
+        color: var(--red);
+      }
+
+      .risk-description {
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* Stats Grid */
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 3rem 0;
+      }
+
+      .stat-card {
+        background: var(--white);
+        border-radius: var(--border-radius-lg);
+        padding: 2rem 1.5rem;
+        text-align: center;
+        box-shadow: var(--shadow-sm);
+        border: none;
+        transition: var(--transition);
+        border-top: 4px solid var(--primary-green);
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow);
+      }
+
+      .stat-icon {
+        font-size: 2rem;
+        color: var(--primary-green);
+        margin-bottom: 1rem;
+      }
+
+      .stat-value {
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: var(--dark-green);
+        margin: 0.5rem 0;
+      }
+
+      .stat-label {
+        color: var(--gray-600);
+        font-weight: 500;
+        font-size: 1rem;
+      }
+
+      /* Feature Importance */
+      .feature-section {
+        margin: 3rem 0;
+      }
+
+      .section-title {
+        font-size: 1.75rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--gray-800);
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title i {
+        margin-right: 0.75rem;
+        color: var(--primary-green);
+      }
+
+      .section-subtitle {
+        color: var(--gray-600);
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+      }
+
+      .feature-importance-container {
+        background: var(--white);
+        border-radius: var(--border-radius-lg);
+        padding: 2rem;
+        box-shadow: var(--shadow-sm);
+        margin-bottom: 2rem;
       }
 
       .feature-item {
-        padding: 1rem;
-        border-bottom: 1px solid rgba(15, 81, 50, 0.1);
+        background: var(--white);
+        border-radius: var(--border-radius);
+        padding: 1.25rem 1.75rem;
+        margin: 0.75rem 0;
+        border-left: 4px solid var(--primary-green);
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        transition: all 0.3s ease;
+        flex-direction: column;
       }
 
       .feature-item:hover {
-        background-color: rgba(255, 255, 255, 0.5);
-        transform: translateX(5px);
+        transform: translateY(-3px);
+        box-shadow: var(--shadow);
       }
 
-      .feature-item:last-child {
-        border-bottom: none;
+      .feature-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
       }
 
-      .progress-bar-custom {
-        height: 12px;
-        border-radius: 6px;
-        margin-top: 0.5rem;
-        background-color: rgba(255, 255, 255, 0.5);
-        width: 200px;
+      .feature-name {
+        font-weight: 600;
+        color: var(--gray-800);
+        font-size: 1.1rem;
       }
 
-      .progress-bar {
-        background-color: var(--primary-green);
+      .feature-value {
+        font-weight: 600;
+        color: var(--primary-green);
+        font-size: 1rem;
+      }
+
+      .importance-bar-container {
+        width: 100%;
+        height: 10px;
+        background: var(--gray-200);
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 0.5rem 0;
+      }
+
+      .importance-bar {
+        height: 100%;
+        border-radius: 5px;
+        background: var(--gradient-green);
         transition: width 1s ease-in-out;
       }
 
-      .action-button {
-        padding: 0.8rem 2rem;
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin: 3rem 0 1rem;
+      }
+
+      .btn-custom {
+        padding: 0.875rem 2rem;
         font-weight: 600;
-        transition: all 0.3s ease;
-        border: 2px solid transparent;
+        border-radius: var(--border-radius-lg);
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 200px;
+      }
+
+      .btn-custom i {
+        margin-right: 0.5rem;
       }
 
       .btn-home {
         background-color: var(--black);
-        color: white;
-        border-color: var(--black);
+        color: var(--white);
+        border: 2px solid var(--black);
       }
 
       .btn-home:hover {
-        background-color: var(--primary-green);
-        border-color: var(--primary-green);
-        transform: translateY(-2px);
-        color: white;
+        background-color: var(--gray-800);
+        border-color: var(--gray-800);
+        color: var(--white);
+        transform: translateY(-3px);
       }
 
       .btn-suggest {
         background-color: var(--primary-green);
-        color: white;
+        color: var(--white);
+        border: 2px solid var(--primary-green);
       }
 
       .btn-suggest:hover {
         background-color: var(--dark-green);
-        transform: translateY(-2px);
-        color: white;
+        border-color: var(--dark-green);
+        color: var(--white);
+        transform: translateY(-3px);
       }
 
-      .result-alert {
-        border-radius: 15px;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
+      .btn-new {
+        background-color: transparent;
+        color: var(--primary-green);
         border: 2px solid var(--primary-green);
-        background-color: var(--light-green);
-        color: var(--dark-green);
-        font-size: 1.1rem;
-        font-weight: 500;
       }
 
-      footer {
+      .btn-new:hover {
+        background-color: var(--primary-green);
+        color: var(--white);
+        transform: translateY(-3px);
+      }
+
+      /* Footer */
+      .footer {
         background-color: var(--black);
-        padding: 1rem 0;
+        padding: 2rem 0;
         margin-top: auto;
+        color: var(--white);
+      }
+
+      .footer-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .footer-logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .footer-logo i {
+        color: var(--red);
+        margin-right: 0.5rem;
+      }
+
+      .footer-text {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        max-width: 600px;
+        margin: 0 auto 1rem;
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .footer-link {
+        color: var(--white);
+        opacity: 0.8;
+        transition: var(--transition);
+      }
+
+      .footer-link:hover {
         color: var(--light-green);
+        opacity: 1;
+        text-decoration: none;
       }
 
-      .feature-name {
-        color: var(--dark-green);
-        font-size: 1.1rem;
-      }
-
-      .section-title {
-        color: var(--dark-green);
-        margin-bottom: 1.5rem;
-        font-weight: 600;
-      }
-
-      @keyframes slideIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .result-container {
+          padding: 2rem 1.5rem;
         }
-        to {
-          opacity: 1;
-          transform: translateY(0);
+        
+        .page-title {
+          font-size: 1.75rem;
+        }
+        
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+        
+        .risk-card {
+          padding: 1.5rem;
+        }
+        
+        .action-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+        
+        .btn-custom {
+          width: 100%;
         }
       }
 
-      .animate-slide {
-        animation: slideIn 0.5s ease-out;
+      /* Animations */
+      .animate-delay-1 {
+        animation-delay: 0.2s;
+      }
+
+      .animate-delay-2 {
+        animation-delay: 0.4s;
+      }
+
+      .animate-delay-3 {
+        animation-delay: 0.6s;
+      }
+
+      /* Tooltip styles */
+      .tooltip-inner {
+        background-color: var(--dark-green);
+        padding: 0.5rem 1rem;
+        border-radius: var(--border-radius);
+        font-size: 0.875rem;
+      }
+
+      .bs-tooltip-auto[data-popper-placement^=top] .tooltip-arrow::before, 
+      .bs-tooltip-top .tooltip-arrow::before {
+        border-top-color: var(--dark-green);
+      }
+
+      /* Progress animation */
+      @keyframes progressAnimation {
+        0% { width: 0; opacity: 0.5; }
+        100% { width: var(--progress-width); opacity: 1; }
+      }
+
+      .progress-animate {
+        animation: progressAnimation 1.5s ease-out forwards;
       }
     </style>
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand text-success" href="/">Diabetes Care</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link text-success" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-success" href="/about">Hospitals</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-success" href="/contact">Resources</a>
-            </li>
 
-            <li class="nav-item">
-              <a class="nav-link text-success" href="/diet">Diet</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link text-success" href="/exercise">Exercise</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link text-success" href="/doctor">Doctor</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
 
     <!-- Main Content -->
-    <div class="container animate-slide">
-      <div class="result-container">
-        <h1 class="text-center page-title">
-          <i class="fas fa-chart-line me-2"></i>ফলাফল
-        </h1>
+    <main class="main-content">
+      <div class="container">
+        <div class="result-container animate__animated animate__fadeIn">
+          <h1 class="page-title">
+            <i class="fas fa-clipboard-check"></i>Your Diabetes Risk Assessment
+          </h1>
 
-        <div class="result-alert text-center">
-          <i class="fas fa-info-circle me-2"></i>
-          {{ prediction_text | safe }}
-        </div>
+          {% if prediction_text %}
+          <!-- Risk Assessment Result -->
+          <div class="risk-card animate__animated animate__fadeInUp {{ 'low-risk' if risk_category in ['Very Low Risk', 'Low Risk'] else 'moderate-risk' if risk_category == 'Moderate Risk' else 'high-risk' }}">
+            <div class="risk-icon">
+              {% if risk_category in ['Very Low Risk', 'Low Risk'] %}
+              <i class="fas fa-check-circle"></i>
+              {% elif risk_category == 'Moderate Risk' %}
+              <i class="fas fa-exclamation-triangle"></i>
+              {% else %}
+              <i class="fas fa-exclamation-circle"></i>
+              {% endif %}
+            </div>
+            <h2 class="risk-title">{{ risk_category }}</h2>
+            <div class="risk-percentage">{{ "%.1f"|format(probability) }}%</div>
+            <p class="risk-description">
+              {% if risk_category in ['Very Low Risk', 'Low Risk'] %}
+              Your risk of developing diabetes is below average. Maintain your healthy lifestyle!
+              {% elif risk_category == 'Moderate Risk' %}
+              You have a moderate risk of developing diabetes. Consider lifestyle changes.
+              {% else %}
+              You have an elevated risk of developing diabetes. Please consult a healthcare professional.
+              {% endif %}
+            </p>
+          </div>
 
-        <div class="feature-section">
-          <h2 class="section-title">
-            <i class="fas fa-star me-2"></i>গুরুত্বপূর্ণ বৈশিষ্ট্যসমূহ:
-          </h2>
-          <div class="feature-list">
-            {% for feature, importance in sorted_features %}
-            <div class="feature-item">
-              <span class="feature-name">{{ feature }}</span>
-              <div class="progress progress-bar-custom">
-                <div
-                  class="progress-bar"
-                  role="progressbar"
-                  style="width: {{ importance * 100 }}%;"
-                  aria-valuenow="{{ importance * 100 }}"
-                  aria-valuemin="0"
-                  aria-valuemax="100"
-                ></div>
+          <!-- Statistics Grid -->
+          <div class="stats-grid">
+            <div class="stat-card animate__animated animate__fadeInUp animate__delay-1s">
+              <div class="stat-icon">
+                <i class="fas fa-shield-alt"></i>
+              </div>
+              <div class="stat-value">{{ "%.1f"|format(confidence_score) }}%</div>
+              <div class="stat-label">Confidence Level</div>
+            </div>
+            <div class="stat-card animate__animated animate__fadeInUp animate__delay-2s">
+              <div class="stat-icon">
+                <i class="fas fa-database"></i>
+              </div>
+              <div class="stat-value">{{ "%.1f"|format(data_completeness) }}%</div>
+              <div class="stat-label">Data Completeness</div>
+            </div>
+            <div class="stat-card animate__animated animate__fadeInUp animate__delay-3s">
+              <div class="stat-icon">
+                <i class="fas fa-chart-pie"></i>
+              </div>
+              <div class="stat-value">{{ "%.1f"|format(probability) }}%</div>
+              <div class="stat-label">Risk Probability</div>
+            </div>
+          </div>
+
+          <!-- Top Risk Factors -->
+          {% if top_factors %}
+          <div class="feature-section animate__animated animate__fadeIn">
+            <h3 class="section-title">
+              <i class="fas fa-chart-bar"></i>Key Influencing Factors
+            </h3>
+            <p class="section-subtitle">
+              These factors had the most significant impact on your diabetes risk assessment
+            </p>
+            
+            <div class="feature-importance-container">
+              {% for factor, importance in top_factors %}
+              <div class="feature-item">
+                <div class="feature-header">
+                  <span class="feature-name">{{ factor.replace('_', ' ').title() }}</span>
+                  <span class="feature-value">{{ "%.1f"|format(importance * 100) }}%</span>
+                </div>
+                <div class="importance-bar-container">
+                  <div class="importance-bar progress-animate" style="--progress-width: {{ importance * 100 }}%; width: 0;"></div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          <!-- All Features (Collapsible) -->
+          {% if sorted_features %}
+          <div class="feature-section animate__animated animate__fadeIn">
+            <div class="d-flex justify-content-center mb-4">
+              <button 
+                class="btn btn-outline-primary btn-lg" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                data-bs-target="#allFeatures" 
+                aria-expanded="false" 
+                aria-controls="allFeatures"
+              >
+                <i class="fas fa-chevron-down me-2"></i>View Detailed Factor Analysis
+              </button>
+            </div>
+            
+            <div class="collapse" id="allFeatures">
+              <h4 class="section-title">
+                <i class="fas fa-list-ol"></i>Complete Factor Breakdown
+              </h4>
+              <p class="section-subtitle">
+                Detailed analysis of all factors considered in your assessment
+              </p>
+              
+              <div class="feature-importance-container">
+                {% for feature, importance in sorted_features %}
+                <div class="feature-item">
+                  <div class="feature-header">
+                    <span class="feature-name">{{ feature.replace('_', ' ').title() }}</span>
+                    <span class="feature-value">{{ "%.1f"|format(importance * 100) }}%</span>
+                  </div>
+                  <div class="importance-bar-container">
+                    <div class="importance-bar progress-animate" style="--progress-width: {{ (importance / sorted_features[0][1] * 100) }}%; width: 0;"></div>
+                  </div>
+                </div>
+                {% endfor %}
               </div>
             </div>
-            {% endfor %}
+          </div>
+          {% endif %}
+
+          {% else %}
+          <div class="alert alert-danger text-center animate__animated animate__shakeX" role="alert">
+            <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+            <h4 class="alert-heading">No Results Found</h4>
+            <p class="mb-0">We couldn't process your request. Please try again.</p>
+          </div>
+          {% endif %}
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <a href="/" class="btn btn-custom btn-home animate__animated animate__fadeInUp">
+              <i class="fas fa-home"></i>Back to Home
+            </a>
+            <a href="/suggest" class="btn btn-custom btn-suggest animate__animated animate__fadeInUp">
+              <i class="fas fa-lightbulb"></i>Personalized Recommendations
+            </a>
+            <a href="/predict_page" class="btn btn-custom btn-new animate__animated animate__fadeInUp">
+              <i class="fas fa-redo"></i>New Assessment
+            </a>
           </div>
         </div>
-
-        <div class="d-flex justify-content-center gap-3 mt-4">
-          <a href="{{ back_url }}" class="btn btn-lg action-button btn-home">
-            <i class="fas fa-home me-2"></i>ব্যাক টু হোম
-          </a>
-          <a
-            href="{{ url_for('suggest') }}"
-            class="btn btn-lg action-button btn-suggest"
-          >
-            <i class="fas fa-lightbulb me-2"></i>পরামর্শ পান
-          </a>
-        </div>
       </div>
-    </div>
+    </main>
 
     <!-- Footer -->
-    <footer>
+    <footer class="footer">
       <div class="container">
-        <p class="text-center mb-0">
-          <i class="fas fa-copyright me-1"></i>ডায়াবেটিস পূর্বাভাস সিস্টেম
-          দ্বারা চালিত
-        </p>
+        <div class="footer-content">
+          <div class="footer-logo">
+            <i class="fas fa-heartbeat"></i>
+            <span>DiabetesAI</span>
+          </div>
+          <p class="footer-text">
+            Our advanced predictive model analyzes multiple health factors to assess your diabetes risk.
+            This tool is for informational purposes only and not a substitute for professional medical advice.
+          </p>
+          <div class="footer-links">
+            <a href="/privacy" class="footer-link">Privacy Policy</a>
+            <a href="/terms" class="footer-link">Terms of Service</a>
+            <a href="/contact" class="footer-link">Contact Us</a>
+          </div>
+        </div>
       </div>
     </footer>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Initialize tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+        
+        // Animate progress bars when they come into view
+        const animateOnScroll = () => {
+          const progressBars = document.querySelectorAll('.progress-animate');
+          
+          progressBars.forEach(bar => {
+            const rect = bar.getBoundingClientRect();
+            const isVisible = (rect.top <= window.innerHeight) && (rect.bottom >= 0);
+            
+            if (isVisible && !bar.classList.contains('animated')) {
+              bar.style.width = bar.style.getPropertyValue('--progress-width') + '%';
+              bar.classList.add('animated');
+            }
+          });
+        };
+        
+        // Initial check
+        animateOnScroll();
+        
+        // Check on scroll
+        window.addEventListener('scroll', animateOnScroll);
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+              behavior: 'smooth'
+            });
+          });
+        });
+      });
+    </script>
   </body>
 </html>

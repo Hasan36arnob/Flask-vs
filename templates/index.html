@@ -9,49 +9,239 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-      body {
-        background-color: #f5f5f5;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      :root {
+        --primary-color: #4e73df;
+        --secondary-color: #1cc88a;
+        --dark-color: #5a5c69;
+        --light-color: #f8f9fc;
+        --danger-color: #e74a3b;
+        --warning-color: #f6c23e;
       }
+      
+      body {
+        background-color: var(--light-color);
+        font-family: 'Poppins', sans-serif;
+        color: var(--dark-color);
+      }
+      
       .form-container {
         background-color: white;
-        border-radius: 10px;
-        padding: 30px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        padding: 40px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
         margin-top: 30px;
         margin-bottom: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
       }
-      .btn-predict {
-        padding: 10px 30px;
+      
+      .btn-primary {
+        background-color: var(--primary-color);
+        border: none;
+        padding: 12px 30px;
         font-weight: 600;
-        margin-top: 20px;
-        background-color: #28a745;
+        letter-spacing: 0.5px;
+        transition: all 0.3s;
+      }
+      
+      .btn-primary:hover {
+        background-color: #2e59d9;
+        transform: translateY(-2px);
+      }
+      
+      .btn-success {
+        background-color: var(--secondary-color);
         border: none;
       }
+      
       .result {
-        background-color: #e9ecef;
-        padding: 15px;
-        border-radius: 5px;
-        margin-bottom: 20px;
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 30px;
         font-weight: 500;
+        border-left: 5px solid var(--primary-color);
       }
+      
+      .navbar {
+        background-color: white !important;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+        padding: 1rem 0;
+      }
+      
       .navbar-brand {
         font-weight: 700;
+        color: var(--primary-color) !important;
+        font-size: 1.5rem;
       }
+      
+      .nav-link {
+        color: var(--dark-color) !important;
+        font-weight: 500;
+        margin: 0 5px;
+        transition: all 0.3s;
+      }
+      
+      .nav-link:hover {
+        color: var(--primary-color) !important;
+      }
+      
       footer {
-        background-color: #343a40;
+        background-color: var(--dark-color);
         color: white;
-        padding: 20px 0;
+        padding: 30px 0;
         margin-top: 50px;
+      }
+      
+      .auth-container {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      
+      .hidden {
+        display: none;
+      }
+      
+      .form-control, .form-select {
+        padding: 12px 15px;
+        border-radius: 8px;
+        border: 1px solid #d1d3e2;
+      }
+      
+      .form-control:focus, .form-select:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
+      }
+      
+      .input-group-text {
+        background-color: #f8f9fc;
+        border: 1px solid #d1d3e2;
+      }
+      
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 10px;
+      }
+      
+      .welcome-message {
+        font-weight: 600;
+        color: var(--primary-color);
+      }
+      
+      .feature-icon {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+      }
+      
+      .feature-card {
+        transition: all 0.3s;
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+      }
+      
+      .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1.5rem 0 rgba(58, 59, 69, 0.2);
+      }
+      
+      .gradient-bg {
+        background: linear-gradient(135deg, var(--primary-color) 0%, #224abe 100%);
+        color: white;
+      }
+      
+      .hero-section {
+        padding: 100px 0;
+        background: linear-gradient(rgba(78, 115, 223, 0.8), rgba(78, 115, 223, 0.8)), url('https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+        background-size: cover;
+        background-position: center;
+        color: white;
+        border-radius: 0 0 15px 15px;
+      }
+      
+      .risk-meter {
+        height: 20px;
+        border-radius: 10px;
+        background: linear-gradient(to right, #1cc88a, #f6c23e, #e74a3b);
+        position: relative;
+        margin: 20px 0;
+      }
+      
+      .risk-indicator {
+        position: absolute;
+        top: -10px;
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 50%;
+        border: 3px solid var(--dark-color);
+        transform: translateX(-50%);
+      }
+      
+      .logout-btn {
+        cursor: pointer;
+        color: var(--danger-color) !important;
+      }
+      
+      .tab-content {
+        padding: 20px 0;
+      }
+      
+      .nav-pills .nav-link.active {
+        background-color: var(--primary-color);
+      }
+      
+      .symptom-card {
+        border-radius: 10px;
+        margin-bottom: 15px;
+        transition: all 0.3s;
+      }
+      
+      .symptom-card:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+      }
+      
+      .progress {
+        height: 10px;
+        border-radius: 5px;
+      }
+      
+      .progress-bar {
+        background-color: var(--primary-color);
+      }
+      
+      @media (max-width: 768px) {
+        .form-container {
+          padding: 20px;
+        }
+        
+        .hero-section {
+          padding: 60px 0;
+        }
       }
     </style>
   </head>
   <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- Navigation (always visible) -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
       <div class="container">
-        <a class="navbar-brand" href="#">Diabetes Care</a>
+        <a class="navbar-brand" href="/">
+          <i class="fas fa-heartbeat me-2"></i>DiabEase
+        </a>
         <button
           class="navbar-toggler"
           type="button"
@@ -63,22 +253,25 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/">Home</a>
+              <a class="nav-link" href="/" ><i class="fas fa-home me-1"></i> Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/about">Hospital</a>
+              <a class="nav-link" href="/about"><i class="fas fa-hospital me-1"></i> Hospitals</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/contact">Help</a>
+              <a class="nav-link" href="/diet"><i class="fas fa-utensils me-1"></i> Diet</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/diet">Diet Plan</a>
+              <a class="nav-link" href="/exercise"><i class="fas fa-running me-1"></i> Exercise</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/exercise">Exercise</a>
+              <a class="nav-link" href="/doctor"><i class="fas fa-user-md me-1"></i> Doctors</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/doctor">Doctor</a>
+              <a class="nav-link" href="/contact"><i class="fas fa-question-circle me-1"></i> Help</a>
+            </li>
+            <li class="nav-item" id="auth-nav-item">
+              <!-- Dynamically filled by JavaScript -->
             </li>
           </ul>
         </div>
@@ -87,225 +280,770 @@
 
     <!-- Main Content -->
     <div class="container">
-      <div class="form-container">
-        <h1 class="text-center mb-4">Diabetes Risk Assessment System</h1>
+      <!-- Register Form -->
+      <div id="register-container" class="form-container auth-container hidden">
+        <div class="text-center mb-4">
+          <h1 class="h3 text-gray-900 mb-3">Create Your Account</h1>
+          <p class="text-muted">Join our community to track your health</p>
+        </div>
+        <form id="register-form">
+          <div class="mb-3">
+            <label for="register-name" class="form-label">Full Name</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+              <input type="text" class="form-control" id="register-name" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="register-email" class="form-label">Email</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+              <input type="email" class="form-control" id="register-email" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="register-password" class="form-label">Password</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-lock"></i></span>
+              <input type="password" class="form-control" id="register-password" required>
+            </div>
+            <div class="progress mt-2">
+              <div class="progress-bar" id="password-strength-bar" role="progressbar" style="width: 0%"></div>
+            </div>
+            <small id="password-strength-text" class="text-muted">Password strength</small>
+          </div>
+          <div class="mb-3">
+            <label for="register-confirm-password" class="form-label">Confirm Password</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-lock"></i></span>
+              <input type="password" class="form-control" id="register-confirm-password" required>
+            </div>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+          </div>
+          <hr>
+          <p class="text-center mt-3">Already have an account? <a href="#" onclick="showLogin()" class="text-primary">Login here</a></p>
+        </form>
+      </div>
+
+      <!-- Login Form -->
+      <div id="login-container" class="form-container auth-container hidden">
+        <div class="text-center mb-4">
+          <h1 class="h3 text-gray-900 mb-3">Welcome Back!</h1>
+          <p class="text-muted">Login to continue your health journey</p>
+        </div>
+        <form id="login-form">
+          <div class="mb-3">
+            <label for="login-email" class="form-label">Email</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+              <input type="email" class="form-control" id="login-email" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="login-password" class="form-label">Password</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-lock"></i></span>
+              <input type="password" class="form-control" id="login-password" required>
+            </div>
+            <div class="text-end mt-1">
+              <small><a href="#" class="text-primary">Forgot password?</a></small>
+            </div>
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="remember-me">
+            <label class="form-check-label" for="remember-me">Remember me</label>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+          </div>
+          <hr>
+          <p class="text-center mt-3">Don't have an account? <a href="#" onclick="showRegister()" class="text-primary">Register here</a></p>
+        </form>
+      </div>
+
+      <!-- Assessment Form (shown after login) -->
+      <div id="assessment-container" class="form-container hidden">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h1 class="h3 text-gray-900 mb-0">Diabetes Risk Assessment</h1>
+          <span id="welcome-message" class="welcome-message"></span>
+        </div>
 
         {% if prediction_text %}
-        <div class="result text-center">
-          <p class="mb-0">{{ prediction_text }}</p>
+        <div class="result">
+          <h4 class="text-center mb-3">Assessment Result</h4>
+          <div class="risk-meter">
+            <div class="risk-indicator" style="left: calc({{ risk_percentage }}%);"></div>
+          </div>
+          <div class="text-center">
+            <p class="mb-0 lead">{{ prediction_text }}</p>
+            <p class="text-muted mt-2">Based on your symptoms and health data</p>
+          </div>
         </div>
         {% endif %}
 
-        <form
-          method="POST"
-          action="/predict"
-          class="needs-validation"
-          novalidate
-        >
-          <div class="row g-3">
-            <div class="col-md-6">
-              <label for="Age" class="form-label">Age</label>
-              <input
-                type="number"
-                class="form-control"
-                id="Age"
-                name="Age"
-                placeholder="Leave blank if you don't want to answer"
-              />
-            </div>
-            <div class="col-md-6">
-              <label for="Gender" class="form-label">Gender</label>
-              <select class="form-select" id="Gender" name="Gender">
-                <option value="">Prefer not to answer</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
-            </div>
+        <ul class="nav nav-pills mb-4" id="assessment-tabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="assessment-tab" data-bs-toggle="pill" data-bs-target="#assessment" type="button" role="tab">Assessment</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="history-tab" data-bs-toggle="pill" data-bs-target="#history" type="button" role="tab">History</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="pill" data-bs-target="#profile" type="button" role="tab">Profile</button>
+          </li>
+        </ul>
 
-            <div class="col-md-6">
-              <label for="Polyuria" class="form-label"
-                >Increased urine output?</label
-              >
-              <select class="form-select" id="Polyuria" name="Polyuria">
-                <option value="">Prefer not to answer</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
+        <div class="tab-content" id="assessment-tab-content">
+          <div class="tab-pane fade show active" id="assessment" role="tabpanel">
+            <form method="POST" action="/predict" class="needs-validation" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="Age" class="form-label">Age</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-birthday-cake"></i></span>
+                    <input type="number" class="form-control" id="Age" name="Age" placeholder="Enter your age">
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <label for="Gender" class="form-label">Gender</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
+                    <select class="form-select" id="Gender" name="Gender">
+                      <option value="">Select gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                </div>
 
-            <div class="col-md-6">
-              <label for="Polydipsia" class="form-label"
-                >Excessive thirst?</label
-              >
-              <select class="form-select" id="Polydipsia" name="Polydipsia">
-                <option value="">Prefer not to answer</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
+                <div class="col-12">
+                  <h5 class="mt-4 mb-3">Symptoms</h5>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="card symptom-card mb-3">
+                        <div class="card-body">
+                          <h6 class="card-title">Increased urine output?</h6>
+                          <select class="form-select" id="Polyuria" name="Polyuria">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="card symptom-card mb-3">
+                        <div class="card-body">
+                          <h6 class="card-title">Excessive thirst?</h6>
+                          <select class="form-select" id="Polydipsia" name="Polydipsia">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="card symptom-card mb-3">
+                        <div class="card-body">
+                          <h6 class="card-title">Sudden weight loss?</h6>
+                          <select class="form-select" id="sudden_weight_loss" name="sudden_weight_loss">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="card symptom-card mb-3">
+                        <div class="card-body">
+                          <h6 class="card-title">Feeling weak?</h6>
+                          <select class="form-select" id="weakness" name="weakness">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="card symptom-card mb-3">
+                        <div class="card-body">
+                          <h6 class="card-title">Excessive hunger?</h6>
+                          <select class="form-select" id="Polyphagia" name="Polyphagia">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="card symptom-card mb-3">
+                        <div class="card-body">
+                          <h6 class="card-title">Blurred vision?</h6>
+                          <select class="form-select" id="visual_blurring" name="visual_blurring">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="card symptom-card mb-3">
+                        <div class="card-body">
+                          <h6 class="card-title">Itching problem?</h6>
+                          <select class="form-select" id="Itching" name="Itching">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="card symptom-card mb-3">
+                        <div class="card-body">
+                          <h6 class="card-title">Increased irritability?</h6>
+                          <select class="form-select" id="Irritability" name="Irritability">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="card symptom-card mb-3">
+                        <div class="card-body">
+                          <h6 class="card-title">Delayed wound healing?</h6>
+                          <select class="form-select" id="delayed_healing" name="delayed_healing">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="card symptom-card mb-3">
+                        <div class="card-body">
+                          <h6 class="card-title">Muscle weakness?</h6>
+                          <select class="form-select" id="partial_paresis" name="partial_paresis">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="card symptom-card mb-3">
+                        <div class="card-body">
+                          <h6 class="card-title">Muscle stiffness?</h6>
+                          <select class="form-select" id="muscle_stiffness" name="muscle_stiffness">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="card symptom-card mb-3">
+                        <div class="card-body">
+                          <h6 class="card-title">Hair loss?</h6>
+                          <select class="form-select" id="Alopecia" name="Alopecia">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                      <div class="card symptom-card mb-3">
+                        <div class="card-body">
+                          <h6 class="card-title">Overweight?</h6>
+                          <select class="form-select" id="Obesity" name="Obesity">
+                            <option value="">Select option</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-            <div class="col-md-6">
-              <label for="sudden_weight_loss" class="form-label"
-                >Sudden weight loss?</label
-              >
-              <select
-                class="form-select"
-                id="sudden_weight_loss"
-                name="sudden_weight_loss"
-              >
-                <option value="">Prefer not to answer</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-
-            <div class="col-md-6">
-              <label for="weakness" class="form-label">Feeling weak?</label>
-              <select class="form-select" id="weakness" name="weakness">
-                <option value="">Prefer not to answer</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-
-            <div class="col-md-6">
-              <label for="Polyphagia" class="form-label"
-                >Excessive hunger?</label
-              >
-              <select class="form-select" id="Polyphagia" name="Polyphagia">
-                <option value="">Prefer not to answer</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-
-            <div class="col-md-6">
-              <label for="visual_blurring" class="form-label"
-                >Blurred vision?</label
-              >
-              <select
-                class="form-select"
-                id="visual_blurring"
-                name="visual_blurring"
-              >
-                <option value="">Prefer not to answer</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-
-            <div class="col-md-6">
-              <label for="Itching" class="form-label">Itching problem?</label>
-              <select class="form-select" id="Itching" name="Itching">
-                <option value="">Prefer not to answer</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-
-            <div class="col-md-6">
-              <label for="Irritability" class="form-label"
-                >Increased irritability?</label
-              >
-              <select class="form-select" id="Irritability" name="Irritability">
-                <option value="">Prefer not to answer</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-
-            <div class="col-md-6">
-              <label for="delayed_healing" class="form-label"
-                >Delayed wound healing?</label
-              >
-              <select
-                class="form-select"
-                id="delayed_healing"
-                name="delayed_healing"
-              >
-                <option value="">Prefer not to answer</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-
-            <div class="col-md-6">
-              <label for="partial_paresis" class="form-label"
-                >Muscle weakness?</label
-              >
-              <select
-                class="form-select"
-                id="partial_paresis"
-                name="partial_paresis"
-              >
-                <option value="">Prefer not to answer</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-
-            <div class="col-md-6">
-              <label for="muscle_stiffness" class="form-label"
-                >Muscle stiffness?</label
-              >
-              <select
-                class="form-select"
-                id="muscle_stiffness"
-                name="muscle_stiffness"
-              >
-                <option value="">Prefer not to answer</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-
-            <div class="col-md-6">
-              <label for="Alopecia" class="form-label">Hair loss?</label>
-              <select class="form-select" id="Alopecia" name="Alopecia">
-                <option value="">Prefer not to answer</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-
-            <div class="col-md-6">
-              <label for="Obesity" class="form-label">Overweight?</label>
-              <select class="form-select" id="Obesity" name="Obesity">
-                <option value="">Prefer not to answer</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
+              <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">
+                  <i class="fas fa-heartbeat me-2"></i> Check Results
+                </button>
+              </div>
+            </form>
+          </div>
+          
+          <div class="tab-pane fade" id="history" role="tabpanel">
+            <div class="text-center py-5">
+              <i class="fas fa-history feature-icon"></i>
+              <h4>Assessment History</h4>
+              <p class="text-muted">Your previous assessments will appear here</p>
+              <div class="card mt-4">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <h6>Assessment #1</h6>
+                      <small class="text-muted">June 15, 2023</small>
+                    </div>
+                    <span class="badge bg-success">Low Risk</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card mt-3">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <h6>Assessment #2</h6>
+                      <small class="text-muted">May 28, 2023</small>
+                    </div>
+                    <span class="badge bg-warning text-dark">Medium Risk</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-
-          <div class="text-center">
-            <button type="submit" class="btn btn-primary btn-predict">
-              Check Results
-            </button>
+          
+          <div class="tab-pane fade" id="profile" role="tabpanel">
+            <div class="text-center py-5">
+              <div class="user-avatar mx-auto mb-3" id="profile-avatar">JD</div>
+              <h4 id="profile-name">John Doe</h4>
+              <p class="text-muted" id="profile-email">john.doe@example.com</p>
+              
+              <div class="card mt-4">
+                <div class="card-body text-start">
+                  <h5 class="card-title">Personal Information</h5>
+                  <div class="mb-3">
+                    <label class="form-label">Age</label>
+                    <input type="number" class="form-control" id="profile-age" value="32">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Gender</label>
+                    <select class="form-select" id="profile-gender">
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <button class="btn btn-primary mt-2">Update Profile</button>
+                </div>
+              </div>
+              
+              <div class="card mt-3">
+                <div class="card-body text-start">
+                  <h5 class="card-title">Account Settings</h5>
+                  <button class="btn btn-outline-primary w-100 mb-2">Change Password</button>
+                  <button class="btn btn-outline-danger w-100" onclick="logout()">Logout</button>
+                </div>
+              </div>
+            </div>
           </div>
-        </form>
+        </div>
+      </div>
+      
+      <!-- Features Section (shown on home when logged in) -->
+      <div id="features-container" class="hidden">
+        <div class="row text-center mb-5">
+          <div class="col-md-4 mb-4">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <i class="fas fa-heartbeat feature-icon"></i>
+                <h4>Risk Assessment</h4>
+                <p>Check your diabetes risk based on symptoms and health data</p>
+                <button class="btn btn-primary" onclick="showAssessment()">Take Assessment</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <i class="fas fa-utensils feature-icon"></i>
+                <h4>Diet Plans</h4>
+                <p>Personalized meal plans to help manage your blood sugar</p>
+                <button class="btn btn-primary" onclick="showDiet()">View Plans</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="card feature-card h-100">
+              <div class="card-body">
+                <i class="fas fa-running feature-icon"></i>
+                <h4>Exercise Guides</h4>
+                <p>Workout routines designed for diabetes prevention</p>
+                <button class="btn btn-primary" onclick="showExercise()">Get Started</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- User Health Plans Todo List -->
+        <div class="card mb-5">
+          <div class="card-body">
+            <h4 class="card-title">Your Health Plans (To-Do List)</h4>
+            <form id="todo-form" class="mb-3 d-flex gap-2">
+              <input type="text" id="todo-input" class="form-control" placeholder="Add a new plan..." required>
+              <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+            <ul id="todo-list" class="list-group"></ul>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Footer -->
     <footer class="text-center">
       <div class="container">
-        <p>&copy; 2025 Diabetes Care System. All rights reserved.</p>
+        <div class="row">
+          <div class="col-md-4 mb-4 mb-md-0">
+            <h5>DiabEase</h5>
+            <p>Your partner in diabetes prevention and management.</p>
+          </div>
+          <div class="col-md-4 mb-4 mb-md-0">
+            <h5>Quick Links</h5>
+            <ul class="list-unstyled">
+              <li><a href="#" onclick="showHome()" class="text-white">Home</a></li>
+              <li><a href="#" onclick="showAbout()" class="text-white">Hospitals</a></li>
+              <li><a href="#" onclick="showDiet()" class="text-white">Diet Plans</a></li>
+              <li><a href="#" onclick="showExercise()" class="text-white">Exercise</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h5>Contact Us</h5>
+            <ul class="list-unstyled">
+              <li><i class="fas fa-envelope me-2"></i> info@diabease.com</li>
+              <li><i class="fas fa-phone me-2"></i> +1 (555) 123-4567</li>
+              <li><i class="fas fa-map-marker-alt me-2"></i> 123 Health St, Wellness City</li>
+            </ul>
+          </div>
+        </div>
+        <hr class="my-4 bg-light">
+        <p>&copy; 2023 DiabEase. All rights reserved.</p>
+        <div class="social-icons">
+          <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+        </div>
       </div>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Form Validation Script -->
+    <!-- Main Application Script -->
     <script>
+      // User management system
+      let users = JSON.parse(localStorage.getItem('users')) || [];
+      let currentUser = null;
+      
+      // DOM elements
+      const registerContainer = document.getElementById('register-container');
+      const loginContainer = document.getElementById('login-container');
+      const assessmentContainer = document.getElementById('assessment-container');
+      const featuresContainer = document.getElementById('features-container');
+      const registerForm = document.getElementById('register-form');
+      const loginForm = document.getElementById('login-form');
+      const authNavItem = document.getElementById('auth-nav-item');
+      const welcomeMessage = document.getElementById('welcome-message');
+      const profileName = document.getElementById('profile-name');
+      const profileEmail = document.getElementById('profile-email');
+      const profileAvatar = document.getElementById('profile-avatar');
+      
+      // Initialize the app
+      function initApp() {
+        // Check if user is already logged in
+        const loggedInUser = localStorage.getItem('currentUser');
+        if (loggedInUser) {
+          currentUser = JSON.parse(loggedInUser);
+          updateUIForLoggedInUser();
+          showHome();
+        } else {
+          showLogin();
+        }
+      }
+      
+      // Update UI when user logs in
+      function updateUIForLoggedInUser() {
+        // Show welcome message
+        welcomeMessage.textContent = `Welcome, ${currentUser.name}!`;
+        
+        // Update profile section
+        if (profileName) profileName.textContent = currentUser.name;
+        if (profileEmail) profileEmail.textContent = currentUser.email;
+        if (profileAvatar) {
+          const initials = currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase();
+          profileAvatar.textContent = initials;
+        }
+        
+        // Update auth nav item
+        authNavItem.innerHTML = `
+          <div class="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+              <span class="user-avatar">${currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase()}</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#" onclick="showProfile()"><i class="fas fa-user me-2"></i>Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item logout-btn" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+            </ul>
+          </div>
+        `;
+      }
+      
+      // Show/hide functions
+      function showRegister() {
+        registerContainer.classList.remove('hidden');
+        loginContainer.classList.add('hidden');
+        assessmentContainer.classList.add('hidden');
+        featuresContainer.classList.add('hidden');
+        return false;
+      }
+      
+      function showLogin() {
+        // Only show login if not logged in
+        if (!currentUser) {
+          loginContainer.classList.remove('hidden');
+          registerContainer.classList.add('hidden');
+          assessmentContainer.classList.add('hidden');
+          featuresContainer.classList.add('hidden');
+        } else {
+          showHome();
+        }
+        return false;
+      }
+      
+      function showHome() {
+        if (currentUser) {
+          featuresContainer.classList.remove('hidden');
+          assessmentContainer.classList.add('hidden');
+          registerContainer.classList.add('hidden');
+          loginContainer.classList.add('hidden');
+        } else {
+          showLogin();
+        }
+        return false;
+      }
+      
+      function showAssessment() {
+        if (currentUser) {
+          assessmentContainer.classList.remove('hidden');
+          featuresContainer.classList.add('hidden');
+          // Activate the assessment tab
+          document.getElementById('assessment-tab').click();
+        } else {
+          showLogin();
+        }
+        registerContainer.classList.add('hidden');
+        loginContainer.classList.add('hidden');
+        return false;
+      }
+      
+      function showProfile() {
+        showAssessment();
+        document.getElementById('profile-tab').click();
+        return false;
+      }
+      
+      function showAbout() {
+        window.location.href = "/about";
+        return false;
+      }
+
+      function showContact() {
+        window.location.href = "/contact";
+        return false;
+      }
+
+      function showDiet() {
+        window.location.href = "/diet";
+        return false;
+      }
+
+      function showExercise() {
+        window.location.href = "/exercise";
+        return false;
+      }
+
+      function showDoctor() {
+        window.location.href = "/doctor";
+        return false;
+      }
+      
+      // Logout function
+      function logout() {
+        currentUser = null;
+        localStorage.removeItem('currentUser');
+        authNavItem.innerHTML = `
+          <a class="nav-link" href="#" onclick="showLogin()"><i class="fas fa-sign-in-alt me-1"></i> Login</a>
+        `;
+  // No need to hide navbar on logout
+        showLogin();
+      }
+      
+      // Register form submission
+      registerForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('register-name').value;
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+        const confirmPassword = document.getElementById('register-confirm-password').value;
+        
+        // Basic validation
+        if (password !== confirmPassword) {
+          alert("Passwords don't match!");
+          return;
+        }
+        
+        // Check password strength
+        if (calculatePasswordStrength(password) < 3) {
+          alert("Please choose a stronger password!");
+          return;
+        }
+        
+        // Check if user already exists
+        if (users.some(user => user.email === email)) {
+          alert("User already exists with this email!");
+          return;
+        }
+        
+        // Add new user
+        const newUser = {
+          name,
+          email,
+          password // In a real app, you would hash this password
+        };
+        
+        users.push(newUser);
+        currentUser = newUser;
+        
+        // Save to localStorage
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+        
+        // Update UI and show home
+        updateUIForLoggedInUser();
+        showHome();
+      });
+      
+      // Login form submission
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        const rememberMe = document.getElementById('remember-me').checked;
+        
+        // Find user
+        const user = users.find(user => user.email === email && user.password === password);
+        
+        if (user) {
+          currentUser = user;
+          if (rememberMe) {
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+          }
+          updateUIForLoggedInUser();
+          showHome();
+        } else {
+          alert("Invalid credentials! Please try again.");
+        }
+      });
+      
+      // Password strength calculator
+      function calculatePasswordStrength(password) {
+        let strength = 0;
+        
+        // Length check
+        if (password.length >= 8) strength++;
+        if (password.length >= 12) strength++;
+        
+        // Character variety checks
+        if (/[A-Z]/.test(password)) strength++;
+        if (/[0-9]/.test(password)) strength++;
+        if (/[^A-Za-z0-9]/.test(password)) strength++;
+        
+        return Math.min(strength, 5);
+      }
+      
+      // Password strength visual feedback
+      document.getElementById('register-password').addEventListener('input', function() {
+        const password = this.value;
+        const strength = calculatePasswordStrength(password);
+        const strengthBar = document.getElementById('password-strength-bar');
+        const strengthText = document.getElementById('password-strength-text');
+        
+        let width = 0;
+        let text = '';
+        let color = '';
+        
+        switch(strength) {
+          case 0:
+            width = 20;
+            text = 'Very Weak';
+            color = '#e74a3b';
+            break;
+          case 1:
+            width = 40;
+            text = 'Weak';
+            color = '#e74a3b';
+            break;
+          case 2:
+            width = 60;
+            text = 'Moderate';
+            color = '#f6c23e';
+            break;
+          case 3:
+            width = 80;
+            text = 'Strong';
+            color = '#1cc88a';
+            break;
+          default:
+            width = 100;
+            text = 'Very Strong';
+            color = '#1cc88a';
+        }
+        
+        strengthBar.style.width = `${width}%`;
+        strengthBar.style.backgroundColor = color;
+        strengthText.textContent = text;
+        strengthText.style.color = color;
+      });
+      
+      // Form Validation
       (() => {
         "use strict";
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        
         const forms = document.querySelectorAll(".needs-validation");
-
-        // Loop over them and prevent submission
+        
         Array.from(forms).forEach((form) => {
           form.addEventListener(
             "submit",
@@ -314,13 +1052,83 @@
                 event.preventDefault();
                 event.stopPropagation();
               }
-
+              
               form.classList.add("was-validated");
             },
             false
           );
         });
       })();
+      
+      // Todo List logic
+      function renderTodoList() {
+        const todoList = JSON.parse(localStorage.getItem('healthTodos')) || [];
+        const listEl = document.getElementById('todo-list');
+        listEl.innerHTML = '';
+        todoList.forEach((item, idx) => {
+          const li = document.createElement('li');
+          li.className = 'list-group-item d-flex justify-content-between align-items-center';
+          li.innerHTML = `
+            <span style="${item.done ? 'text-decoration: line-through; color: #888;' : ''}">${item.text}</span>
+            <div>
+              <button class="btn btn-sm btn-success me-1" onclick="finishTodo(${idx})" ${item.done ? 'disabled' : ''}>${item.done ? 'Done' : 'Finish'}</button>
+              <button class="btn btn-sm btn-secondary me-1" onclick="editTodo(${idx})">Edit</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteTodo(${idx})">Delete</button>
+            </div>
+          `;
+          listEl.appendChild(li);
+        });
+      }
+
+      function addTodo(text) {
+        const todoList = JSON.parse(localStorage.getItem('healthTodos')) || [];
+        todoList.push({ text, done: false });
+        localStorage.setItem('healthTodos', JSON.stringify(todoList));
+        renderTodoList();
+      }
+
+      function finishTodo(idx) {
+        const todoList = JSON.parse(localStorage.getItem('healthTodos')) || [];
+        todoList[idx].done = true;
+        localStorage.setItem('healthTodos', JSON.stringify(todoList));
+        renderTodoList();
+      }
+
+      function editTodo(idx) {
+        const todoList = JSON.parse(localStorage.getItem('healthTodos')) || [];
+        const newText = prompt('Edit your plan:', todoList[idx].text);
+        if (newText !== null && newText.trim() !== '') {
+          todoList[idx].text = newText.trim();
+          localStorage.setItem('healthTodos', JSON.stringify(todoList));
+          renderTodoList();
+        }
+      }
+
+      function deleteTodo(idx) {
+        const todoList = JSON.parse(localStorage.getItem('healthTodos')) || [];
+        todoList.splice(idx, 1);
+        localStorage.setItem('healthTodos', JSON.stringify(todoList));
+        renderTodoList();
+      }
+
+      // Initialize the app when DOM is loaded
+      document.addEventListener('DOMContentLoaded', function() {
+        initApp();
+        // Setup todo list if features container is present
+        const todoForm = document.getElementById('todo-form');
+        if (todoForm) {
+          renderTodoList();
+          todoForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const input = document.getElementById('todo-input');
+            const value = input.value.trim();
+            if (value) {
+              addTodo(value);
+              input.value = '';
+            }
+          });
+        }
+      });
     </script>
   </body>
 </html>

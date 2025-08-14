@@ -3,278 +3,532 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Prediction Results</title>
+    <title>Prediction Results | Diabetes Risk Assessment</title>
     <!-- Bootstrap 5.3 CSS -->
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- Font Awesome -->
+    <!-- Font Awesome 6.4 -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
       rel="stylesheet"
     />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <!-- Custom CSS -->
     <style>
       :root {
         --primary-green: #198754;
         --dark-green: #0f5132;
         --light-green: #d1e7dd;
+        --gradient-green: linear-gradient(135deg, #198754 0%, #0f5132 100%);
         --black: #212529;
         --gray-dark: #343a40;
+        --accent-blue: #0d6efd;
+        --accent-yellow: #ffc107;
+        --accent-red: #dc3545;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+        --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+        --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       }
 
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Poppins', sans-serif;
         background-color: #f8f9fa;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
+        color: var(--black);
+        line-height: 1.6;
       }
 
+      /* Navbar */
       .navbar {
-        background-color: var(--black) !important;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        background: var(--gradient-green) !important;
+        box-shadow: var(--shadow-md);
+        padding: 0.8rem 0;
       }
 
-      .navbar-brand,
+      .navbar-brand {
+        font-weight: 700;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .navbar-brand i {
+        margin-right: 0.5rem;
+        font-size: 1.8rem;
+      }
+
       .nav-link {
-        color: var(--light-green) !important;
+        font-weight: 500;
+        padding: 0.5rem 1rem !important;
+        border-radius: 0.5rem;
+        margin: 0 0.2rem;
+        transition: var(--transition);
       }
 
       .nav-link:hover {
-        color: white !important;
+        background: rgba(255,255,255,0.15);
       }
 
       .nav-link.active {
-        color: var(--primary-green) !important;
+        background: rgba(255,255,255,0.2);
+        font-weight: 600;
       }
 
-      .result-container {
+      /* Main Content */
+      .main-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 2rem 0;
+      }
+
+      .result-card {
         background: white;
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        padding: 2.5rem;
-        margin: 2rem auto;
-        max-width: 800px;
-        border: 2px solid var(--primary-green);
+        border-radius: 1rem;
+        box-shadow: var(--shadow-lg);
+        overflow: hidden;
+        max-width: 850px;
+        margin: 0 auto;
+        border: none;
+        transition: var(--transition);
       }
 
-      .page-title {
-        color: var(--black);
-        font-weight: 700;
-        margin-bottom: 2rem;
-        position: relative;
-        padding-bottom: 1rem;
-      }
-
-      .page-title::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100px;
-        height: 4px;
-        background: var(--primary-green);
-        border-radius: 2px;
-      }
-
-      .result {
-        padding: 2rem;
-        border-radius: 15px;
-        margin: 2rem 0;
-        transition: all 0.3s ease;
-      }
-
-      .result:hover {
+      .result-card:hover {
         transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
       }
 
-      .low-risk {
-        background: var(--light-green);
-        border: 2px solid var(--primary-green);
+      .result-header {
+        background: var(--gradient-green);
+        color: white;
+        padding: 1.5rem;
+        text-align: center;
+        position: relative;
       }
 
-      .moderate-risk {
-        background: #fff3cd;
-        border: 2px solid #ffc107;
-      }
-
-      .high-risk {
-        background: #f8d7da;
-        border: 2px solid #dc3545;
-      }
-
-      .result h3 {
+      .result-header h1 {
         font-weight: 700;
         margin: 0;
+        font-size: 1.8rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .result-header i {
+        margin-right: 0.8rem;
         font-size: 1.5rem;
       }
 
-      .home-button {
-        background-color: var(--black);
-        border: 2px solid var(--black);
-        padding: 0.8rem 2.5rem;
+      .result-body {
+        padding: 2.5rem;
+      }
+
+      /* Risk Level Cards */
+      .risk-card {
+        border-radius: 0.75rem;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        box-shadow: var(--shadow-sm);
+        transition: var(--transition);
+        border-left: 5px solid;
+      }
+
+      .risk-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-md);
+      }
+
+      .risk-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .risk-title {
+        font-weight: 700;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .risk-description {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      /* Risk Level Specific Styles */
+      .low-risk {
+        background: rgba(25, 135, 84, 0.08);
+        border-left-color: var(--primary-green);
+      }
+
+      .low-risk .risk-icon {
+        color: var(--primary-green);
+      }
+
+      .moderate-risk {
+        background: rgba(255, 193, 7, 0.08);
+        border-left-color: var(--accent-yellow);
+      }
+
+      .moderate-risk .risk-icon {
+        color: var(--accent-yellow);
+      }
+
+      .high-risk {
+        background: rgba(220, 53, 69, 0.08);
+        border-left-color: var(--accent-red);
+      }
+
+      .high-risk .risk-icon {
+        color: var(--accent-red);
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .btn-custom {
+        padding: 0.8rem 2rem;
+        border-radius: 0.75rem;
         font-weight: 600;
-        transition: all 0.3s ease;
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 180px;
       }
 
-      .home-button:hover {
-        background-color: var(--primary-green);
-        border-color: var(--primary-green);
-        transform: translateY(-2px);
-      }
-
-      .home-button i {
+      .btn-custom i {
         margin-right: 0.5rem;
       }
 
-      .alert-danger {
-        border-radius: var(--border-radius);
+      .btn-primary {
+        background: var(--gradient-green);
+        border: none;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(25, 135, 84, 0.3);
+      }
+
+      .btn-outline-primary {
+        border: 2px solid var(--primary-green);
+        color: var(--primary-green);
+      }
+
+      .btn-outline-primary:hover {
+        background: var(--primary-green);
+        color: white;
+      }
+
+      /* Recommendations */
+      .recommendations {
+        background: #f8f9fa;
+        border-radius: 0.75rem;
         padding: 1.5rem;
-        font-weight: 500;
+        margin-top: 2rem;
       }
 
+      .recommendations h3 {
+        color: var(--primary-green);
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .recommendations h3 i {
+        margin-right: 0.5rem;
+      }
+
+      .recommendations ul {
+        padding-left: 1.5rem;
+      }
+
+      .recommendations li {
+        margin-bottom: 0.5rem;
+      }
+
+      /* Footer */
       footer {
-        background-color: var(--black);
-        padding: 1rem 0;
+        background: var(--gradient-green);
+        color: white;
+        padding: 1.5rem 0;
         margin-top: auto;
+      }
+
+      .footer-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .footer-logo {
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .footer-logo i {
+        margin-right: 0.5rem;
+        color: #ff6b6b;
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 1.5rem;
+        margin: 1rem 0;
+      }
+
+      .footer-link {
+        color: white;
+        transition: var(--transition);
+      }
+
+      .footer-link:hover {
         color: var(--light-green);
+        text-decoration: none;
       }
 
-      footer p {
-        font-weight: 500;
+      .footer-social {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
       }
 
-      /* Animation classes */
-      .fade-in {
-        animation: fadeIn 0.5s ease-in;
+      .social-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
       }
 
-      @keyframes fadeIn {
-        from {
+      .social-icon:hover {
+        background: rgba(255,255,255,0.2);
+        transform: translateY(-2px);
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .result-body {
+          padding: 1.5rem;
+        }
+        
+        .risk-card {
+          padding: 1.5rem;
+        }
+        
+        .action-buttons {
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+        
+        .btn-custom {
+          width: 100%;
+        }
+      }
+
+      /* Animations */
+      .animate-pop {
+        animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+      }
+
+      @keyframes popIn {
+        0% {
+          transform: scale(0.9);
           opacity: 0;
-          transform: translateY(20px);
         }
-        to {
+        100% {
+          transform: scale(1);
           opacity: 1;
-          transform: translateY(0);
         }
+      }
+
+      .delay-1 {
+        animation-delay: 0.1s;
+      }
+      .delay-2 {
+        animation-delay: 0.2s;
       }
     </style>
   </head>
   <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <div class="container">
-        <a class="navbar-brand" href="/">
-          <i class="fas fa-heartbeat me-2"></i>
-          Diabetes Prediction
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/">
-                <i class="fas fa-home me-1"></i>Home
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/about">
-                <i class="fas fa-info-circle me-1"></i>About
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/contact">
-                <i class="fas fa-envelope me-1"></i>Contact
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="/predict_page">
-                <i class="fas fa-chart-line me-1"></i>Predict
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+  
 
     <!-- Main Content -->
-    <div class="container fade-in">
-      <div class="result-container">
-        <h1 class="page-title text-center">
-          <i class="fas fa-clipboard-check me-2"></i>Prediction Results
-        </h1>
-
-        {% if prediction_text %}
-        <div class="result text-center">
-          {% if "Low Risk" in prediction_text %}
-          <div class="result low-risk">
-            <i
-              class="fas fa-check-circle fa-3x mb-3"
-              style="color: var(--dark-green)"
-            ></i>
-            <h3 class="mb-0">{{ prediction_text | safe }}</h3>
+    <div class="main-container">
+      <div class="container">
+        <div class="result-card animate__animated animate__fadeInUp">
+          <div class="result-header">
+            <h1>
+              <i class="fas fa-clipboard-check"></i>Your Diabetes Risk Assessment
+            </h1>
           </div>
-          {% elif "Moderate Risk" in prediction_text %}
-          <div class="result moderate-risk">
-            <i
-              class="fas fa-exclamation-triangle fa-3x mb-3"
-              style="color: #856404"
-            ></i>
-            <h3 class="mb-0">{{ prediction_text | safe }}</h3>
+          
+          <div class="result-body">
+            {% if prediction_text %}
+              {% if "Low Risk" in prediction_text %}
+              <div class="risk-card low-risk animate-pop">
+                <div class="risk-icon">
+                  <i class="fas fa-check-circle"></i>
+                </div>
+                <h2 class="risk-title">Low Risk of Diabetes</h2>
+                <p class="risk-description">
+                  Your assessment indicates a low likelihood of having diabetes. 
+                  Continue maintaining healthy habits to keep your risk low.
+                </p>
+                <div class="progress mb-3" style="height: 10px;">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="text-muted">Risk Level: 25%</small>
+              </div>
+              
+              {% elif "Moderate Risk" in prediction_text %}
+              <div class="risk-card moderate-risk animate-pop">
+                <div class="risk-icon">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h2 class="risk-title">Moderate Risk of Diabetes</h2>
+                <p class="risk-description">
+                  Your assessment shows some risk factors for diabetes. 
+                  Consider consulting with a healthcare provider and making lifestyle adjustments.
+                </p>
+                <div class="progress mb-3" style="height: 10px;">
+                  <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="text-muted">Risk Level: 60%</small>
+              </div>
+              
+              {% elif "High Risk" in prediction_text %}
+              <div class="risk-card high-risk animate-pop">
+                <div class="risk-icon">
+                  <i class="fas fa-exclamation-circle"></i>
+                </div>
+                <h2 class="risk-title">High Risk of Diabetes</h2>
+                <p class="risk-description">
+                  Your assessment indicates a high likelihood of having diabetes. 
+                  We strongly recommend consulting with a healthcare professional as soon as possible.
+                </p>
+                <div class="progress mb-3" style="height: 10px;">
+                  <div class="progress-bar bg-danger" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <small class="text-muted">Risk Level: 85%</small>
+              </div>
+              {% endif %}
+              
+              <!-- Recommendations Section -->
+              <div class="recommendations animate__animated animate__fadeIn delay-1">
+                <h3><i class="fas fa-lightbulb"></i> Recommended Actions</h3>
+                <ul>
+                  {% if "Low Risk" in prediction_text %}
+                    <li>Continue regular physical activity (at least 150 minutes per week)</li>
+                    <li>Maintain a balanced diet rich in fruits, vegetables, and whole grains</li>
+                    <li>Schedule annual check-ups to monitor your health</li>
+                  {% elif "Moderate Risk" in prediction_text %}
+                    <li>Consult with a healthcare provider for further testing</li>
+                    <li>Increase physical activity to 30 minutes most days</li>
+                    <li>Reduce sugar and refined carbohydrate intake</li>
+                    <li>Monitor your blood sugar levels periodically</li>
+                  {% elif "High Risk" in prediction_text %}
+                    <li>Schedule an appointment with a doctor immediately</li>
+                    <li>Request HbA1c and fasting glucose tests</li>
+                    <li>Begin a medically supervised diet and exercise plan</li>
+                    <li>Consider working with a diabetes educator</li>
+                  {% endif %}
+                </ul>
+              </div>
+              
+              <!-- Action Buttons -->
+              <div class="action-buttons animate__animated animate__fadeIn delay-2">
+                <a href="/" class="btn btn-custom btn-primary">
+                  <i class="fas fa-home"></i> Back to Home
+                </a>
+                <a href="/predict_page" class="btn btn-custom btn-outline-primary">
+                  <i class="fas fa-redo"></i> New Assessment
+                </a>
+                {% if "Moderate Risk" in prediction_text or "High Risk" in prediction_text %}
+                <a href="/find-doctor" class="btn btn-custom btn-danger">
+                  <i class="fas fa-user-md"></i> Find a Doctor
+                </a>
+                {% endif %}
+              </div>
+              
+            {% else %}
+              <div class="alert alert-danger text-center animate-pop" role="alert">
+                <i class="fas fa-times-circle fa-2x mb-3"></i>
+                <h4 class="alert-heading">Assessment Unavailable</h4>
+                <p>We couldn't process your diabetes risk assessment. Please try again.</p>
+                <hr>
+                <a href="/predict_page" class="btn btn-outline-danger">
+                  <i class="fas fa-redo"></i> Retry Assessment
+                </a>
+              </div>
+            {% endif %}
           </div>
-          {% elif "High Risk" in prediction_text %}
-          <div class="result high-risk">
-            <i
-              class="fas fa-exclamation-circle fa-3x mb-3"
-              style="color: #721c24"
-            ></i>
-            <h3 class="mb-0">{{ prediction_text | safe }}</h3>
-          </div>
-          {% else %}
-          <div class="result bg-light">
-            <i
-              class="fas fa-info-circle fa-3x mb-3"
-              style="color: var(--black)"
-            ></i>
-            <h3 class="mb-0">{{ prediction_text | safe }}</h3>
-          </div>
-          {% endif %}
-        </div>
-        {% else %}
-        <div class="alert alert-danger text-center" role="alert">
-          <i class="fas fa-times-circle fa-2x mb-2"></i>
-          <p class="mb-0">No results found. Please try again.</p>
-        </div>
-        {% endif %}
-
-        <div class="text-center mt-4">
-          <a href="/" class="btn btn-lg home-button">
-            <i class="fas fa-home me-2"></i>Back to Home
-          </a>
         </div>
       </div>
     </div>
 
+    <!-- Footer -->
     <footer>
       <div class="container">
-        <p class="text-center mb-0">
-          <i class="fas fa-heart text-danger me-1"></i>
-          Powered by Diabetes Prediction System
-        </p>
+        <div class="footer-content">
+          <div class="footer-logo">
+            <i class="fas fa-heartbeat"></i>
+            DiabetesGuard
+          </div>
+          <div class="footer-links">
+            <a href="/privacy" class="footer-link">Privacy Policy</a>
+            <a href="/terms" class="footer-link">Terms of Service</a>
+            <a href="/contact" class="footer-link">Contact Us</a>
+          </div>
+          <div class="footer-social">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+          <p class="mt-3 mb-0 small">&copy; 2023 DiabetesGuard. All rights reserved.</p>
+        </div>
       </div>
     </footer>
 
     <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+      // Add animation classes as elements come into view
+      document.addEventListener('DOMContentLoaded', function() {
+        const animateElements = document.querySelectorAll('.risk-card, .recommendations, .action-buttons');
+        
+        animateElements.forEach((element, index) => {
+          element.style.animationDelay = `${index * 0.1}s`;
+        });
+      });
+    </script>
   </body>
 </html>
