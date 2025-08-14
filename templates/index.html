@@ -371,16 +371,16 @@
         </div>
 
         {% if prediction_text %}
-        <div class="result">
-          <h4 class="text-center mb-3">মূল্যায়নের ফলাফল</h4>
-          <div class="risk-meter">
-            <div class="risk-indicator" style="left: calc({{ risk_percentage }}%);"></div>
+          <div class="result">
+            <h4 class="text-center mb-3">মূল্যায়নের ফলাফল</h4>
+            <div class="risk-meter">
+              <div class="risk-indicator" style="left: calc({{ risk_percentage }}%);"></div>
+            </div>
+            <div class="text-center">
+              <p class="mb-0 lead">{{ prediction_text }}</p>
+              <p class="text-muted mt-2">আপনার উপসর্গ ও স্বাস্থ্য তথ্যের ভিত্তিতে</p>
+            </div>
           </div>
-          <div class="text-center">
-            <p class="mb-0 lead">{{ prediction_text }}</p>
-            <p class="text-muted mt-2">আপনার উপসর্গ ও স্বাস্থ্য তথ্যের ভিত্তিতে</p>
-          </div>
-        </div>
         {% endif %}
 
         <ul class="nav nav-pills mb-4" id="assessment-tabs" role="tablist">
@@ -429,8 +429,8 @@
                           <h6 class="card-title">মূত্রের পরিমাণ বৃদ্ধি পেয়েছে?</h6>
                           <select class="form-select" id="Polyuria" name="Polyuria">
                             <option value="">নির্বাচন করুন</option>
-                            <option value="Yes">হ্যাঁ</option>
-                            <option value="No">না</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
                           </select>
                         </div>
                       </div>
