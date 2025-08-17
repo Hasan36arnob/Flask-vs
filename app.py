@@ -750,6 +750,481 @@
 
 
 
+# from flask import Flask, request, jsonify, render_template, redirect, url_for
+# import joblib
+# import numpy as np
+# from pymongo import MongoClient
+# import datetime
+# import math
+# from scipy import stats
+# import warnings
+# warnings.filterwarnings('ignore')
+
+# app = Flask(__name__)
+
+# # MongoDB connection
+# mongo_uri = "mongodb+srv://arnobhasanice:NVSZUMkLUTWnfFXR@fl1.qnsxy.mongodb.net/?retryWrites=true&w=majority&appName=fl1"
+# client = MongoClient(mongo_uri)
+# db = client['diabetes_db']
+# collection = db['predictions']
+
+# # Model version for reproducibility
+# model_version = "1.0.0"
+
+# # Load model and encoders
+# try:
+#     model = joblib.load('diabetes_model.pkl')
+#     label_encoders = joblib.load('label_encoders.pkl')
+#     print("✅ Model and encoders loaded successfully")
+# except Exception as e:
+#     print(f"❌ Error loading model or encoders: {e}")
+#     model = None
+#     label_encoders = None
+
+# # Global feature importance baseline (from your chart)
+# GLOBAL_IMPORTANCE = {
+#     'Polyuria': 0.175,
+#     'Polydipsia': 0.125, 
+#     'Gender': 0.075,
+#     'Itching': 0.050,
+#     'sudden weight loss': 0.040,
+#     'Irritability': 0.025,
+#     'partial paresis': 0.020,
+#     'visual blurring': 0.020,
+#     'Age': 0.015,
+#     'muscle stiffness': 0.015,
+#     'delayed healing': 0.015,
+#     'Obesity': 0.015,
+#     'Polyphagia': 0.010,
+#     'Alopecia': 0.008,
+#     'weakness': 0.005
+# }
+
+# class AcademicFeatureExplainer:
+#     """
+#     Academic-grade individual feature importance calculator
+#     Uses multiple methods for robust explanations
+#     """
+    
+#     def __init__(self, model, training_data_stats=None):
+#         self.model = model
+#         # Use population statistics as baselines (more academically sound)
+#         self.baselines = {
+#             'Age': 45.0,  # Population mean age for diabetes studies
+#             'Gender': 0.5,  # 50/50 distribution
+#             # All other features default to 'No' (0) as baseline
+#         }
+        
+#     def calculate_permutation_importance(self, instance, feature_names, n_iterations=10):
+#         """
+#         Calculate permutation-based individual feature importance
+#         with statistical significance testing
+        
+#         Args:
+#             instance: Single prediction instance
+#             feature_names: List of feature names
+#             n_iterations: Number of permutation iterations for stability
+            
+#         Returns:
+#             dict: Feature contributions with confidence intervals
+#         """
+#         try:
+#             # Baseline prediction
+#             baseline_prob = self.model.predict_proba(instance.reshape(1, -1))[0][1]
+            
+#             feature_contributions = {}
+            
+#             for i, feature_name in enumerate(feature_names):
+#                 contributions_samples = []
+                
+#                 # Multiple iterations for statistical stability
+#                 for _ in range(n_iterations):
+#                     modified_instance = instance.copy()
+                    
+#                     # Set feature to baseline value
+#                     if feature_name in self.baselines:
+#                         modified_instance[i] = self.baselines[feature_name]
+#                     else:
+#                         modified_instance[i] = 0  # Default baseline
+                    
+#                     # Calculate contribution
+#                     modified_prob = self.model.predict_proba(modified_instance.reshape(1, -1))[0][1]
+#                     contribution = baseline_prob - modified_prob
+#                     contributions_samples.append(contribution)
+                
+#                 # Statistical analysis
+#                 mean_contribution = np.mean(contributions_samples)
+#                 std_contribution = np.std(contributions_samples)
+                
+#                 # Only consider statistically significant contributions
+#                 if abs(mean_contribution) > 2 * std_contribution and mean_contribution > 0:
+#                     feature_contributions[feature_name] = {
+#                         'contribution': mean_contribution,
+#                         'std': std_contribution,
+#                         'confidence_95': (
+#                             mean_contribution - 1.96 * std_contribution,
+#                             mean_contribution + 1.96 * std_contribution
+#                         ),
+#                         'significance': 'significant' if abs(mean_contribution) > 2 * std_contribution else 'marginal'
+#                     }
+#                 else:
+#                     feature_contributions[feature_name] = {
+#                         'contribution': 0.0,
+#                         'std': 0.0,
+#                         'confidence_95': (0.0, 0.0),
+#                         'significance': 'not_significant'
+#                     }
+            
+#             return feature_contributions
+            
+#         except Exception as e:
+#             print(f"❌ Error in permutation importance: {e}")
+#             return self._fallback_importance(instance, feature_names)
+    
+#     def calculate_marginal_contribution(self, instance, feature_names):
+#         """
+#         Calculate marginal contribution using gradient approximation
+#         More sophisticated than simple permutation
+#         """
+#         try:
+#             baseline_prob = self.model.predict_proba(instance.reshape(1, -1))[0][1]
+            
+#             contributions = {}
+            
+#             for i, feature_name in enumerate(feature_names):
+#                 # Small perturbation method
+#                 epsilon = 0.01
+                
+#                 # Positive perturbation
+#                 perturbed_up = instance.copy()
+#                 perturbed_up[i] += epsilon
+#                 prob_up = self.model.predict_proba(perturbed_up.reshape(1, -1))[0][1]
+                
+#                 # Negative perturbation  
+#                 perturbed_down = instance.copy()
+#                 perturbed_down[i] = max(0, perturbed_down[i] - epsilon)
+#                 prob_down = self.model.predict_proba(perturbed_down.reshape(1, -1))[0][1]
+                
+#                 # Gradient approximation
+#                 gradient = (prob_up - prob_down) / (2 * epsilon) if epsilon > 0 else 0
+                
+#                 # Contribution = gradient * (actual_value - baseline)
+#                 baseline_val = self.baselines.get(feature_name, 0)
+#                 contribution = gradient * (instance[i] - baseline_val)
+                
+#                 contributions[feature_name] = max(0, contribution)  # Only positive contributions
+            
+#             return contributions
+            
+#         except Exception as e:
+#             print(f"❌ Error in marginal contribution: {e}")
+#             return self._fallback_importance(instance, feature_names)
+    
+#     def _fallback_importance(self, instance, feature_names):
+#         """
+#         Academically sound fallback method
+#         Uses global importance weighted by patient-specific values
+#         """
+#         contributions = {}
+        
+#         for i, feature_name in enumerate(feature_names):
+#             global_importance = GLOBAL_IMPORTANCE.get(feature_name, 0.01)
+            
+#             if feature_name == 'Age':
+#                 # Age contribution scaled by deviation from baseline
+#                 age_factor = min(instance[i] / 80.0, 1.0)  # Normalize to 0-1
+#                 contribution = global_importance * age_factor
+#             else:
+#                 # Binary features: full importance if positive, zero if negative
+#                 contribution = global_importance * instance[i] if instance[i] > 0 else 0
+            
+#             contributions[feature_name] = contribution
+        
+#         return contributions
+    
+#     def get_explanation_confidence(self, contributions):
+#         """
+#         Calculate confidence in the explanation
+#         Based on number of contributing features and their significance
+#         """
+#         significant_features = sum(1 for contrib in contributions.values() 
+#                                  if (isinstance(contrib, dict) and contrib['significance'] == 'significant') 
+#                                  or (isinstance(contrib, float) and contrib > 0.01))
+        
+#         total_contribution = sum(contrib['contribution'] if isinstance(contrib, dict) 
+#                                else contrib for contrib in contributions.values())
+        
+#         # Confidence based on feature coverage and total contribution
+#         feature_confidence = min(significant_features / 5.0, 1.0)  # Max 5 features
+#         magnitude_confidence = min(total_contribution / 0.5, 1.0)  # Normalize by expected max
+        
+#         return (feature_confidence + magnitude_confidence) / 2
+
+# # Initialize explainer
+# explainer = AcademicFeatureExplainer(model) if model else None
+
+# # Routes remain the same until predict function...
+
+# @app.route('/')
+# def home():
+#     return render_template('index.html')
+
+# @app.route('/about')
+# def about():
+#     return render_template('about.html')
+
+# @app.route('/contact')
+# def contact():
+#     return render_template('contact.html')
+
+# @app.route('/diet')
+# def diet():
+#     return render_template('diet.html')
+
+# @app.route('/exercise')
+# def exercise():
+#     return render_template('exercise.html')
+
+# @app.route('/tracking')
+# def tracking():
+#     return render_template('tracking.html')
+
+# @app.route('/medication')
+# def medication():
+#     return render_template('medication.html')
+
+# @app.route('/doctor')
+# def doctor():
+#     return render_template('doctor.html')
+
+# @app.route('/predict_page')
+# def predict_page():
+#     return render_template('predict.html')
+
+# @app.route('/predict', methods=['POST'])
+# def predict():
+#     """
+#     Enhanced prediction with academic-grade feature importance
+#     """
+#     if model is None or label_encoders is None:
+#         return render_template('predict.html', prediction_text="Error: Model or encoders not loaded.")
+    
+#     try:
+#         # Data preprocessing (same as before)
+#         input_data = {}
+        
+#         age = request.form.get('Age', '').strip()
+#         input_data['Age'] = int(age) if age else 0
+        
+#         categorical_fields = [
+#             'Gender', 'Polyuria', 'Polydipsia', 'sudden weight loss',
+#             'weakness', 'Polyphagia', 'visual blurring', 'Itching',
+#             'Irritability', 'delayed healing', 'partial paresis',
+#             'muscle stiffness', 'Alopecia', 'Obesity'
+#         ]
+        
+#         for field in categorical_fields:
+#             value = request.form.get(field, '').strip()
+#             input_data[field] = value if value else 'No Answer'
+        
+#         # Feature encoding
+#         features = []
+#         feature_names = list(input_data.keys())
+        
+#         for key in feature_names:
+#             if key == 'Age':
+#                 features.append(input_data[key])
+#             else:
+#                 if input_data[key] == 'No Answer':
+#                     features.append(0)
+#                 else:
+#                     features.append(int(label_encoders[key].transform([input_data[key]])[0]))
+
+#         features = np.array(features)
+        
+#         # Basic metrics
+#         answered_questions = sum(1 for k, v in input_data.items() if v not in ['', 'No Answer', 0])
+#         total_questions = len(input_data)
+#         data_completeness = answered_questions / total_questions
+        
+#         # Prediction
+#         probabilities = model.predict_proba(features.reshape(1, -1))
+#         probability_positive = float(probabilities[0][1] * 100)
+        
+#         # ACADEMIC-GRADE FEATURE IMPORTANCE CALCULATION
+#         print("🔬 Calculating individual feature importance...")
+        
+#         # Method 1: Permutation importance with statistical testing
+#         perm_contributions = explainer.calculate_permutation_importance(features, feature_names, n_iterations=10)
+        
+#         # Method 2: Marginal contribution analysis
+#         marginal_contributions = explainer.calculate_marginal_contribution(features, feature_names)
+        
+#         # Combine methods for robustness
+#         final_contributions = {}
+#         for feature in feature_names:
+#             perm_contrib = perm_contributions.get(feature, {}).get('contribution', 0)
+#             marg_contrib = marginal_contributions.get(feature, 0)
+            
+#             # Use average of both methods, weighted by data completeness
+#             combined_contrib = (perm_contrib + marg_contrib) / 2
+#             final_contributions[feature] = combined_contrib
+        
+#         # Calculate explanation confidence
+#         explanation_confidence = explainer.get_explanation_confidence(perm_contributions)
+        
+#         # Adjust overall confidence
+#         base_confidence = math.log(1 + 9 * data_completeness) / math.log(10) * 100
+#         adjusted_confidence = base_confidence * explanation_confidence
+        
+#         # Risk probability adjustment
+#         adjusted_probability = probability_positive * (adjusted_confidence / 100)
+        
+#         # Risk categorization
+#         if adjusted_probability > 50:
+#             risk_category, color = "Very High Risk", "#8B0000"
+#         elif adjusted_probability > 45:
+#             risk_category, color = "High Risk", "#FF0000" 
+#         elif adjusted_probability > 25:
+#             risk_category, color = "Moderate Risk", "#FFA500"
+#         elif adjusted_probability > 15:
+#             risk_category, color = "Low Risk", "#FFFF00"
+#         else:
+#             risk_category, color = "Very Low Risk", "#008000"
+        
+#         # Enhanced result display
+#         prediction_text = (
+#             f'<div class="result-card">'
+#             f'  <h2>🎯 Academic Risk Assessment Results</h2>'
+#             f'  <div class="risk-indicator" style="background-color:{color};">'
+#             f'    <h3>Diabetes Risk: {risk_category}</h3>'
+#             f'    <p>📊 Estimated Risk: {adjusted_probability:.1f}%</p>'
+#             f'  </div>'
+#             f'  <div class="academic-metrics">'
+#             f'    <p>🔬 Model Confidence: {adjusted_confidence:.1f}%</p>'
+#             f'    <p>📋 Data Completeness: {(data_completeness * 100):.1f}%</p>'
+#             f'    <p>🎲 Explanation Confidence: {(explanation_confidence * 100):.1f}%</p>'
+#             f'    <p>🏥 Clinical Interpretation: {"Recommend immediate medical consultation" if adjusted_probability > 55 else "Regular monitoring advised"}</p>'
+#             f'  </div>'
+#             f'</div>'
+#         )
+        
+#         # Prepare academic-quality results
+#         significant_features = [(name, contrib) for name, contrib in final_contributions.items() 
+#                               if contrib > 0.001]
+#         sorted_features = sorted(significant_features, key=lambda x: x[1], reverse=True)
+#         top_factors = sorted_features[:5]
+        
+#         # Enhanced database record with academic metadata
+#         prediction_record = {
+#             'input_data': {k: int(v) if isinstance(v, np.integer) else v for k, v in input_data.items()},
+#             'prediction_metadata': {
+#                 'probability_raw': float(probability_positive),
+#                 'probability_adjusted': float(adjusted_probability),
+#                 'base_confidence': float(base_confidence),
+#                 'explanation_confidence': float(explanation_confidence),
+#                 'final_confidence': float(adjusted_confidence),
+#                 'data_completeness': float(data_completeness * 100),
+#                 'risk_category': risk_category,
+#                 'answered_questions': answered_questions,
+#                 'total_questions': total_questions
+#             },
+#             'feature_analysis': {
+#                 'permutation_contributions': {k: (v['contribution'] if isinstance(v, dict) else v) 
+#                                            for k, v in perm_contributions.items()},
+#                 'marginal_contributions': marginal_contributions,
+#                 'final_contributions': final_contributions,
+#                 'statistical_significance': {k: (v.get('significance', 'unknown') if isinstance(v, dict) else 'computed')
+#                                            for k, v in perm_contributions.items()}
+#             },
+#             'academic_metadata': {
+#                 'model_version': model_version,
+#                 'explanation_method': 'hybrid_permutation_marginal',
+#                 'statistical_testing': True,
+#                 'n_permutation_iterations': 10,
+#                 'timestamp': datetime.datetime.now()
+#             }
+#         }
+        
+#         collection.insert_one(prediction_record)
+        
+#         print(f"✅ Academic prediction completed. Top factors: {[f[0] for f in top_factors[:3]]}")
+        
+#         return render_template(
+#             'result.html',
+#             prediction_text=prediction_text,
+#             risk_category=risk_category,
+#             probability=adjusted_probability,
+#             confidence_score=adjusted_confidence,
+#             explanation_confidence=explanation_confidence * 100,
+#             data_completeness=data_completeness * 100,
+#             sorted_features=sorted_features,
+#             top_factors=top_factors,
+#             back_url=url_for('home')
+#         )
+
+#     except Exception as e:
+#         print(f"❌ Prediction error: {str(e)}")
+#         return render_template('predict.html', prediction_text=f"Error during prediction: {str(e)}")
+
+# @app.route('/suggest', methods=['GET'])
+# def suggest():
+#     """Enhanced suggestions with academic rigor"""
+#     try:
+#         latest_prediction = collection.find_one(sort=[('_id', -1)])
+#         if not latest_prediction:
+#             return render_template('suggest.html', suggestions="No predictions found.")
+
+#         # Use academic feature analysis
+#         if 'feature_analysis' in latest_prediction:
+#             final_contributions = latest_prediction['feature_analysis']['final_contributions']
+#             significance = latest_prediction['feature_analysis'].get('statistical_significance', {})
+            
+#             # Only include statistically significant or highly contributing features
+#             relevant_features = []
+#             for feature, contribution in final_contributions.items():
+#                 sig_level = significance.get(feature, 'computed')
+#                 if contribution > 0.01 and sig_level in ['significant', 'computed']:
+#                     relevant_features.append((feature, contribution))
+            
+#             sorted_features = sorted(relevant_features, key=lambda x: x[1], reverse=True)[:5]
+#         else:
+#             # Fallback for older predictions
+#             input_data = latest_prediction['input_data']
+#             sorted_features = [(k, GLOBAL_IMPORTANCE.get(k, 0.01)) 
+#                              for k, v in input_data.items() 
+#                              if v in [1, 'Yes', True]][:5]
+
+#         # Academic-quality suggestions with evidence basis
+#         evidence_based_suggestions = {
+#             'Polyuria': "🔬 **Evidence-Based Action**: Frequent urination is a key diabetes indicator (Sensitivity: 85%). Recommend: 24-hour urine monitoring, HbA1c test, and endocrinologist consultation within 2 weeks.",
+#             'Polydipsia': "💧 **Clinical Correlation**: Excessive thirst correlates with elevated glucose (r=0.78). Action: Monitor fluid intake patterns, check for dry mouth, schedule glucose tolerance test.",
+#             'sudden weight loss': "⚖️ **High Risk Indicator**: Unexplained weight loss >5% in 6 months has 92% specificity for diabetes. **Immediate Action Required**: Comprehensive metabolic panel within 48 hours.",
+#             'visual blurring': "👁️ **Diabetic Retinopathy Risk**: Early symptom in 60% of diabetes cases. Schedule: Dilated fundus examination, HbA1c, and consider referral to ophthalmologist.",
+#             'delayed healing': "🏥 **Wound Care Protocol**: Poor healing indicates compromised glucose metabolism. Monitor: wound progression, implement strict glucose control, consider vascular assessment.",
+#             'Gender': "👤 **Gender-Specific Risk**: Males have 1.5x higher T2DM risk after age 45. Recommend: Annual screening, testosterone level check, cardiovascular assessment.",
+#             'Obesity': "🏃 **Lifestyle Medicine**: BMI >30 increases diabetes risk 7-fold. Evidence-based intervention: Structured weight loss program targeting 5-10% reduction in 6 months.",
+#             'Age': "📅 **Age-Related Screening**: Risk doubles every decade after 45. Protocol: Annual HbA1c, lipid panel, blood pressure monitoring, lifestyle counseling."
+#         }
+
+#         suggestions = []
+#         for feature, contribution in sorted_features:
+#             if feature in evidence_based_suggestions:
+#                 suggestions.append(evidence_based_suggestions[feature])
+
+#         # Add methodology note for academic rigor
+#         methodology_note = "📊 **Methodology**: Suggestions based on individual feature contribution analysis using hybrid permutation-marginal importance with statistical significance testing (p<0.05)."
+#         suggestions.append(methodology_note)
+
+#         return render_template('suggest.html', suggestions=suggestions, back_url=url_for('home'))
+        
+#     except Exception as e:
+#         return render_template('suggest.html', 
+#                              suggestions=[f'❌ Error generating evidence-based suggestions: {str(e)}'])
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
+
 from flask import Flask, request, jsonify, render_template, redirect, url_for
 import joblib
 import numpy as np
@@ -781,7 +1256,7 @@ except Exception as e:
     model = None
     label_encoders = None
 
-# Global feature importance baseline (from your chart)
+# Global feature importance baseline
 GLOBAL_IMPORTANCE = {
     'Polyuria': 0.175,
     'Polydipsia': 0.125, 
@@ -801,62 +1276,34 @@ GLOBAL_IMPORTANCE = {
 }
 
 class AcademicFeatureExplainer:
-    """
-    Academic-grade individual feature importance calculator
-    Uses multiple methods for robust explanations
-    """
-    
     def __init__(self, model, training_data_stats=None):
         self.model = model
-        # Use population statistics as baselines (more academically sound)
         self.baselines = {
-            'Age': 45.0,  # Population mean age for diabetes studies
-            'Gender': 0.5,  # 50/50 distribution
-            # All other features default to 'No' (0) as baseline
+            'Age': 45.0,
+            'Gender': 0.5,
         }
-        
+
     def calculate_permutation_importance(self, instance, feature_names, n_iterations=10):
-        """
-        Calculate permutation-based individual feature importance
-        with statistical significance testing
-        
-        Args:
-            instance: Single prediction instance
-            feature_names: List of feature names
-            n_iterations: Number of permutation iterations for stability
-            
-        Returns:
-            dict: Feature contributions with confidence intervals
-        """
         try:
-            # Baseline prediction
             baseline_prob = self.model.predict_proba(instance.reshape(1, -1))[0][1]
-            
             feature_contributions = {}
             
             for i, feature_name in enumerate(feature_names):
                 contributions_samples = []
-                
-                # Multiple iterations for statistical stability
                 for _ in range(n_iterations):
                     modified_instance = instance.copy()
-                    
-                    # Set feature to baseline value
                     if feature_name in self.baselines:
                         modified_instance[i] = self.baselines[feature_name]
                     else:
-                        modified_instance[i] = 0  # Default baseline
+                        modified_instance[i] = 0
                     
-                    # Calculate contribution
                     modified_prob = self.model.predict_proba(modified_instance.reshape(1, -1))[0][1]
                     contribution = baseline_prob - modified_prob
                     contributions_samples.append(contribution)
                 
-                # Statistical analysis
                 mean_contribution = np.mean(contributions_samples)
                 std_contribution = np.std(contributions_samples)
                 
-                # Only consider statistically significant contributions
                 if abs(mean_contribution) > 2 * std_contribution and mean_contribution > 0:
                     feature_contributions[feature_name] = {
                         'contribution': mean_contribution,
@@ -881,89 +1328,43 @@ class AcademicFeatureExplainer:
             print(f"❌ Error in permutation importance: {e}")
             return self._fallback_importance(instance, feature_names)
     
-    def calculate_marginal_contribution(self, instance, feature_names):
-        """
-        Calculate marginal contribution using gradient approximation
-        More sophisticated than simple permutation
-        """
-        try:
-            baseline_prob = self.model.predict_proba(instance.reshape(1, -1))[0][1]
-            
-            contributions = {}
-            
-            for i, feature_name in enumerate(feature_names):
-                # Small perturbation method
-                epsilon = 0.01
-                
-                # Positive perturbation
-                perturbed_up = instance.copy()
-                perturbed_up[i] += epsilon
-                prob_up = self.model.predict_proba(perturbed_up.reshape(1, -1))[0][1]
-                
-                # Negative perturbation  
-                perturbed_down = instance.copy()
-                perturbed_down[i] = max(0, perturbed_down[i] - epsilon)
-                prob_down = self.model.predict_proba(perturbed_down.reshape(1, -1))[0][1]
-                
-                # Gradient approximation
-                gradient = (prob_up - prob_down) / (2 * epsilon) if epsilon > 0 else 0
-                
-                # Contribution = gradient * (actual_value - baseline)
-                baseline_val = self.baselines.get(feature_name, 0)
-                contribution = gradient * (instance[i] - baseline_val)
-                
-                contributions[feature_name] = max(0, contribution)  # Only positive contributions
-            
-            return contributions
-            
-        except Exception as e:
-            print(f"❌ Error in marginal contribution: {e}")
-            return self._fallback_importance(instance, feature_names)
-    
     def _fallback_importance(self, instance, feature_names):
-        """
-        Academically sound fallback method
-        Uses global importance weighted by patient-specific values
-        """
         contributions = {}
-        
         for i, feature_name in enumerate(feature_names):
             global_importance = GLOBAL_IMPORTANCE.get(feature_name, 0.01)
             
             if feature_name == 'Age':
-                # Age contribution scaled by deviation from baseline
-                age_factor = min(instance[i] / 80.0, 1.0)  # Normalize to 0-1
+                age_factor = min(instance[i] / 80.0, 1.0)
                 contribution = global_importance * age_factor
             else:
-                # Binary features: full importance if positive, zero if negative
                 contribution = global_importance * instance[i] if instance[i] > 0 else 0
             
             contributions[feature_name] = contribution
         
         return contributions
     
-    def get_explanation_confidence(self, contributions):
-        """
-        Calculate confidence in the explanation
-        Based on number of contributing features and their significance
-        """
-        significant_features = sum(1 for contrib in contributions.values() 
-                                 if (isinstance(contrib, dict) and contrib['significance'] == 'significant') 
-                                 or (isinstance(contrib, float) and contrib > 0.01))
-        
-        total_contribution = sum(contrib['contribution'] if isinstance(contrib, dict) 
-                               else contrib for contrib in contributions.values())
-        
-        # Confidence based on feature coverage and total contribution
-        feature_confidence = min(significant_features / 5.0, 1.0)  # Max 5 features
-        magnitude_confidence = min(total_contribution / 0.5, 1.0)  # Normalize by expected max
-        
-        return (feature_confidence + magnitude_confidence) / 2
+    def get_explanation_confidence(self, feature_contributions):
+        """Calculate overall confidence in the explanation"""
+        try:
+            if not feature_contributions:
+                return 0.8  # Default confidence if no features
+            
+            significant_features = sum(
+                1 for f in feature_contributions.values() 
+                if f.get('significance') == 'significant'
+            )
+            total_features = len(feature_contributions)
+            
+            # Base confidence increases with more significant features
+            confidence = 0.5 + 0.5 * (significant_features / total_features)
+            return min(max(confidence, 0.5), 1.0)  # Keep between 0.5 and 1.0
+            
+        except Exception as e:
+            print(f"Error calculating explanation confidence: {e}")
+            return 0.8
 
 # Initialize explainer
 explainer = AcademicFeatureExplainer(model) if model else None
-
-# Routes remain the same until predict function...
 
 @app.route('/')
 def home():
@@ -1003,18 +1404,18 @@ def predict_page():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    """
-    Enhanced prediction with academic-grade feature importance
-    """
     if model is None or label_encoders is None:
         return render_template('predict.html', prediction_text="Error: Model or encoders not loaded.")
     
     try:
-        # Data preprocessing (same as before)
         input_data = {}
         
         age = request.form.get('Age', '').strip()
         input_data['Age'] = int(age) if age else 0
+        
+        # Collect family history but don't use in prediction
+        family_history = request.form.get('DiabetesFamilyHistory', '').strip()
+        input_data['DiabetesFamilyHistory'] = family_history if family_history else 'No Answer'
         
         categorical_fields = [
             'Gender', 'Polyuria', 'Polydipsia', 'sudden weight loss',
@@ -1027,9 +1428,9 @@ def predict():
             value = request.form.get(field, '').strip()
             input_data[field] = value if value else 'No Answer'
         
-        # Feature encoding
+        # Prepare features for model (excluding DiabetesFamilyHistory)
         features = []
-        feature_names = list(input_data.keys())
+        feature_names = [f for f in input_data.keys() if f != 'DiabetesFamilyHistory']
         
         for key in feature_names:
             if key == 'Age':
@@ -1043,112 +1444,71 @@ def predict():
         features = np.array(features)
         
         # Basic metrics
-        answered_questions = sum(1 for k, v in input_data.items() if v not in ['', 'No Answer', 0])
-        total_questions = len(input_data)
+        answered_questions = sum(1 for k, v in input_data.items() if v not in ['', 'No Answer', 0] and k != 'DiabetesFamilyHistory')
+        total_questions = len(input_data) - 1  # Exclude family history
         data_completeness = answered_questions / total_questions
         
         # Prediction
         probabilities = model.predict_proba(features.reshape(1, -1))
         probability_positive = float(probabilities[0][1] * 100)
         
-        # ACADEMIC-GRADE FEATURE IMPORTANCE CALCULATION
-        print("🔬 Calculating individual feature importance...")
+        # Adjust probability based on family history if present
+        if input_data.get('DiabetesFamilyHistory') == 'Yes':
+            probability_positive = min(100, probability_positive * 1.25)  # 25% increase
         
-        # Method 1: Permutation importance with statistical testing
-        perm_contributions = explainer.calculate_permutation_importance(features, feature_names, n_iterations=10)
+        # Calculate confidence and adjusted probability
+        feature_contributions = explainer.calculate_permutation_importance(features, feature_names) if explainer else {}
+        explanation_confidence = explainer.get_explanation_confidence(feature_contributions) if explainer else 0.8
         
-        # Method 2: Marginal contribution analysis
-        marginal_contributions = explainer.calculate_marginal_contribution(features, feature_names)
-        
-        # Combine methods for robustness
-        final_contributions = {}
-        for feature in feature_names:
-            perm_contrib = perm_contributions.get(feature, {}).get('contribution', 0)
-            marg_contrib = marginal_contributions.get(feature, 0)
-            
-            # Use average of both methods, weighted by data completeness
-            combined_contrib = (perm_contrib + marg_contrib) / 2
-            final_contributions[feature] = combined_contrib
-        
-        # Calculate explanation confidence
-        explanation_confidence = explainer.get_explanation_confidence(perm_contributions)
-        
-        # Adjust overall confidence
         base_confidence = math.log(1 + 9 * data_completeness) / math.log(10) * 100
         adjusted_confidence = base_confidence * explanation_confidence
-        
-        # Risk probability adjustment
         adjusted_probability = probability_positive * (adjusted_confidence / 100)
         
         # Risk categorization
-        if adjusted_probability > 50:
+        if adjusted_probability > 60:
             risk_category, color = "Very High Risk", "#8B0000"
         elif adjusted_probability > 45:
             risk_category, color = "High Risk", "#FF0000" 
-        elif adjusted_probability > 25:
+        elif adjusted_probability > 35:
             risk_category, color = "Moderate Risk", "#FFA500"
         elif adjusted_probability > 15:
             risk_category, color = "Low Risk", "#FFFF00"
         else:
             risk_category, color = "Very Low Risk", "#008000"
         
-        # Enhanced result display
-        prediction_text = (
-            f'<div class="result-card">'
-            f'  <h2>🎯 Academic Risk Assessment Results</h2>'
-            f'  <div class="risk-indicator" style="background-color:{color};">'
-            f'    <h3>Diabetes Risk: {risk_category}</h3>'
-            f'    <p>📊 Estimated Risk: {adjusted_probability:.1f}%</p>'
-            f'  </div>'
-            f'  <div class="academic-metrics">'
-            f'    <p>🔬 Model Confidence: {adjusted_confidence:.1f}%</p>'
-            f'    <p>📋 Data Completeness: {(data_completeness * 100):.1f}%</p>'
-            f'    <p>🎲 Explanation Confidence: {(explanation_confidence * 100):.1f}%</p>'
-            f'    <p>🏥 Clinical Interpretation: {"Recommend immediate medical consultation" if adjusted_probability > 55 else "Regular monitoring advised"}</p>'
-            f'  </div>'
-            f'</div>'
-        )
-        
-        # Prepare academic-quality results
-        significant_features = [(name, contrib) for name, contrib in final_contributions.items() 
-                              if contrib > 0.001]
+        # Feature importance for display
+        final_contributions = explainer._fallback_importance(features, feature_names) if explainer else {}
+        significant_features = [(name, contrib) for name, contrib in final_contributions.items() if contrib > 0.001]
         sorted_features = sorted(significant_features, key=lambda x: x[1], reverse=True)
         top_factors = sorted_features[:5]
         
-        # Enhanced database record with academic metadata
+        # Prepare prediction text
+        prediction_text = f"""
+        <div class="result-card">
+            <h2>Diabetes Risk Assessment Results</h2>
+            <div class="risk-indicator" style="background-color:{color};">
+                <h3>Diabetes Risk: {risk_category}</h3>
+                <p>Estimated Probability: {adjusted_probability:.1f}%</p>
+            </div>
+            <div class="confidence-metrics">
+                <p>Model Confidence: {adjusted_confidence:.1f}%</p>
+                <p>Data Completeness: {data_completeness*100:.1f}%</p>
+            </div>
+        </div>
+        """
+        
+        # Store prediction
         prediction_record = {
-            'input_data': {k: int(v) if isinstance(v, np.integer) else v for k, v in input_data.items()},
-            'prediction_metadata': {
-                'probability_raw': float(probability_positive),
-                'probability_adjusted': float(adjusted_probability),
-                'base_confidence': float(base_confidence),
-                'explanation_confidence': float(explanation_confidence),
-                'final_confidence': float(adjusted_confidence),
-                'data_completeness': float(data_completeness * 100),
+            'input_data': input_data,
+            'prediction_result': {
+                'probability': adjusted_probability,
                 'risk_category': risk_category,
-                'answered_questions': answered_questions,
-                'total_questions': total_questions
+                'confidence': adjusted_confidence
             },
-            'feature_analysis': {
-                'permutation_contributions': {k: (v['contribution'] if isinstance(v, dict) else v) 
-                                           for k, v in perm_contributions.items()},
-                'marginal_contributions': marginal_contributions,
-                'final_contributions': final_contributions,
-                'statistical_significance': {k: (v.get('significance', 'unknown') if isinstance(v, dict) else 'computed')
-                                           for k, v in perm_contributions.items()}
-            },
-            'academic_metadata': {
-                'model_version': model_version,
-                'explanation_method': 'hybrid_permutation_marginal',
-                'statistical_testing': True,
-                'n_permutation_iterations': 10,
-                'timestamp': datetime.datetime.now()
-            }
+            'timestamp': datetime.datetime.now(),
+            'model_version': model_version
         }
-        
         collection.insert_one(prediction_record)
-        
-        print(f"✅ Academic prediction completed. Top factors: {[f[0] for f in top_factors[:3]]}")
         
         return render_template(
             'result.html',
@@ -1169,58 +1529,32 @@ def predict():
 
 @app.route('/suggest', methods=['GET'])
 def suggest():
-    """Enhanced suggestions with academic rigor"""
     try:
         latest_prediction = collection.find_one(sort=[('_id', -1)])
         if not latest_prediction:
             return render_template('suggest.html', suggestions="No predictions found.")
 
-        # Use academic feature analysis
-        if 'feature_analysis' in latest_prediction:
-            final_contributions = latest_prediction['feature_analysis']['final_contributions']
-            significance = latest_prediction['feature_analysis'].get('statistical_significance', {})
-            
-            # Only include statistically significant or highly contributing features
-            relevant_features = []
-            for feature, contribution in final_contributions.items():
-                sig_level = significance.get(feature, 'computed')
-                if contribution > 0.01 and sig_level in ['significant', 'computed']:
-                    relevant_features.append((feature, contribution))
-            
-            sorted_features = sorted(relevant_features, key=lambda x: x[1], reverse=True)[:5]
-        else:
-            # Fallback for older predictions
-            input_data = latest_prediction['input_data']
-            sorted_features = [(k, GLOBAL_IMPORTANCE.get(k, 0.01)) 
-                             for k, v in input_data.items() 
-                             if v in [1, 'Yes', True]][:5]
-
-        # Academic-quality suggestions with evidence basis
-        evidence_based_suggestions = {
-            'Polyuria': "🔬 **Evidence-Based Action**: Frequent urination is a key diabetes indicator (Sensitivity: 85%). Recommend: 24-hour urine monitoring, HbA1c test, and endocrinologist consultation within 2 weeks.",
-            'Polydipsia': "💧 **Clinical Correlation**: Excessive thirst correlates with elevated glucose (r=0.78). Action: Monitor fluid intake patterns, check for dry mouth, schedule glucose tolerance test.",
-            'sudden weight loss': "⚖️ **High Risk Indicator**: Unexplained weight loss >5% in 6 months has 92% specificity for diabetes. **Immediate Action Required**: Comprehensive metabolic panel within 48 hours.",
-            'visual blurring': "👁️ **Diabetic Retinopathy Risk**: Early symptom in 60% of diabetes cases. Schedule: Dilated fundus examination, HbA1c, and consider referral to ophthalmologist.",
-            'delayed healing': "🏥 **Wound Care Protocol**: Poor healing indicates compromised glucose metabolism. Monitor: wound progression, implement strict glucose control, consider vascular assessment.",
-            'Gender': "👤 **Gender-Specific Risk**: Males have 1.5x higher T2DM risk after age 45. Recommend: Annual screening, testosterone level check, cardiovascular assessment.",
-            'Obesity': "🏃 **Lifestyle Medicine**: BMI >30 increases diabetes risk 7-fold. Evidence-based intervention: Structured weight loss program targeting 5-10% reduction in 6 months.",
-            'Age': "📅 **Age-Related Screening**: Risk doubles every decade after 45. Protocol: Annual HbA1c, lipid panel, blood pressure monitoring, lifestyle counseling."
-        }
-
+        # Prepare suggestions based on latest prediction
         suggestions = []
-        for feature, contribution in sorted_features:
-            if feature in evidence_based_suggestions:
-                suggestions.append(evidence_based_suggestions[feature])
-
-        # Add methodology note for academic rigor
-        methodology_note = "📊 **Methodology**: Suggestions based on individual feature contribution analysis using hybrid permutation-marginal importance with statistical significance testing (p<0.05)."
-        suggestions.append(methodology_note)
-
+        input_data = latest_prediction.get('input_data', {})
+        
+        # Check for key risk factors and add suggestions
+        if input_data.get('Polyuria') == 'Yes':
+            suggestions.append("Frequent urination detected: Recommend consulting a doctor and monitoring fluid intake")
+        if input_data.get('Polydipsia') == 'Yes':
+            suggestions.append("Excessive thirst noted: Suggest glucose level testing")
+        if input_data.get('DiabetesFamilyHistory') == 'Yes':
+            suggestions.append("Family history of diabetes: Consider more frequent screening")
+        if input_data.get('Age', 0) > 45:
+            suggestions.append("Age-related risk: Annual diabetes screening recommended")
+        if not suggestions:
+            suggestions.append("No specific recommendations based on your inputs")
+            
         return render_template('suggest.html', suggestions=suggestions, back_url=url_for('home'))
         
     except Exception as e:
         return render_template('suggest.html', 
-                             suggestions=[f'❌ Error generating evidence-based suggestions: {str(e)}'])
+                            suggestions=[f'Error generating suggestions: {str(e)}'])
 
 if __name__ == '__main__':
     app.run(debug=True)
