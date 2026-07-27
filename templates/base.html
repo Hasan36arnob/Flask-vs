@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}DiaCare{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
+  <link href="{{ url_for('static', filename='css/premium.css') }}" rel="stylesheet" />
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <div class="bg-mesh"></div>
+  <div class="bg-grid"></div>
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+
+  <nav class="premium-nav">
+    <div class="container">
+      <a class="nav-brand" href="/">
+        <span class="nav-brand-icon"><i class="fas fa-heartbeat"></i></span>
+        DiaCare
+      </a>
+      <button class="nav-toggle" aria-label="Menu"><i class="fas fa-bars"></i></button>
+      <ul class="nav-links">
+        <li><a href="/"><i class="fas fa-home"></i> হোম</a></li>
+        <li><a href="/about"><i class="fas fa-hospital"></i> হাসপাতাল</a></li>
+        <li><a href="/diet"><i class="fas fa-utensils"></i> ডায়েট</a></li>
+        <li><a href="/exercise"><i class="fas fa-running"></i> ব্যায়াম</a></li>
+        <li><a href="/doctor"><i class="fas fa-user-md"></i> ডাক্তার</a></li>
+        <li><a href="/contact"><i class="fas fa-book-medical"></i> রিসোর্স</a></li>
+        {% block nav_extra %}{% endblock %}
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-wrapper">
+    <main class="page-content">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="premium-footer">
+      <div class="container-premium">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-brand">
+              <i class="fas fa-heartbeat" style="color: var(--accent)"></i>
+              DiaCare
+            </div>
+            <p class="footer-desc">AI-চালিত ডায়াবেটিস ঝুঁকি মূল্যায়ন ও স্বাস্থ্য ব্যবস্থাপনা প্ল্যাটফর্ম। আপনার সুস্থ জীবনের সঙ্গী।</p>
+          </div>
+          <div>
+            <div class="footer-heading">দ্রুত লিঙ্ক</div>
+            <ul class="footer-links-list">
+              <li><a href="/">হোম</a></li>
+              <li><a href="/about">হাসপাতাল</a></li>
+              <li><a href="/diet">ডায়েট প্ল্যান</a></li>
+              <li><a href="/exercise">ব্যায়াম</a></li>
+              <li><a href="/doctor">ডাক্তার</a></li>
+            </ul>
+          </div>
+          <div>
+            <div class="footer-heading">যোগাযোগ</div>
+            <ul class="footer-links-list">
+              <li><i class="fas fa-envelope me-2" style="color: var(--accent)"></i> arnobhasanice@gmail.com</li>
+              <li><i class="fas fa-phone me-2" style="color: var(--accent)"></i> +8801915-215080</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; ২০২৬ DiaCare। সর্বস্বত্ব সংরক্ষিত।</p>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/premium.js') }}"></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>
