@@ -11,8 +11,6 @@
 
     {% if risk_category is defined and risk_category %}
       {% set prob = probability|default(0)|round(1) %}
-      {% set conf = confidence_score|default(0)|round(1) %}
-      {% set complete = data_completeness|default(0)|round(1) %}
 
       {% if 'Very High' in risk_category or 'High' in risk_category %}
         {% set risk_class = 'high' if 'High' in risk_category and 'Very' not in risk_category else 'very-high' %}
@@ -56,35 +54,46 @@
         </p>
       </div>
 
-      <div class="metrics-row reveal">
-        <div class="metric-card">
-          <div class="metric-value">{{ conf }}%</div>
-          <div class="metric-label">মডেল আস্থা</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value">{{ complete }}%</div>
-          <div class="metric-label">তথ্য সম্পূর্ণতা</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-value">{{ top_factors|length if top_factors else 0 }}</div>
-          <div class="metric-label">মূল কারণ</div>
-        </div>
-      </div>
+      {% set factor_names = {
+        'Polyuria': 'ঘন ঘন প্রস্রাব (Polyuria)',
+        'Polydipsia': 'অতিরিক্ত পিপাসা (Polydipsia)',
+        'sudden weight loss': 'হঠাৎ ওজন হ্রাস (Sudden Weight Loss)',
+        'weakness': 'শারীরিক দুর্বলতা (Weakness)',
+        'Polyphagia': 'অতিরিক্ত ক্ষুধা (Polyphagia)',
+        'visual blurring': 'ঝাপসা দৃষ্টি (Visual Blurring)',
+        'Itching': 'ত্বকে চুলকানি (Itching)',
+        'Irritability': 'খিটখিটে মেজাজ (Irritability)',
+        'delayed healing': 'ক্ষত শুকাতে বিলম্ব (Delayed Healing)',
+        'partial paresis': 'আংশিক পক্ষাঘাত / দুর্বলতা',
+        'muscle stiffness': 'পেশির টান / আড়ষ্টতা',
+        'Alopecia': 'অতিরিক্ত চুল পড়া (Alopecia)',
+        'Obesity': 'অতিরিক্ত ওজন / স্থূলতা (Obesity)',
+        'Family History of Diabetes': 'পরিবারে ডায়াবেটিসের ইতিহাস',
+        'Age': 'বয়সজনিত কারণ',
+        'Gender': 'লিঙ্গভিত্তিক কারণ'
+      } %}
 
+      {% set active_factors = [] %}
       {% if top_factors %}
+        {% for name, contrib in top_factors %}
+          {% if contrib > 0 %}
+            {% set _ = active_factors.append((name, contrib)) %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      {% if active_factors %}
       <div class="reveal" style="margin-top: 2rem;">
         <h3 class="section-title" style="font-size: 1.2rem; margin-bottom: 1rem;">
-          <i class="fas fa-chart-bar text-gradient"></i> প্রধান ঝুঁকি কারণ
+          <i class="fas fa-notes-medical text-gradient"></i> চিহ্নিত প্রধান ঝুঁকি কারণসমূহ
         </h3>
         <ul class="factor-list">
-          {% for name, contrib in top_factors %}
+          {% for name, contrib in active_factors %}
           <li class="factor-item">
-            <span class="factor-rank">{{ loop.index }}</span>
-            <div class="factor-bar-wrap">
-              <strong style="font-size: 0.92rem;">{{ name }}</strong>
-              <div class="factor-bar">
-                <div class="factor-bar-fill" style="width: {{ (contrib * 500)|int }}%;"></div>
-              </div>
+            <span class="factor-rank" style="background: rgba(52, 211, 153, 0.15); color: var(--accent-bright);"><i class="fas fa-check"></i></span>
+            <div class="factor-info" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+              <strong style="font-size: 0.95rem; color: var(--text-primary);">{{ factor_names.get(name, name) }}</strong>
+              <span class="badge bg-soft-warning" style="font-size: 0.75rem; padding: 0.35rem 0.65rem; border-radius: 20px; background: rgba(251, 191, 36, 0.15); color: #fbbf24;">ঝুঁকি ফ্যাক্টর</span>
             </div>
           </li>
           {% endfor %}

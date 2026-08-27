@@ -1250,9 +1250,9 @@ model_version = "1.0.0"
 try:
     model = joblib.load('diabetes_model.pkl')
     label_encoders = joblib.load('label_encoders.pkl')
-    print("✅ Model and encoders loaded successfully")
+    print("[OK] Model and encoders loaded successfully")
 except Exception as e:
-    print(f"❌ Error loading model or encoders: {e}")
+    print(f"[ERROR] Error loading model or encoders: {e}")
     model = None
     label_encoders = None
 
@@ -1398,72 +1398,102 @@ def medication():
 def doctor():
     return render_template('doctor.html')
 
+# Define exact Stacking Ensemble Permutation Importance Weights
+PERMUTATION_IMPORTANCE_WEIGHTS = {
+    'Polyuria': 0.1183,
+    'Polydipsia': 0.0807,
+    'Gender': 0.0690,
+    'sudden weight loss': 0.0161,
+    'Age': 0.0154,
+    'delayed healing': 0.0129,
+    'weakness': 0.0101,
+    'Genital thrush': 0.0088,
+    'Irritability': 0.0067,
+    'partial paresis': 0.0043,
+    'Polyphagia': 0.0019,
+    'visual blurring': 0.0000,
+    'Obesity': -0.0009,
+    'Itching': -0.0022,
+    'Alopecia': -0.0075,
+    'muscle stiffness': -0.0107,
+    'Family History of Diabetes': -0.0130
+}
+
 @app.route('/predict_page')
 def predict_page():
     return render_template('predict.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    if model is None or label_encoders is None:
-        return render_template('predict.html', prediction_text="Error: Model or encoders not loaded.")
-    
     try:
         input_data = {}
         
-        age = request.form.get('Age', '').strip()
-        input_data['Age'] = int(age) if age else 0
+        # 1. Collect inputs
+        age_val = request.form.get('Age', '').strip()
+        input_data['Age'] = int(age_val) if age_val and age_val.isdigit() else 0
         
-        # Collect family history but don't use in prediction
-        family_history = request.form.get('DiabetesFamilyHistory', '').strip()
-        input_data['DiabetesFamilyHistory'] = family_history if family_history else 'No Answer'
-        
-        categorical_fields = [
-            'Gender', 'Polyuria', 'Polydipsia', 'sudden weight loss',
-            'weakness', 'Polyphagia', 'visual blurring', 'Itching',
-            'Irritability', 'delayed healing', 'partial paresis',
-            'muscle stiffness', 'Alopecia', 'Obesity'
-        ]
-        
-        for field in categorical_fields:
-            value = request.form.get(field, '').strip()
-            input_data[field] = value if value else 'No Answer'
-        
-        # Prepare features for model (excluding DiabetesFamilyHistory)
-        features = []
-        feature_names = [f for f in input_data.keys() if f != 'DiabetesFamilyHistory']
-        
-        for key in feature_names:
-            if key == 'Age':
-                features.append(input_data[key])
-            else:
-                if input_data[key] == 'No Answer':
-                    features.append(0)
-                else:
-                    features.append(int(label_encoders[key].transform([input_data[key]])[0]))
+        gender_val = request.form.get('Gender', '').strip()
+        input_data['Gender'] = gender_val if gender_val else 'Female'
 
-        features = np.array(features)
+        family_hist = request.form.get('DiabetesFamilyHistory', request.form.get('Family History of Diabetes', '')).strip()
+        input_data['Family History of Diabetes'] = family_hist if family_hist else 'No'
+
+        symptom_fields = [
+            ('Polyuria', 'Polyuria'),
+            ('Polydipsia', 'Polydipsia'),
+            ('sudden weight loss', 'sudden_weight_loss'),
+            ('delayed healing', 'delayed_healing'),
+            ('weakness', 'weakness'),
+            ('Genital thrush', 'Genital_thrush'),
+            ('Irritability', 'Irritability'),
+            ('partial paresis', 'partial_paresis'),
+            ('Polyphagia', 'Polyphagia'),
+            ('visual blurring', 'visual_blurring'),
+            ('Obesity', 'Obesity'),
+            ('Itching', 'Itching'),
+            ('Alopecia', 'Alopecia'),
+            ('muscle stiffness', 'muscle_stiffness')
+        ]
+
+        for canonical_name, form_name in symptom_fields:
+            val = request.form.get(form_name, request.form.get(canonical_name, '')).strip()
+            input_data[canonical_name] = val if val else 'No'
+
+        # 2. Linear Equation Calculation using Stacking Ensemble Permutation Importance
+        # Equation: Score S = sum(w_i * x_i)
+        # x_i: 1 for Yes / Male, 0 for No / Female; for Age: Age / 100
+        score = 0.0
+        feature_contributions_list = []
+
+        for feature_name, weight in PERMUTATION_IMPORTANCE_WEIGHTS.items():
+            if feature_name == 'Age':
+                x_val = min(input_data['Age'] / 100.0, 1.0)
+            elif feature_name == 'Gender':
+                x_val = 1.0 if input_data['Gender'].lower() == 'male' else 0.0
+            else:
+                x_val = 1.0 if input_data.get(feature_name, '').lower() in ['yes', 'positive', '1'] else 0.0
+
+            contrib = weight * x_val
+            score += contrib
+            feature_contributions_list.append((feature_name, contrib))
+
+        # Max possible positive sum for scaling
+        max_positive_score = sum(w for w in PERMUTATION_IMPORTANCE_WEIGHTS.values() if w > 0) # 0.3442
         
-        # Basic metrics
-        answered_questions = sum(1 for k, v in input_data.items() if v not in ['', 'No Answer', 0] and k != 'DiabetesFamilyHistory')
-        total_questions = len(input_data) - 1  # Exclude family history
-        data_completeness = answered_questions / total_questions
-        
-        # Prediction
-        probabilities = model.predict_proba(features.reshape(1, -1))
-        probability_positive = float(probabilities[0][1] * 100)
-        
-        # Adjust probability based on family history if present
-        if input_data.get('DiabetesFamilyHistory') == 'Yes':
-            probability_positive = min(100, probability_positive * 1.25)  # 25% increase
-        
-        # Calculate confidence and adjusted probability
-        feature_contributions = explainer.calculate_permutation_importance(features, feature_names) if explainer else {}
-        explanation_confidence = explainer.get_explanation_confidence(feature_contributions) if explainer else 0.8
-        
-        base_confidence = math.log(1 + 9 * data_completeness) / math.log(10) * 100
-        adjusted_confidence = base_confidence * explanation_confidence
-        adjusted_probability = probability_positive * (adjusted_confidence / 100)
-        
+        # Risk probability percentage calculation
+        if max_positive_score > 0:
+            probability_positive = max(0.0, min(100.0, (score / max_positive_score) * 100.0))
+        else:
+            probability_positive = 0.0
+
+        # Completeness calculation
+        answered_questions = sum(1 for v in input_data.values() if v not in ['', 'No Answer', 0])
+        total_questions = len(PERMUTATION_IMPORTANCE_WEIGHTS)
+        data_completeness = (answered_questions / total_questions) * 100.0
+        explanation_confidence = 95.0
+        adjusted_confidence = min(98.0, 50.0 + (data_completeness * 0.48))
+        adjusted_probability = probability_positive
+
         # Risk categorization
         if adjusted_probability > 60:
             risk_category, color = "Very High Risk", "#8B0000"
@@ -1475,13 +1505,11 @@ def predict():
             risk_category, color = "Low Risk", "#FFFF00"
         else:
             risk_category, color = "Very Low Risk", "#008000"
-        
-        # Feature importance for display
-        final_contributions = explainer._fallback_importance(features, feature_names) if explainer else {}
-        significant_features = [(name, contrib) for name, contrib in final_contributions.items() if contrib > 0.001]
-        sorted_features = sorted(significant_features, key=lambda x: x[1], reverse=True)
+
+        # Sorted feature contributions for UI display
+        sorted_features = sorted(feature_contributions_list, key=lambda x: abs(x[1]), reverse=True)
         top_factors = sorted_features[:5]
-        
+
         # Prepare prediction text
         prediction_text = f"""
         <div class="result-card">
@@ -1490,17 +1518,14 @@ def predict():
                 <h3>Diabetes Risk: {risk_category}</h3>
                 <p>Estimated Probability: {adjusted_probability:.1f}%</p>
             </div>
-            <div class="confidence-metrics">
-                <p>Model Confidence: {adjusted_confidence:.1f}%</p>
-                <p>Data Completeness: {data_completeness*100:.1f}%</p>
-            </div>
         </div>
         """
-        
+
         # Store prediction
         prediction_record = {
             'input_data': input_data,
             'prediction_result': {
+                'score': score,
                 'probability': adjusted_probability,
                 'risk_category': risk_category,
                 'confidence': adjusted_confidence
@@ -1508,16 +1533,19 @@ def predict():
             'timestamp': datetime.datetime.now(),
             'model_version': model_version
         }
-        collection.insert_one(prediction_record)
-        
+        try:
+            collection.insert_one(prediction_record)
+        except Exception as db_err:
+            print(f"MongoDB save warning: {db_err}")
+
         return render_template(
             'result.html',
             prediction_text=prediction_text,
             risk_category=risk_category,
             probability=adjusted_probability,
             confidence_score=adjusted_confidence,
-            explanation_confidence=explanation_confidence * 100,
-            data_completeness=data_completeness * 100,
+            explanation_confidence=explanation_confidence,
+            data_completeness=data_completeness,
             sorted_features=sorted_features,
             top_factors=top_factors,
             back_url=url_for('home')
