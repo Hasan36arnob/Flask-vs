@@ -6,16 +6,16 @@
   <div class="glass-card glass-card-static reveal">
     <div class="page-header" style="padding-top: 0;">
       <h1 class="section-title">আপনার ডায়াবেটিস ঝুঁকি মূল্যায়ন</h1>
-      <p class="section-subtitle">AI-চালিত বিশ্লেষণের ফলাফল</p>
+      <p class="section-subtitle">কৃত্রিম বুদ্ধিমত্তা বিশ্লেষণের ফলাফল</p>
     </div>
 
     {% if risk_category is defined and risk_category %}
       {% set prob = probability|default(0)|round(1) %}
 
-      {% if 'Very High' in risk_category or 'High' in risk_category %}
-        {% set risk_class = 'high' if 'High' in risk_category and 'Very' not in risk_category else 'very-high' %}
+      {% if 'অত্যন্ত উচ্চ' in risk_category or 'উচ্চ' in risk_category %}
+        {% set risk_class = 'high' if 'উচ্চ' in risk_category and 'অত্যন্ত' not in risk_category else 'very-high' %}
         {% set gauge_color = '#f87171' %}
-      {% elif 'Moderate' in risk_category %}
+      {% elif 'মাঝারি' in risk_category %}
         {% set risk_class = 'moderate' %}
         {% set gauge_color = '#fbbf24' %}
       {% else %}
@@ -55,22 +55,23 @@
       </div>
 
       {% set factor_names = {
-        'Polyuria': 'ঘন ঘন প্রস্রাব (Polyuria)',
-        'Polydipsia': 'অতিরিক্ত পিপাসা (Polydipsia)',
-        'sudden weight loss': 'হঠাৎ ওজন হ্রাস (Sudden Weight Loss)',
-        'weakness': 'শারীরিক দুর্বলতা (Weakness)',
-        'Polyphagia': 'অতিরিক্ত ক্ষুধা (Polyphagia)',
-        'visual blurring': 'ঝাপসা দৃষ্টি (Visual Blurring)',
-        'Itching': 'ত্বকে চুলকানি (Itching)',
-        'Irritability': 'খিটখিটে মেজাজ (Irritability)',
-        'delayed healing': 'ক্ষত শুকাতে বিলম্ব (Delayed Healing)',
+        'Polyuria': 'ঘন ঘন প্রস্রাব',
+        'Polydipsia': 'অতিরিক্ত পিপাসা',
+        'sudden weight loss': 'হঠাৎ ওজন হ্রাস',
+        'weakness': 'শারীরিক দুর্বলতা',
+        'Polyphagia': 'অতিরিক্ত ক্ষুধা',
+        'visual blurring': 'ঝাপসা দৃষ্টি',
+        'Itching': 'ত্বকে চুলকানি',
+        'Irritability': 'খিটখিটে মেজাজ',
+        'delayed healing': 'ক্ষত শুকাতে বিলম্ব',
         'partial paresis': 'আংশিক পক্ষাঘাত / দুর্বলতা',
         'muscle stiffness': 'পেশির টান / আড়ষ্টতা',
-        'Alopecia': 'অতিরিক্ত চুল পড়া (Alopecia)',
-        'Obesity': 'অতিরিক্ত ওজন / স্থূলতা (Obesity)',
+        'Alopecia': 'অতিরিক্ত চুল পড়া',
+        'Obesity': 'অতিরিক্ত ওজন / স্থূলতা',
         'Family History of Diabetes': 'পরিবারে ডায়াবেটিসের ইতিহাস',
         'Age': 'বয়সজনিত কারণ',
-        'Gender': 'লিঙ্গভিত্তিক কারণ'
+        'Gender': 'লিঙ্গভিত্তিক কারণ',
+        'Genital thrush': 'জেনিটাল থ্রাশ / ছত্রাক সংক্রমণ'
       } %}
 
       {% set active_factors = [] %}

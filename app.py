@@ -1225,6 +1225,8 @@
 # if __name__ == '__main__':
 #     app.run(debug=True)
 
+import utils.transport
+import utils.session
 from flask import Flask, request, jsonify, render_template, redirect, url_for
 import joblib
 import numpy as np
@@ -1496,15 +1498,15 @@ def predict():
 
         # Risk categorization
         if adjusted_probability > 60:
-            risk_category, color = "Very High Risk", "#8B0000"
+            risk_category, color = "অত্যন্ত উচ্চ ঝুঁকি", "#8B0000"
         elif adjusted_probability > 45:
-            risk_category, color = "High Risk", "#FF0000" 
+            risk_category, color = "উচ্চ ঝুঁকি", "#FF0000" 
         elif adjusted_probability > 35:
-            risk_category, color = "Moderate Risk", "#FFA500"
+            risk_category, color = "মাঝারি ঝুঁকি", "#FFA500"
         elif adjusted_probability > 15:
-            risk_category, color = "Low Risk", "#FFFF00"
+            risk_category, color = "কম ঝুঁকি", "#FFFF00"
         else:
-            risk_category, color = "Very Low Risk", "#008000"
+            risk_category, color = "অত্যন্ত কম ঝুঁকি", "#008000"
 
         # Sorted feature contributions for UI display
         sorted_features = sorted(feature_contributions_list, key=lambda x: abs(x[1]), reverse=True)
